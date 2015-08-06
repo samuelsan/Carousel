@@ -19,10 +19,17 @@
         //  They are evenly spaced out on the X coordinate, with a random Y coordinate
         firefly = group.create(120 * i, game.rnd.integerInRange(100, 400), 'firefly');
       }
+      game.physics.enable(group, Phaser.Physics.ARCADE);
+      firefly.body.collideWorldBounds = true;
+      firefly.body.bounce.setTo(1, 1);
 
       bugnet = game.add.sprite(400, 300, 'bugnet');
+      bugnet.name = 'bugnet';
       bugnet.anchor.setTo(0.5, 0.5);
       game.physics.enable(bugnet, Phaser.Physics.ARCADE);
+      bugnet.body.collideWorldBounds = true;
+      bugnet.body.checkCollision.up = false;
+      bugnet.body.checkCollision.down = false;
       bugnet.body.allowRotation = false;
     },
     update: function () {
