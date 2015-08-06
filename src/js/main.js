@@ -2,14 +2,11 @@ var FireFly = function (game, x, y) {
 
     Phaser.Sprite.call(this, game, x, y, 'firefly');
 
-    // this.rotateSpeed = rotateSpeed;
+    this.game.time.events.loop(300, function() {
+      this.game.add.tween(this).to({x: this.game.world.randomX, y: this.game.world.randomY}, 250, Phaser.Easing.Quadratic.InOut, true);
+      }, this)
 
-    this.game.time.events.loop(500, function() {
-    this.game.add.tween(this).to({x: this.game.world.randomX, y: this.game.world.randomY}, 450, Phaser.Easing.Quadratic.InOut, true);
-    }, this)
 };
-
-
 
 FireFly.prototype = Object.create(Phaser.Sprite.prototype);
 FireFly.prototype.constructor = FireFly;
@@ -33,14 +30,6 @@ FireFly.prototype.update = function() {
       background = game.add.image(0,0, 'background');
       bugjar = game.add.image(0,0, 'bugjar')
 
-      // var group = game.add.group(); 
-
-      // for (var i = 0; i < 6; i++)
-      // {
-      //   //  They are evenly spaced out on the X coordinate, with a random Y coordinate
-      //   firefly = group.create(120 * i, game.rnd.integerInRange(100, 400), 'firefly');
-      // }
-
     var firefly = new FireFly(game, 200, 300);
 
     var firefly2 = new FireFly(game, 300, 400);
@@ -63,12 +52,16 @@ FireFly.prototype.update = function() {
       bugnet = game.add.sprite(400, 300, 'bugnet');
       bugnet.anchor.setTo(0.5, 0.5);
       game.physics.enable(bugnet, Phaser.Physics.ARCADE);
-      bugnet.body.allowRotation = false;
+      // bugnet.body.fixedRotation = true;
     },
     
     update: function () {
-      // console.log('updating')
-      bugnet.rotation = game.physics.arcade.moveToPointer(bugnet, 0, game.input.activePointer, 100);
+      bugnet.fixedRotation = game.physics.arcade.moveToPointer(bugnet, 0, game.input.activePointer, 50);
+
+      if (game.input.activePointer.isDown)
+      {
+        bugnet.angle += 42;
+      }
     }
   };
 
@@ -77,4 +70,7 @@ FireFly.prototype.update = function() {
     create: handlers.create,
     update: handlers.update
   });
-})();
+
+}) 
+
+();
