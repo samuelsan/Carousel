@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/EulaConstellar/carousel#readme",
   "dependencies": {
+    "gulp": "^3.9.0",
     "mootools": "^1.5.1"
   }
 }
