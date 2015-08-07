@@ -11,12 +11,14 @@ define(['firefly'], function () {
         game.load.image('background', 'assets/temp_minigamebackground.png');
         game.load.image('bugjar', 'assets/bugjar.png');
         game.load.image('bugnet', 'assets/bugnet.png');
-        game.load.image('firefly', 'assets/firefly.png')
+        game.load.image('firefly', 'assets/firefly.png');
       },
+
       create: function () {
         game.physics.startSystem(Phaser.Physics.ARCADE);
         background = game.add.image(0,0, 'background');
         bugjar = game.add.image(0,0, 'bugjar')
+
         var firefly = new FireFly(game, 200, 300);
         var firefly2 = new FireFly(game, 300, 400);
         var firefly3 = new FireFly(game, 400, 400);
@@ -40,7 +42,6 @@ define(['firefly'], function () {
         {
           tween = game.add.tween(bugnet).to({ angle: bugnet.angle + 179 }, 100, "Sine.easeInOut", true, -1);
         }, null, 0);
-
         game.input.activePointer.leftButton.onUp.add(function(e)
         {
           tween.stop()
