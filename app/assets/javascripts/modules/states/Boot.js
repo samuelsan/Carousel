@@ -1,6 +1,4 @@
-define([
-  'Phaser'
-], function (Phaser) {
+define(['Phaser'], function (Phaser) {
 
   var BootState = function (game) {};
 

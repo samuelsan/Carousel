@@ -1,11 +1,9 @@
-define([
-  'Phaser'
-], function (Phaser) {
+define(['Phaser'], function (Phaser) {
 
   var StreamState = function (game) {};
 
   StreamState.prototype = {
-    constructor: StreamState,
+    constructor: BootState,
     preload: function() {
       game.load.image('background', 'app/assets/javascripts/modules/units/backgrounds/stream.jpg')
     },

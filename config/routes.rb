@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'public/index'
-
+  root 'public#index'
   resources :users
 
   get 'carousel/index'

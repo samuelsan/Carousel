@@ -1,11 +1,9 @@
-define([
-  'Phaser'
-], function (Phaser) {
+define(['Phaser'], function (Phaser) {
 
   var EndDemoState = function (game) {};
 
   EndDemoState.prototype = {
-    constructor: EndDemoState,
+    constructor: BootState,
     preload: function() {},
     create: function() {},
     update: function() {}

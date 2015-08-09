@@ -1,14 +1,12 @@
-define([
-  'Phaser'
-], function (Phaser) {
+define(['Phaser'], function (Phaser) {
 
   var MinigameState = function (game) {};
+  var FireFly = require('javascripts/modules/factories/firefly');
+  var bugnet, background, firefly, timer, timerEvent, text, arrayOfFlies;
+  var arrayOfFlies = [];
 
   MinigameState.prototype = {
-    constructor: MinigameState,
-    var FireFly = require('app/assets/javascripts/modules/factories/firefly');
-    var bugnet, background, firefly, timer, timerEvent, text, arrayOfFlies;
-    var arrayOfFlies = [];
+    constructor: BootState,
     preload: function() {
       // load the images //
       game.load.image('background', 'app/assets/javascripts/modules/units/backgrounds/temp_minigamebackground.png');

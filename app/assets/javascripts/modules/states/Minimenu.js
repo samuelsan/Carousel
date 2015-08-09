@@ -1,11 +1,9 @@
-define([
-  'Phaser'
-], function (Phaser) {
+define(['Phaser'], function (Phaser) {
 
   var MinimenuState = function (game) {};
 
   MinimenuState.prototype = {
-    constructor: MinimenuState,
+    constructor: BootState,
     preload: function() {
       game.load.image('background', 'app/assets/javascripts/modules/units/backgrounds/...')
       game.load.image('menu', 'app/assets/javascripts/modules/units/backgrounds/...')

@@ -5,14 +5,14 @@ requirejs.config({
 });
 
 require([
-  'assets/javascripts/modules/CarouselGame',
-  'assets/javascripts/modules/states/Boot',
-  'assets/javascripts/modules/states/Preload',
-  'assets/javascripts/modules/states/Oaktree'
-  'assets/javascripts/modules/states/Stream'
-  'assets/javascripts/modules/states/Minimenu'
-  'assets/javascripts/modules/states/Minigame'
-  'assets/javascripts/modules/states/EndDemo'
+  'app/assets/javascripts/modules/CarouselGame',
+  'app/assets/javascripts/modules/states/Boot',
+  'app/assets/javascripts/modules/states/Preload',
+  'app/assets/javascripts/modules/states/Oaktree',
+  'app/assets/javascripts/modules/states/Stream',
+  'app/assets/javascripts/modules/states/Minimenu',
+  'app/assets/javascripts/modules/states/Minigame',
+  'app/assets/javascripts/modules/states/EndDemo'
 ], function (CarouselGame, BootState, PreloadState, OaktreeState, StreamState, MinimenuState, MinigameState, EndDemoState) {
 
   var game = new PhaserGame(640, 480);

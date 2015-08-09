@@ -1,11 +1,9 @@
-define([
-  'Phaser'
-], function (Phaser) {
+define(['Phaser'], function (Phaser) {
 
   var PreloadState = function (game) {};
 
   PreloadState.prototype = {
-    constructor: PreloadState,
+    constructor: BootState,
     preload: function() {
       game.load.image('title', 'app/assets/javascripts/modules/units/backgrounds/...')
     },

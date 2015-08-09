@@ -1,11 +1,9 @@
-define([
-  'Phaser'
-], function (Phaser) {
+define(['Phaser'], function (Phaser) {
 
   var OaktreeState = function (game) {};
 
   OaktreeState.prototype = {
-    constructor: OaktreeState,
+    constructor: BootState,
     preload: function() {
       game.load.image('background', 'app/assets/javascripts/modules/units/backgrounds/oaktree.jpg')
     },
