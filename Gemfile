@@ -42,3 +42,4 @@ gem "koala", "~> 1.10.0rc" # Facebook API
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem 'puma'
