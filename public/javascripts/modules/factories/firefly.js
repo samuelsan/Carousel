@@ -1,6 +1,3 @@
-  /**
-  * FireFly defined
-  */
   var FireFly = function (game, x, y) {
     Phaser.Sprite.call(this, game, x, y, 'firefly');
     game.physics.enable(this, Phaser.Physics.ARCADE);

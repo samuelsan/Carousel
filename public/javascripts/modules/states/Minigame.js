@@ -15,7 +15,7 @@ var MinigameState = function (game) {};
       // load the sounds and music //
       game.load.audio('music', '/javascripts/modules/units/music/Firefly.mp3');
       game.load.audio('fireflybuzz', '/javascripts/modules/units/sounds/firefly_buzzing.wav');
-      game.load.audio('netswish', '/javascripts/modules/units/sounds/sounds/net_swish.mp3');
+      game.load.audio('netswish', '/javascripts/modules/units/sounds/net_swish.mp3');
       game.load.audio('firefly-catch', '/javascripts/modules/units/sounds/firefly_surprise.mp3');
     },
     create: function() {
@@ -79,15 +79,17 @@ var MinigameState = function (game) {};
       }, null, 0);
 
       // destroys the sprite on click //
-      arrayOfFlies.forEach(function(fly) {
+      arrayOfFlies.forEach((function(fly) {
         fly.inputEnabled = true;
         fly.input.useHandCursor = true;
-        fly.events.onInputDown.add(handlers.destroySprite, this);
-      });
+        fly.events.onInputDown.add(function () {
+          this.destroySprite(fly);
+        }, this);
+      }).bind(this));
 
       // displays the score and sets a default of 0 //
-      handlers.score = 0;  
-      handlers.labelScore = game.add.text(40, 55, "0", { font: "30px Arial", fill: "#ffffff" });
+      this.score = 0;  
+      this.labelScore = game.add.text(40, 55, "0", { font: "30px Arial", fill: "#ffffff" });
     },
     update: function() {
       // moves the net with the mouse pointer //
@@ -106,7 +108,9 @@ var MinigameState = function (game) {};
           arrayOfFlies.push(newFireFly);
           newFireFly.inputEnabled = true;
           newFireFly.input.useHandCursor = true;
-          newFireFly.events.onInputDown.add(handlers.destroySprite, this);
+          newFireFly.events.onInputDown.add(function () {
+            this.destroySprite(arrayOfFlies[i]);
+          }, this);
         }
       }
     },
@@ -119,17 +123,20 @@ var MinigameState = function (game) {};
       arrayOfFlies.pop();
 
       // updates the score //
-      handlers.updateScore();
+      this.updateScore();
     },
     updateScore: function () {
       // adds 1 to the score when bug is caught //
-      handlers.score += 1;
+      this.score += 1;
 
       // changes the score text to the new score //
-      handlers.labelScore.text = handlers.score;  
+      if (this.labelScore) {
+        this.labelScore.text = this.score;  
+      }
     },
     render: function () {
       // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
+      
       if (timer.running) {
         game.debug.text(this.formatTime(Math.round((timerEvent.delay - timer.ms) / 1000)), 480, 70, "white", "60px Arial");
       }

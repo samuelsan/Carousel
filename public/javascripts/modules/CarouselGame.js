@@ -2,7 +2,7 @@
     return new Phaser.Game(w, h, Phaser.AUTO);
   };
 
-  var game = new PhaserGame(640, 480);
+  var game = new PhaserGame(1000, 800);
   game.state.add('Boot', BootState);
   game.state.add('Preload', PreloadState);
   game.state.add('Oaktree', OaktreeState);
