@@ -1,5 +1,3 @@
-define(['Phaser'], function (Phaser) {
-
   var EndDemoState = function (game) {};
 
   EndDemoState.prototype = {
@@ -8,6 +6,3 @@ define(['Phaser'], function (Phaser) {
     create: function() {},
     update: function() {}
   };
-
-  return EndDemoState;
-});

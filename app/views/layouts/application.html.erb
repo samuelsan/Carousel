@@ -3,13 +3,20 @@
 <head>
   <title>Carousel</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= requirejs_include_tag "application" %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
 <%= yield %>
-
+<script src="/javascripts/phaser.js"></script>
+<script src="/javascripts/modules/factories/firefly.js"></script>
+<script src="/javascripts/modules/states/Boot.js"></script>
+<script src="/javascripts/modules/states/Preload.js"></script>
+<script src="/javascripts/modules/states/Oaktree.js"></script>
+<script src="/javascripts/modules/states/Stream.js"></script>
+<script src="/javascripts/modules/states/Minimenu.js"></script>
+<script src="/javascripts/modules/states/Minigame.js"></script>
+<script src="/javascripts/modules/states/EndDemo.js"></script>
+<script src="/javascripts/modules/CarouselGame.js"></script>
 </body>
 </html>

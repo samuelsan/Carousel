@@ -1,5 +1,3 @@
-define(['Phaser'], function (Phaser) {
-
   var OaktreeState = function (game) {};
 
   OaktreeState.prototype = {
@@ -12,6 +10,3 @@ define(['Phaser'], function (Phaser) {
     },
     update: function() {}
   };
-
-  return OaktreeState;
-});

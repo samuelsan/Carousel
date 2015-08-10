@@ -1,4 +1,3 @@
-define(['firefly'], function () {
   /**
   * FireFly defined
   */
@@ -21,9 +20,3 @@ define(['firefly'], function () {
       game.physics.arcade.velocityFromRotation(this.angle + game.rnd.integerInRange(-60, 60), 500, this.body.velocity);
     }
   };
-
-  /**
-  * return the created FireFly object.
-  */
-  return FireFly;
-});

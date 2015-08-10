@@ -1,5 +1,3 @@
-define(['Phaser'], function (Phaser) {
-
   var StreamState = function (game) {};
 
   StreamState.prototype = {
@@ -12,6 +10,3 @@ define(['Phaser'], function (Phaser) {
     },
     update: function() {}
   };
-
-  return StreamState;
-});

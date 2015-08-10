@@ -1,7 +1,4 @@
-define(['Phaser'], function (Phaser) {
-
-  var MinigameState = function (game) {};
-  var FireFly = require('javascripts/modules/factories/firefly');
+var MinigameState = function (game) {};
   var bugnet, background, firefly, timer, timerEvent, text, arrayOfFlies;
   var arrayOfFlies = [];
 
@@ -9,17 +6,17 @@ define(['Phaser'], function (Phaser) {
     constructor: BootState,
     preload: function() {
       // load the images //
-      game.load.image('background', 'app/assets/javascripts/modules/units/backgrounds/temp_minigamebackground.png');
-      game.load.image('bugjar', 'app/assets/javascripts/modules/units/sprites/bugjar.png');
-      game.load.image('bugnet', 'app/assets/javascripts/modules/units/sprites/bugnet.png');
-      game.load.image('firefly', 'app/assets/javascripts/modules/units/sprites/firefly.png');
-      game.load.image('fireflysurprise', 'app/assets/javascripts/modules/units/sprites/firefly-surprise.png');
+      game.load.image('background', '/javascripts/modules/units/backgrounds/temp_minigamebackground.png');
+      game.load.image('bugjar', '/javascripts/modules/units/sprites/bugjar.png');
+      game.load.image('bugnet', '/javascripts/modules/units/sprites/bugnet.png');
+      game.load.image('firefly', '/javascripts/modules/units/sprites/firefly.png');
+      game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
 
       // load the sounds and music //
-      game.load.audio('music', 'app/assets/javascripts/modules/units/music/Firefly.mp3');
-      game.load.audio('fireflybuzz', 'app/assets/javascripts/modules/units/sounds/firefly_buzzing.wav');
-      game.load.audio('netswish', 'app/assets/javascripts/modules/units/sounds/sounds/net_swish.mp3');
-      game.load.audio('firefly-catch', 'app/assets/javascripts/modules/units/sounds/firefly_surprise.mp3');
+      game.load.audio('music', '/javascripts/modules/units/music/Firefly.mp3');
+      game.load.audio('fireflybuzz', '/javascripts/modules/units/sounds/firefly_buzzing.wav');
+      game.load.audio('netswish', '/javascripts/modules/units/sounds/sounds/net_swish.mp3');
+      game.load.audio('firefly-catch', '/javascripts/modules/units/sounds/firefly_surprise.mp3');
     },
     create: function() {
       // initiate game physics //
@@ -150,6 +147,3 @@ define(['Phaser'], function (Phaser) {
       return seconds.substr(-2);   
     }
   };
-
-  return MinigameState;
-});

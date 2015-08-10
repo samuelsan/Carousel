@@ -1,5 +1,3 @@
-define(['Phaser'], function (Phaser) {
-
   var MinimenuState = function (game) {};
 
   MinimenuState.prototype = {
@@ -13,6 +11,3 @@ define(['Phaser'], function (Phaser) {
     },
     update: function() {}
   };
-
-  return MinimenuState;
-});
