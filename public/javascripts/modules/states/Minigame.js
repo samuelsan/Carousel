@@ -5,6 +5,8 @@
 var MinigameState = function (game) {
   this.game = game;
   this.arrayOfFlies = [];
+  this.highscore = 0;
+  this.score = 0;
 };
 
 MinigameState.prototype = {
@@ -28,10 +30,10 @@ MinigameState.prototype = {
     this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
 
     // load the sounds and music //
-    this.game.load.audio('music', '/javascripts/modules/units/music/Firefly.mp3');
     this.game.load.audio('fireflybuzz', '/javascripts/modules/units/sounds/firefly_buzzing.wav');
     this.game.load.audio('netswish', '/javascripts/modules/units/sounds/net_swish.mp3');
     this.game.load.audio('firefly-catch', '/javascripts/modules/units/sounds/firefly_surprise.mp3');
+    this.game.load.audio('music', '/javascripts/modules/units/music/Firefly.mp3');
   },
   create: function() {
     // initiate game physics //
@@ -44,11 +46,6 @@ MinigameState.prototype = {
     // add audio
     this.netswish = this.game.add.audio('netswish');
     this.fireflycatch = this.game.add.audio('firefly-catch');
-    
-    this.music = this.game.add.audio('music');
-    this.music.volume = 3;
-    this.music.loop = true;
-    this.music.play();
 
     this.fireflybuzz = this.game.add.audio('fireflybuzz');
     this.fireflybuzz.volume = 2;
@@ -89,8 +86,7 @@ MinigameState.prototype = {
       this.game.add.tween(this.bugnet).to({ angle: orig }, 100, 'Sine.easeInOut', true, -1);
     }.bind(this), null, 0);
 
-    // displays the score and sets a default of 0 //
-    this.score = 0;  
+    // displays the score and sets a default of 0 // 
     this.labelScore = this.game.add.text(30, 55, '0', { font: '30px Arial', fill: '#ffffff' });
   },
   update: function()
@@ -118,6 +114,17 @@ MinigameState.prototype = {
     if (this.labelScore) {
       this.labelScore.text = this.score;  
     }
+  },  
+  checkhighscore: function() {
+    if (this.score > this.highscore){
+        this.highscore = this.score;
+        return this.highscore
+      } else {
+        return this.highscore
+    };
+  },
+  checkscore: function() {
+    return this.score
   },
   render: function () {
     // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
@@ -126,7 +133,12 @@ MinigameState.prototype = {
       this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 480, 70, "white", "60px Arial");
     }
     else {
-      this.game.debug.text("Done!", 455, 70, "white", "60px Arial");
+      // this.game.debug.text("Done!", 455, 70, "white", "60px Arial");
+      this.checkhighscore();
+      this.game.input.activePointer.leftButton.onDown.removeAll();
+      this.fireflybuzz.stop();
+      this.fireflycatch.stop();
+      this.game.state.start("Minimenu");
     }
   },
   endTimer: function() {
