@@ -8,9 +8,10 @@ development:
   adapter:  postgresql
   pool:     5
   port:     5432
-  username: naumanmithani
-  database: carousel
-  host:     localhost
+  username: ysiaruuqveltqh
+  password: b1IwFSn8U9kphek5Dylz2msnC-
+  database: dceno2vtrepfqs
+  host:     ec2-54-204-3-200.compute-1.amazonaws.com
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
