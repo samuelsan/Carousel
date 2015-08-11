@@ -7,9 +7,6 @@ var MinigameState = function (game) {
   this.arrayOfFlies = [];
 };
 
-// var bugnet, background, timerEvent, arrayOfFlies;
-// var arrayOfFlies = [];
-
 MinigameState.prototype = {
   constructor: BootState,
   createFireFly: function()
@@ -37,7 +34,6 @@ MinigameState.prototype = {
     this.game.load.audio('firefly-catch', '/javascripts/modules/units/sounds/firefly_surprise.mp3');
   },
   create: function() {
-    // var self = this;
     // initiate game physics //
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     
@@ -67,10 +63,6 @@ MinigameState.prototype = {
       
     // Start the timer//
     this.timer.start();
-
-    // function generateFireFly() {
-    //   return new FireFly(this.game, this.game.world.randomX, this.game.world.randomY);
-    // }
 
     for (var i=0; i < 6; i++) {
       this.createFireFly();
