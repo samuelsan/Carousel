@@ -15,3 +15,6 @@
 /log/*.log
 /tmp
 
+# Ignore the Gemfile.lock file
+Gemfile.lock
+
