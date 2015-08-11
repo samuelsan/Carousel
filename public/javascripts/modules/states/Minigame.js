@@ -87,6 +87,7 @@ MinigameState.prototype = {
     }.bind(this), null, 0);
 
     // displays the score and sets a default of 0 // 
+    this.score = 0;
     this.labelScore = this.game.add.text(30, 55, '0', { font: '30px Arial', fill: '#ffffff' });
   },
   update: function()
@@ -100,9 +101,10 @@ MinigameState.prototype = {
       return fly !== firefly;
     })
     firefly.destroy();
-
-    setTimeout(this.createFireFly.bind(this), 1500);
-
+    
+    if (this.timer.ms > 3000) {
+      this.fireflytimer = setTimeout(this.createFireFly.bind(this), 1500);
+    }
     // updates the score
     this.updateScore();
   },
@@ -134,11 +136,13 @@ MinigameState.prototype = {
     }
     else {
       // this.game.debug.text("Done!", 455, 70, "white", "60px Arial");
+      this.game.world.removeAll();
+      clearTimeout(this.fireflytimer);
       this.checkhighscore();
       this.game.input.activePointer.leftButton.onDown.removeAll();
       this.fireflybuzz.stop();
       this.fireflycatch.stop();
-      this.game.state.start("Minimenu");
+      this.game.state.start('Minimenu', true, false);
     }
   },
   endTimer: function() {
