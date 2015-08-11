@@ -11,10 +11,25 @@ MinimenuState.prototype = {
   preload: function() {
     this.game.load.image('background', 'javascripts/modules/units/backgrounds/temp_minigamebackground.png');
     this.game.load.image('menu', 'javascripts/modules/units/backgrounds/minigame-intro.png');
+    this.game.load.image('playbutton', 'javascripts/modules/units/sprites/playbutton.png');
+
+    this.game.load.audio('music', '/javascripts/modules/units/music/Firefly.mp3');
   },
   create: function() {
     this.background = this.game.add.image(0,0, 'background');
     this.menu = this.game.add.image(0,0, 'menu');
+    this.playbutton = this.game.add.button(670, 450, 'playbutton', this.playgame);
+
+    this.highscore = this.game.add.text(670, 375, window.minigame.checkhighscore(), { font: '30px Arial', fill: '#ffffff'});
+    this.score = this.game.add.text(335, 375, window.minigame.checkscore(), { font: '30px Arial', fill: '#ffffff'});
+
+    if (!this.music || !this.music.isPlaying) {
+      this.music = this.game.add.audio('music', 1, true);
+      this.music.play();
+    }
+  },
+  playgame: function() {
+    this.game.state.start('Minigame');
   },
   update: function() {}
 };
