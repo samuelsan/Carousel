@@ -1,12 +1,18 @@
-  var StreamState = function (game) {};
+/* globals BootState, Phaser */
 
-  StreamState.prototype = {
-    constructor: BootState,
-    preload: function() {
-      game.load.image('background', 'app/assets/javascripts/modules/units/backgrounds/stream.jpg')
-    },
-    create: function() {
-      background = game.add.image(0,0, 'background');
-    },
-    update: function() {}
-  };
+'use strict';
+
+var StreamState = function (game) {
+  this.game = game
+};
+
+StreamState.prototype = {
+  constructor: BootState,
+  preload: function() {
+    this.game.load.image('background', 'javascripts/modules/units/backgrounds/stream.jpg')
+  },
+  create: function() {
+    this.background = this.game.add.image(0,0, 'background');
+  },
+  update: function() {}
+};
