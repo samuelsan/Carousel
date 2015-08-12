@@ -8,10 +8,17 @@ class User < ActiveRecord::Base
       provider:           auth.provider,
       uid:                auth.uid,
       name:               auth.info.name,
-      oauth_token:        auth.credentials.oauth_token,
-      oauth_expires_at:   Time.at(auth.credentials.expires_at)
+      oauth_token:        auth.credentials.token,
+      oauth_expires_at:   Time.at(auth.credentials.expires_at),
+      email:              auth.info.email,
+      age:                auth.extra.raw_info.age_range.min.last,
+      profile_photo_url:  auth.info.image
     )
-    # puts auth.age_range
   end
 
 end
+
+
+# add_column :users,  :email,             :text
+# add_column :users,  :age,               :integer
+# add_column :users,  :profile_photo_url, :text
