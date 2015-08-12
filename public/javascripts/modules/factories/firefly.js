@@ -21,4 +21,5 @@
       this.game.physics.arcade.velocityFromRotation(this.angle + this.game.rnd.integerInRange(-60, 60), 500, this.body.velocity);
     }
   };
-}());
+}()
+);
