@@ -3,6 +3,8 @@
   BootState.prototype = {
     constructor: BootState,
     preload: function() {},
-    create: function() {},
+    create: function() {
+
+    },
     update: function() {}
   };
