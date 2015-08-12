@@ -16,6 +16,7 @@
         // this.body.sensor = true;
         this.body.velocity.x = v.x;
         this.body.velocity.y = v.y;
+        this.game.add.existing(this);
 
         // this.body.onBeginContact.add(function()
         // {
@@ -87,4 +88,4 @@
     //   };
     //   game.debug.stop();    
     };
-}());
+}());  
