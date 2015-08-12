@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   #             uniqueness: true
   #             length: { maximum: 71 }
 
-  validates :age, numericality: { greater_than: 29 }
+  validates :age, numericality: { greater_than: 16 }
 
   # class method
   def self.from_omniauth(auth)
