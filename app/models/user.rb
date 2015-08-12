@@ -1,6 +1,21 @@
 require 'pry'
 class User < ActiveRecord::Base
 
+  # belongs_to :user
+
+  # has_many :user_vault_relations
+  # has_many :vaults, through: :user_vault_relations
+
+  # has_many :text_posts
+  # has_many :photo_posts
+
+  # validates   :name,
+  #             presence:   true,
+  #             uniqueness: true
+  #             length: { maximum: 71 }
+
+  validates :age, numericality: { greater_than: 29 }
+
   # class method
   def self.from_omniauth(auth)
     if (User.find_by(uid: auth.uid))
