@@ -4,7 +4,7 @@
 
     var Projectile = window.Projectile =  function (game, x, y)
     {
-        Phaser.Sprite.call(this, game, x, y, 'ball');
+        Phaser.Sprite.call(this, game, x, y, 'acorn');
         
         this.game = game;
         this.game.physics.box2d.enable(this);
@@ -13,7 +13,7 @@
 
         // console.log(v);
 
-        this.body.sensor = true;
+        // this.body.sensor = true;
         this.body.velocity.x = v.x;
         this.body.velocity.y = v.y;
 
