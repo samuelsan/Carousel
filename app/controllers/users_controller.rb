@@ -1,85 +1,93 @@
-class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+# The entire UsersController has been commented-out since it is not in use at the present time.
+# Since we do not perform any user management at present, this is not needed.
+# How to re-enable: highlight the entire class then un-comment.
 
-  # GET /users
-  # GET /users.json
-  def index
-    @users = User.all
-  end
+# class UsersController < ApplicationController
+#   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  # GET /users/1
-  # GET /users/1.json
-  def show
-  end
+#   # GET /users
+#   # GET /users.json
+#   def index
+#     @users = User.all
+#   end
 
-  # GET /users/new
-  def new
-    @user = User.new
-  end
+#   # GET /users/1
+#   # GET /users/1.json
+#   def show
+#   end
 
-  # GET /users/1/edit
-  def edit
-  end
+#   # GET /users/new
+#   def new
+#     @user = User.new
+#   end
 
-  # POST /users
-  # POST /users.json
-  def create
-    @user = User.new(user_params)
+#   # GET /users/1/edit
+#   def edit
+#   end
 
-    # respond_to do |format|
-    #   if @user.save
-    #     format.html { redirect_to @user, notice: 'User was successfully created.' }
-    #     format.json { render :show, status: :created, location: @user }
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @user.errors, status: :unprocessable_entity }
-    #   end
-    # end
-  end
+#   # POST /users
+#   # POST /users.json
+#   def create
+#     @user = User.new(user_params)
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+#     if (@user.save)
+#       session[:user_id] = @user_id
+#     end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
-  def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+#     # respond_to do |format|
+#     #   if @user.save
+#     #     format.html { redirect_to @user, notice: 'User was successfully created.' }
+#     #     format.json { render :show, status: :created, location: @user }
+#     #   else
+#     #     format.html { render :new }
+#     #     format.json { render json: @user.errors, status: :unprocessable_entity }
+#     #   end
+#     # end
+#   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+#   # PATCH/PUT /users/1
+#   # PATCH/PUT /users/1.json
+#   def update
+#     respond_to do |format|
+#       if @user.update(user_params)
+#         format.html { redirect_to @user, notice: 'User was successfully updated.' }
+#         format.json { render :show, status: :ok, location: @user }
+#       else
+#         format.html { render :edit }
+#         format.json { render json: @user.errors, status: :unprocessable_entity }
+#       end
+#     end
+#   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user)
-        .permit(
-          :provider,
-          :uid,
-          :name,
-          :oauth_token,
-          :oauth_expires_at,
-          :email,
-          :age,
-          :profile_photo_url
-        )
-    end
+#   # DELETE /users/1
+#   # DELETE /users/1.json
+#   def destroy
+#     @user.destroy
+#     respond_to do |format|
+#       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+#       format.json { head :no_content }
+#     end
+#   end
 
-end
+#   private
+#     # Use callbacks to share common setup or constraints between actions.
+#     def set_user
+#       @user = User.find(params[:id])
+#     end
+
+#     # Never trust parameters from the scary internet, only allow the white list through.
+#     def user_params
+#       params.require(:user)
+#         .permit(
+#           :provider,
+#           :uid,
+#           :name,
+#           :oauth_token,
+#           :oauth_expires_at,
+#           :email,
+#           :age,
+#           :profile_photo_url
+#         )
+#     end
+
+# end
