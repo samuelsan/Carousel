@@ -101,10 +101,12 @@ MinigameState.prototype = {
       return fly !== firefly;
     })
     firefly.destroy();
-    
-    if (this.timer.ms > 3000) {
-      this.fireflytimer = setTimeout(this.createFireFly.bind(this), 1500);
-    }
+  
+        if (this.timer.running){
+          setTimeout(function(){
+            this.createFireFly();
+          }.bind(this), 1500);
+    };
     // updates the score
     this.updateScore();
   },
@@ -135,7 +137,6 @@ MinigameState.prototype = {
       this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 480, 70, "white", "60px Arial");
     }
     else {
-      // this.game.debug.text("Done!", 455, 70, "white", "60px Arial");
       this.game.world.removeAll();
       clearTimeout(this.fireflytimer);
       this.checkhighscore();
