@@ -1,7 +1,7 @@
 require 'pry'
 class User < ActiveRecord::Base
 
-  has_one :players_profiles
+  has_one :players_profile
 
   validates :age, numericality: { greater_than: 16 }
 
