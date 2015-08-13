@@ -3,7 +3,7 @@
 (function()
 {
   'use strict';
-  var game = window.game = new Phaser.Game(1000, 600, Phaser.AUTO, 'gamecontainer'); 
+  var game = window.game = new Phaser.Game(1067, 800, Phaser.AUTO, 'gamecontainer'); 
   var boot = window.boot = new BootState(game);
   var preload = window.preload = new PreloadState(game);
   var oaktree = window.oaktree = new OaktreeState(game);

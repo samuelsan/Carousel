@@ -9,6 +9,11 @@ var OaktreeState = function (game)
   this.launchY = 325;
 };
 
+var shapes = [[1,796.5,929,558.5,1067,564,1067,800],[367,583.5,469,575.5,599,600.5,329,599.5,348.5,586],[824,582.5,735,606.5,780,586.5],[599,600.5,469,575.5,545,579.5,573,585.5],[61,621.5,1,796.5,10,632.5,17,624.5],[1067,564,1020,561.5,1052,559.5],[929,558.5,824,582.5,882,562.5],[329,599.5,1,796.5,259,603.5,285,597.5],[209,607.5,1,796.5,179,610.5,187,607.5],[677,611.5,1,796.5,631,606.5,667,607.5],[259,603.5,1,796.5,209,607.5,221,603.5],[469,575.5,367,583.5,391,575.5],[179,610.5,1,796.5,87,615.5,99,609.5],[10,632.5,1,796.5,0.5,636],[87,615.5,1,796.5,61,621.5],[599,600.5,631,606.5,1,796.5,329,599.5],[929,558.5,735,606.5,824,582.5],[703,610.5,1,796.5,677,611.5],[735,606.5,1,796.5,703,610.5]];
+
+
+
+
 OaktreeState.prototype = {
   constructor: BootState,
   preload: function() {
@@ -24,11 +29,18 @@ OaktreeState.prototype = {
     this.game.physics.startSystem(Phaser.Physics.BOX2D);
     this.game.physics.box2d.restitution = 0.3;
     this.game.physics.box2d.gravity.y = 500;
+    this.game.physics.box2d.friction = 0.3;
     this.game.physics.box2d.setBoundsToWorld();   
 
-    // this.background = this.game.add.image(0,0, 'background');
-    // this.background.height = this.game.height;
-    // this.background.width = this.game.width;
+    // this.groundBody = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0, 0);
+    // this.groundBody.setChain(groundVertices);
+  
+    var PTM = 50;
+  
+
+    this.background = this.game.add.image(0,0, 'background');
+    this.background.height = this.game.height;
+    this.background.width = this.game.width;
 
     this.treetrunk = this.game.add.image(0,0, 'treetrunk');
     this.treetrunk.height = this.game.height;
@@ -44,19 +56,80 @@ OaktreeState.prototype = {
     this.squirrelhole = this.game.add.sprite(0,0, 'squirrelhole');
     this.squirrelhole.height = this.game.height;
     this.squirrelhole.width = this.game.width;
-    this.squirrelhole.anchor.set(0,0);
+    
     this.game.physics.box2d.enable(this.squirrelhole);
     this.squirrelhole.body.static = true;
+    this.squirrelhole.body.setCircle(30, 805, 190);
+    this.squirrelhole.body.addCircle(30, 805, 210);
 
     this.iris = this.game.add.image(300,200, 'iris');
 
-    this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, this.game.world.width / 2, this.game.world.height - 3);
+    this.groundCollider = new Phaser.Physics.Box2D.Body(this.game,
+                                                        null,
+                                                        0,
+                                                        0);
     this.groundCollider.static = true;
-    this.groundCollider.setRectangle(this.game.world.width, 3, 0, 0, 0);
+    // shapes.forEach(function(shape)
+    // {
+    //   this.groundCollider.addLoop(shape);
+    // }.bind(this));
+
+    // this.groundCollider.setRectangle(30, 30, 0, 0, 0);
+
+    function flatten(arr)
+    {
+      return arr.reduce(function(a, i) { return a.concat(i); }, []); // .inject([]) { |a,i| a << i }
+    }
+
+    function toPairs(arr)
+    {
+      var pairs = [];
+
+      for(var i = 0; i < arr.length; i+= 2)
+      {
+        pairs.push({x: arr[i], y: arr[i+1]});
+      }
+      return pairs
+    }
+
+    function fromPairs(arr)
+    {
+      return arr.reduce(function(a, i) { return a.concat(i.x, i.y); }, []);
+    }
+
+    function band(d, v1, v2)
+    {
+      return function(pair)
+      {
+        return pair[d] >= v1 && pair[d] <= v2;
+      }
+    }
+
+    function byCoordinate(c)
+    {
+      return function(a, b)
+      {
+        if(a[c] == b[c]) { return  0; }
+        if(a[c]  < b[c]) { return -1; }
+        return 1;
+      }
+    }
+
+
+    var points =  
+      fromPairs(
+        toPairs(
+          flatten(shapes)
+        )
+        .filter(band('y', 0, 700))
+        .sort(byCoordinate('x'))
+      );
+
+    this.groundCollider.setChain(points);
   },
   render: function()
   {
-    game.debug.box2dWorld();
+    // game.debug.box2dWorld();
   },
   collisionHandler: function(acorn, ground, acornBody, groundBody, touching, contact)
   {
