@@ -7,6 +7,9 @@ gem 'rails', '4.1.6'
 # PostgreSQL gem
 gem 'pg'
 
+# ActiveRecord composite key gem
+gem 'composite_primary_keys'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
