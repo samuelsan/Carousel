@@ -26,7 +26,7 @@ MinimenuState.prototype = {
     this.score = this.game.add.text(335, 375, window.minigame.checkscore(), { font: '30px Arial', fill: '#ffffff'});
 
     if (!this.music || !this.music.isPlaying) {
-      this.music = this.game.add.audio('music', 1, true);
+      this.music = this.game.add.audio('music', 3, true);
       this.music.play();
     }
   },

@@ -47,6 +47,10 @@ MinigameState.prototype = {
     this.netswish = this.game.add.audio('netswish');
     this.fireflycatch = this.game.add.audio('firefly-catch');
 
+    this.music = this.game.add.audio('music');
+    this.music.volume = 3;
+    this.music.play();
+
     this.fireflybuzz = this.game.add.audio('fireflybuzz');
     this.fireflybuzz.volume = 2;
     this.fireflybuzz.loop = true;
@@ -141,6 +145,7 @@ MinigameState.prototype = {
       clearTimeout(this.fireflytimer);
       this.checkhighscore();
       this.game.input.activePointer.leftButton.onDown.removeAll();
+      this.music.stop();
       this.fireflybuzz.stop();
       this.fireflycatch.stop();
       this.game.state.start('Minimenu', true, false);
