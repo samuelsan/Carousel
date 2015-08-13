@@ -6,7 +6,7 @@ var MinigameState = function (game) {
   this.game = game;
   this.arrayOfFlies = [];
   this.highscore = 0;
-  this.score = 0;
+  this.score = 0; 
 };
 
 MinigameState.prototype = {
@@ -28,6 +28,7 @@ MinigameState.prototype = {
     this.game.load.image('bugnet', '/javascripts/modules/units/sprites/bugnet.png');
     this.game.load.image('firefly', '/javascripts/modules/units/sprites/firefly.png');
     this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
+    this.game.load.image('glow', '/javascripts/modules/units/sprites/firefly-background.png');
 
     // load the sounds and music //
     this.game.load.audio('fireflybuzz', '/javascripts/modules/units/sounds/firefly_buzzing.wav');
@@ -42,6 +43,41 @@ MinigameState.prototype = {
     // add images//
     this.background = this.game.add.image(0,0, 'background');
     this.bugjar = this.game.add.image(0,0, 'bugjar');
+    this.glow = this.game.add.image(0,0, 'glow');
+
+    this.sprite = { x: 0, y: -64 };
+    this.tween = this.game.add.tween(this.sprite).to( { x: 128 }, 4000, "Bounce.easeIn", true, 0, -1, true);
+    this.tween2 = this.game.add.tween(this.sprite).to( { y: 128 }, 4000, "Bounce.easeOut", true, 0, -1, false);
+
+    this.glows = [];
+    this.waveformX = this.tween.generateData(70);
+    this.waveformY = this.tween2.generateData(70);
+
+    this.xl = this.waveformX.length - 1;
+    this.yl = this.waveformY.length - 1;
+
+    this.sprites = this.game.add.spriteBatch();
+
+    var xs = 28;
+    var ys = 32;
+
+    for (var y = 0; y < 10; y++)
+    {
+        for (var x = 0; x < 20; x++)
+        {
+            var glow = this.game.make.sprite((x * xs * 6), (y * ys * 6), 'glow');
+
+            glow.ox = glow.x;
+            glow.oy = glow.y;
+
+            glow.cx = this.game.rnd.between(0, this.xl);
+            glow.cy = this.game.rnd.between(0, this.yl);
+
+            glow.anchor.set(0.5);
+            this.sprites.addChild(glow);
+            this.glows.push(glow);
+        }
+    }
 
     // add audio
     this.netswish = this.game.add.audio('netswish');
@@ -97,20 +133,41 @@ MinigameState.prototype = {
   update: function()
   {
     this.bugnet.fixedRotation = this.game.physics.arcade.moveToPointer(this.bugnet, 0, this.game.input.activePointer, 50);
+    
+    for (var i = 0, len = this.glows.length; i < len; i++)
+    {
+        this.glows[i].x = this.glows[i].ox + this.waveformX[this.glows[i].cx].x;
+        this.glows[i].y = this.glows[i].oy + this.waveformY[this.glows[i].cy].y;
+
+        this.glows[i].cx++;
+
+        if (this.glows[i].cx > this.xl)
+        {
+            this.glows[i].cx = 0;
+        }
+
+        this.glows[i].cy++;
+
+        if (this.glows[i].cy > this.yl)
+        {
+            this.glows[i].cy = 0;
+        }
+    }    
   },
   destroySprite: function (firefly) {
     this.fireflycatch.play();
     this.arrayOfFlies = this.arrayOfFlies.filter(function(fly)
     {
       return fly !== firefly;
-    })
+    });
     firefly.destroy();
   
-        if (this.timer.running){
-          setTimeout(function(){
-            this.createFireFly();
-          }.bind(this), 1500);
-    };
+    if (this.timer.running)
+    {
+      setTimeout(function(){
+        this.createFireFly();
+      }.bind(this), 1500);
+    }
     // updates the score
     this.updateScore();
   },
@@ -126,13 +183,13 @@ MinigameState.prototype = {
   checkhighscore: function() {
     if (this.score > this.highscore){
         this.highscore = this.score;
-        return this.highscore
+        return this.highscore;
       } else {
-        return this.highscore
-    };
+        return this.highscore;
+    }
   },
   checkscore: function() {
-    return this.score
+    return this.score;
   },
   render: function () {
     // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
