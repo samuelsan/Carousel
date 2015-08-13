@@ -23,7 +23,7 @@ MinigameState.prototype = {
   },
   preload: function() {
     // load the images //
-    this.game.load.image('background', '/javascripts/modules/units/backgrounds/temp_minigamebackground.png');
+    this.game.load.image('background', '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
     this.game.load.image('bugjar', '/javascripts/modules/units/sprites/bugjar.png');
     this.game.load.image('bugnet', '/javascripts/modules/units/sprites/bugnet.png');
     this.game.load.image('firefly', '/javascripts/modules/units/sprites/firefly.png');
