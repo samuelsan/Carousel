@@ -9,7 +9,7 @@ var MinimenuState = function (game) {
 MinimenuState.prototype = {
   constructor: BootState,
   preload: function() {
-    this.game.load.image('background', 'javascripts/modules/units/backgrounds/temp_minigamebackground.png');
+    this.game.load.image('background', 'javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
     this.game.load.image('menu', 'javascripts/modules/units/backgrounds/minigame-intro.png');
     this.game.load.image('playbutton', 'javascripts/modules/units/sprites/playbutton.png');
     this.game.load.image('returnbutton', 'javascripts/modules/units/sprites/returnbutton.png');
@@ -26,7 +26,7 @@ MinimenuState.prototype = {
     this.score = this.game.add.text(335, 375, window.minigame.checkscore(), { font: '30px Arial', fill: '#ffffff'});
 
     if (!this.music || !this.music.isPlaying) {
-      this.music = this.game.add.audio('music', 1, true);
+      this.music = this.game.add.audio('music', 3, true);
       this.music.play();
     }
   },

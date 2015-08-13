@@ -23,7 +23,7 @@ MinigameState.prototype = {
   },
   preload: function() {
     // load the images //
-    this.game.load.image('background', '/javascripts/modules/units/backgrounds/temp_minigamebackground.png');
+    this.game.load.image('background', '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
     this.game.load.image('bugjar', '/javascripts/modules/units/sprites/bugjar.png');
     this.game.load.image('bugnet', '/javascripts/modules/units/sprites/bugnet.png');
     this.game.load.image('firefly', '/javascripts/modules/units/sprites/firefly.png');
@@ -46,6 +46,10 @@ MinigameState.prototype = {
     // add audio
     this.netswish = this.game.add.audio('netswish');
     this.fireflycatch = this.game.add.audio('firefly-catch');
+
+    this.music = this.game.add.audio('music');
+    this.music.volume = 3;
+    this.music.play();
 
     this.fireflybuzz = this.game.add.audio('fireflybuzz');
     this.fireflybuzz.volume = 2;
@@ -141,6 +145,7 @@ MinigameState.prototype = {
       clearTimeout(this.fireflytimer);
       this.checkhighscore();
       this.game.input.activePointer.leftButton.onDown.removeAll();
+      this.music.stop();
       this.fireflybuzz.stop();
       this.fireflycatch.stop();
       this.game.state.start('Minimenu', true, false);
