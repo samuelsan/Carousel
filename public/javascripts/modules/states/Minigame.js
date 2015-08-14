@@ -104,6 +104,16 @@ MinigameState.prototype = {
     for (var i=0; i < 6; i++) {
       this.createFireFly();
     }
+
+    this.pause_label = this.game.add.text(200, 200, 'Pause', { font: '24px Arial', fill: '#fff' });
+    this.pause_label.inputEnabled = true;
+    this.pause_label.events.onInputUp.add(function () {
+      game.paused = true; 
+    });    
+
+    game.input.onDown.add(function () {
+      game.paused = false;
+    });
     
     // add bugnet sprite and set up bugnet physics//
     this.bugnet = this.game.add.sprite(400, 300, 'bugnet');
@@ -130,8 +140,7 @@ MinigameState.prototype = {
     this.score = 0;
     this.labelScore = this.game.add.text(30, 55, '0', { font: '30px Arial', fill: '#ffffff' });
   },
-  update: function()
-  {
+  update: function() {
     this.bugnet.fixedRotation = this.game.physics.arcade.moveToPointer(this.bugnet, 0, this.game.input.activePointer, 50);
     
     for (var i = 0, len = this.glows.length; i < len; i++)
