@@ -12,12 +12,12 @@ var OaktreeState = function (game)
 OaktreeState.prototype = {
   constructor: BootState,
   preload: function() {
-    this.game.load.image('background', 'javascripts/modules/units/backgrounds/oaktree.jpg');
-    this.game.load.image('ground', 'javascripts/modules/units/backgrounds/oakground.png');
-    this.game.load.image('treetrunk', 'javascripts/modules/units/backgrounds/treetrunk.png');
-    this.game.load.image('squirrelhole', 'javascripts/modules/units/backgrounds/squirrelhole.png');
-    this.game.load.image('iris', 'javascripts/modules/units/sprites/temp-iris.png');
-    this.game.load.image('acorn', 'javascripts/modules/units/sprites/Acorn.png');
+    this.game.load.image('background',   '/javascripts/modules/units/backgrounds/oaktree.jpg');
+    this.game.load.image('ground',       '/javascripts/modules/units/backgrounds/oakground.png');
+    this.game.load.image('treetrunk',    '/javascripts/modules/units/backgrounds/treetrunk.png');
+    this.game.load.image('squirrelhole', '/javascripts/modules/units/backgrounds/squirrelhole.png');
+    this.game.load.image('iris',         '/javascripts/modules/units/sprites/temp-iris.png');
+    this.game.load.image('acorn',        '/javascripts/modules/units/sprites/Acorn.png');
   },
   create: function() {
     this.background = this.game.add.image(0,0, 'background');

@@ -23,18 +23,18 @@ MinigameState.prototype = {
   },
   preload: function() {
     // load the images //
-    this.game.load.image('background', '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
-    this.game.load.image('bugjar', '/javascripts/modules/units/sprites/bugjar.png');
-    this.game.load.image('bugnet', '/javascripts/modules/units/sprites/bugnet.png');
-    this.game.load.image('firefly', '/javascripts/modules/units/sprites/firefly.png');
+    this.game.load.image('background',      '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
+    this.game.load.image('bugjar',          '/javascripts/modules/units/sprites/bugjar.png');
+    this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet.png');
+    this.game.load.image('firefly',         '/javascripts/modules/units/sprites/firefly.png');
     this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
-    this.game.load.image('glow', '/javascripts/modules/units/sprites/firefly-background.png');
+    this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background.png');
 
     // load the sounds and music //
-    this.game.load.audio('fireflybuzz', '/javascripts/modules/units/sounds/firefly_buzzing.wav');
-    this.game.load.audio('netswish', '/javascripts/modules/units/sounds/net_swish.mp3');
-    this.game.load.audio('firefly-catch', '/javascripts/modules/units/sounds/firefly_surprise.mp3');
-    this.game.load.audio('music', '/javascripts/modules/units/music/Firefly.mp3');
+    this.game.load.audio('fireflybuzz',     '/javascripts/modules/units/sounds/firefly_buzzing.wav');
+    this.game.load.audio('netswish',        '/javascripts/modules/units/sounds/net_swish.mp3');
+    this.game.load.audio('firefly-catch',   '/javascripts/modules/units/sounds/firefly_surprise.mp3');
+    this.game.load.audio('music',           '/javascripts/modules/units/music/Firefly.mp3');
   },
   create: function() {
     // initiate game physics //
