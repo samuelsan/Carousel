@@ -21,3 +21,4 @@ database.yml
 # OS X Finder files
 .DS_Store
 
+Gemfile.lock
