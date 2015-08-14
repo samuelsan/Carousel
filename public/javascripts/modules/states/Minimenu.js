@@ -3,7 +3,7 @@
 'use strict';
 
 var MinimenuState = function (game) {
-  this.game = game
+  this.game = game;
 };
 
 MinimenuState.prototype = {
