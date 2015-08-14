@@ -15,8 +15,9 @@
 /log/*.log
 /tmp
 
-# Ignore the Gemfile.lock file
-Gemfile.lock
-
 # Database config. file
 database.yml
+
+# OS X Finder files
+.DS_Store
+
