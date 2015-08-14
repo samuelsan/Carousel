@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   root  'public#index'
-  
+
   get   'public/index'
   get   'carousel/index'
+  get   'public/story'    #Synopsis
 
   resources :users
   resource  :session,   only: [:create, :destroy]
