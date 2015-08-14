@@ -22,6 +22,10 @@ OaktreeState.prototype = {
     this.game.load.image('squirrelhole', 'javascripts/modules/units/backgrounds/squirrelhole.png');
     this.game.load.image('iris', 'javascripts/modules/units/sprites/temp-iris.png');
     this.game.load.image('acorn', 'javascripts/modules/units/sprites/Acorn.png');
+
+    //audio
+    this.game.load.audio('squirrel', '/javascripts/modules/units/sounds/squirrel.wav');
+    this.game.load.audio('acorn-on-ground', '/javascripts/modules/units/sounds/acorn_on_grass.wav');    
   },
   create: function() {
     this.game.input.activePointer.leftButton.onDown.add(this.fireAcorn, this);
@@ -29,8 +33,10 @@ OaktreeState.prototype = {
     this.game.physics.box2d.restitution = 0.3;
     this.game.physics.box2d.gravity.y = 500;
     this.game.physics.box2d.friction = 0.3;
-    this.game.physics.box2d.setBoundsToWorld();   
-  
+    this.game.physics.box2d.setBoundsToWorld(); 
+
+    this.squirrel = this.game.add.audio('squirrel'); 
+    this.acorn_on_ground = this.game.add.audio('acorn-on-ground');      
 
     this.background = this.game.add.image(0,0, 'background');
     this.background.height = this.game.height;
@@ -58,11 +64,6 @@ OaktreeState.prototype = {
     this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
     this.groundCollider.static = true;
 
-    this.treetrunkCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
-    this.treetrunkCollider.static = true;
-    this.treetrunkCollider.setChain(treetrunk);
-
-
     function flatten(arr)
     {
       return arr.reduce(function(a, i) { return a.concat(i); }, []); // .inject([]) { |a,i| a << i }
@@ -76,7 +77,7 @@ OaktreeState.prototype = {
       {
         pairs.push({x: arr[i], y: arr[i+1]});
       }
-      return pairs
+      return pairs;
     }
 
     function fromPairs(arr)
@@ -122,8 +123,10 @@ OaktreeState.prototype = {
     this.acorn = window.acorn = new Projectile(this.game, this.launchX, this.launchY);
     this.acorn.body.setBodyContactCallback(this.squirrelhole, this.squirrelholeCallback, this); 
   },
+
   squirrelholeCallback: function(body1, body2, fixture1, fixture2, begin) 
   {
+    this.squirrel.play();
     this.acorn.destroy();
   }   
 
