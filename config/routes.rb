@@ -2,8 +2,9 @@ Rails.application.routes.draw do
   root  'public#index'
 
   get   'public/index'
-  get   'carousel/index'
+  get   'carousel/index'  #the game
   get   'public/story'    #Synopsis
+  get   'public/team'     #About / Contact Us page
 
   resources :users
   resource  :session,   only: [:create, :destroy]

@@ -22,7 +22,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">CAROUSEL</a>
+                <!-- <a class="navbar-brand" href="#">CAROUSEL</a> -->
+                <div class='navbar-brand'>
+                    <%= link_to "CAROUSEL", public_index_path %>
+                </div>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -36,10 +39,7 @@
                         <% end %>
                     </li>
                     <li>
-                        <a href="#">The Team</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
+                        <%= link_to "About / Contact us", public_team_path %>
                     </li>
                     <li id="user-widget">
                         <% if (current_user()) %>
