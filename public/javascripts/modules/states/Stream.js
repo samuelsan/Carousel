@@ -6,6 +6,10 @@ var StreamState = function (game) {
   this.game = game;
   this.launchX = 765;
   this.launchY = 540;
+  this.points = {
+  'x': [765, 770, 770, 775, 730, 700, 690, 680, 665],
+  'y': [540, 765, 930, 1100, 1330, 1150, 920, 760, 40]
+  };
 };
 
 StreamState.prototype = {
