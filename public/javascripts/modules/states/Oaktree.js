@@ -16,16 +16,16 @@ var ground = [[1,796.5,929,558.5,1067,564,1067,800],[367,583.5,469,575.5,599,600
 OaktreeState.prototype = {
   constructor: BootState,
   preload: function() {
-    this.game.load.image('background', 'javascripts/modules/units/backgrounds/oaktree.jpg');
-    this.game.load.image('ground', 'javascripts/modules/units/backgrounds/oakground.png');
-    this.game.load.image('treetrunk', 'javascripts/modules/units/backgrounds/treetrunk.png');
-    this.game.load.image('squirrelhole', 'javascripts/modules/units/backgrounds/squirrelhole.png');
-    this.game.load.image('iris', 'javascripts/modules/units/sprites/temp-iris.png');
-    this.game.load.image('acorn', 'javascripts/modules/units/sprites/Acorn.png');
+    this.game.load.image('background',      '/javascripts/modules/units/backgrounds/oaktree.jpg');
+    this.game.load.image('ground',          '/javascripts/modules/units/backgrounds/oakground.png');
+    this.game.load.image('treetrunk',       '/javascripts/modules/units/backgrounds/treetrunk.png');
+    this.game.load.image('squirrelhole',    '/javascripts/modules/units/backgrounds/squirrelhole.png');
+    this.game.load.image('iris',            '/javascripts/modules/units/sprites/temp-iris.png');
+    this.game.load.image('acorn',           '/javascripts/modules/units/sprites/Acorn.png');
 
     //audio
-    this.game.load.audio('squirrel', '/javascripts/modules/units/sounds/squirrel.wav');
-    this.game.load.audio('acorn-on-ground', '/javascripts/modules/units/sounds/acorn_on_grass.wav');    
+    this.game.load.audio('squirrel',        '/javascripts/modules/units/sounds/squirrel.wav');
+    this.game.load.audio('acorn-on-ground', '/javascripts/modules/units/sounds/acorn_on_grass.wav');
   },
   create: function() {
     this.game.input.activePointer.leftButton.onDown.add(this.fireAcorn, this);

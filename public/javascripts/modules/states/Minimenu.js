@@ -9,12 +9,12 @@ var MinimenuState = function (game) {
 MinimenuState.prototype = {
   constructor: BootState,
   preload: function() {
-    this.game.load.image('background', 'javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
-    this.game.load.image('menu', 'javascripts/modules/units/backgrounds/minigame-intro.png');
-    this.game.load.image('playbutton', 'javascripts/modules/units/sprites/playbutton.png');
-    this.game.load.image('returnbutton', 'javascripts/modules/units/sprites/returnbutton.png');
+    this.game.load.image('background',    '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
+    this.game.load.image('menu',          '/javascripts/modules/units/backgrounds/minigame-intro.png');
+    this.game.load.image('playbutton',    '/javascripts/modules/units/sprites/playbutton.png');
+    this.game.load.image('returnbutton',  '/javascripts/modules/units/sprites/returnbutton.png');
 
-    this.game.load.audio('music', '/javascripts/modules/units/music/Firefly.mp3');
+    this.game.load.audio('music',         '/javascripts/modules/units/music/Firefly.mp3');
   },
   create: function() {
     this.background = this.game.add.image(0,0, 'background');
