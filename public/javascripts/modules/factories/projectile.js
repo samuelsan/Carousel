@@ -4,7 +4,7 @@
 
     var Projectile = window.Projectile =  function (game, x, y)
     {
-        Phaser.Sprite.call(this, game, x, y, 'acorn');
+        Phaser.Sprite.call(this, game, x, y, 'fish');
         
         this.game = game;
         this.game.physics.box2d.enable(this);

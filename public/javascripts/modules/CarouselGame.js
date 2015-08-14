@@ -19,5 +19,5 @@
   game.state.add('Minimenu', minimenu);
   game.state.add('Minigame', minigame);
   game.state.add('EndDemo', enddemo);
-  game.state.start('Oaktree');
+  game.state.start('Stream');
 }());
