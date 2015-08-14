@@ -15,8 +15,8 @@ var StreamState = function (game) {
 StreamState.prototype = {
   constructor: BootState,
   preload: function() {
-    this.game.load.image('background', 'javascripts/modules/units/backgrounds/stream.jpg');
-    this.game.load.image('fish', 'javascripts/modules/units/sprites/fish.png');
+    this.game.load.image('background',  '/javascripts/modules/units/backgrounds/stream.jpg');
+    this.game.load.image('fish',        '/javascripts/modules/units/sprites/fish.png');
   },
   create: function() {
     this.background = this.game.add.image(0,0, 'background');
