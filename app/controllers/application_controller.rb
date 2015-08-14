@@ -15,7 +15,12 @@ class ApplicationController < ActionController::Base
   helper_method :is_logged_in?
 
   def authenticated
-    render status: 400 if !is_logged_in?
+    # render status: 400 if !is_logged_in?
+    if (!is_logged_in?)
+      flash[:alert] = "Please sign in to play the demo."
+      redirect_to "/"
+    end
   end
+  helper_method :authenticated
 
 end
