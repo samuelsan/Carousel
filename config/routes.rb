@@ -1,16 +1,18 @@
 Rails.application.routes.draw do
-  root  'public#index'
+  root  'public#about'
 
   get   'public/index'
-  get   'carousel/index'  #the game
+  get   'carousel/index'  #(play) the game
   get   'public/story'    #Synopsis
-  get   'public/team'     #About / Contact Us page
+  get   'public/team'     #Team page
+  get   'public/about'    #About (the game)
+  get   'public/contact'  #Contact us form page
 
   resources :users
   resource  :session,   only: [:create, :destroy]
 
   match 'auth/:provider/callback',  to: 'sessions#create',                  via: [:get, :post]
-  match 'auth/failure',             to: redirect('/'),                      via: [:get, :post]
+  match 'auth/failure',             to:  redirect('/'),                      via: [:get, :post]
   match 'signout',                  to: 'sessions#destroy', as: 'signout',  via: [:get, :post]
 
   # The priority is based upon order of creation: first created -> highest priority.
