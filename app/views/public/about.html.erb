@@ -12,15 +12,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>The Story</h1>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
                 <p>
                     Salvia readymade kitsch, mumblecore skateboard butcher direct trade Odd Future cold-pressed XOXO tofu cornhole 8-bit jean shorts. Disrupt Thundercats Carles pop-up Brooklyn sriracha, irony hoodie fashion axe High Life. Try-hard trust fund authentic DIY Carles PBR, flannel keytar semiotics beard ethical next level tilde cred. Artisan 3 wolf moon Carles, literally fingerstache before they sold out cornhole post-ironic. Flexitarian chillwave farm-to-table, Pinterest Thundercats flannel sartorial. Post-ironic semiotics you probably haven't heard of them, iPhone viral gastropub bicycle rights flexitarian flannel scenester swag leggings blog quinoa hoodie. Butcher selfies stumptown, hella authentic DIY meggings try-hard chambray.
                 </p>
@@ -36,7 +27,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-lg btn-primary">Play Demo</a>
+                <% if (current_user()) %>
+                    <%= link_to "Play Demo", carousel_index_path, class: "btn btn-lg btn-primary"%>
+                <% else %>
+                    <%= link_to "Sign in with Facebook to play", "/auth/facebook", id: "sign_in", class: "btn btn-lg btn-primary" %>
+                <% end %>
             </div>
         </div>
     </div>

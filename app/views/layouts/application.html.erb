@@ -24,17 +24,17 @@
                 </button>
                 <!-- <a class="navbar-brand" href="#">CAROUSEL</a> -->
                 <div class='navbar-brand'>
-                    <%= link_to "CAROUSEL", public_index_path %>
+                    <%= link_to "CAROUSEL", public_about_path %>
                 </div>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <%= link_to "Synopsis", public_story_path %>
+                        <%= link_to "Synopsis", public_synopsis_path %>
                     </li>
                     <li>
-                        <%= link_to "Synopsis", public_story_path %>
+                        <%= link_to "About", public_about_path %>
                     </li>
                     <li>
                         <% if (current_user()) %>
@@ -42,7 +42,10 @@
                         <% end %>
                     </li>
                     <li>
-                        <%= link_to "About / Contact us", public_team_path %>
+                        <%= link_to "Team", public_team_path %>
+                    </li>
+                    <li>
+                        <%= link_to "Conatct Us", public_contact_path %>
                     </li>
                     <li id="user-widget">
                         <% if (current_user()) %>
@@ -58,7 +61,6 @@
         </div>
         <!-- /.container -->
     </nav>
-
   <%= yield %>
 
   

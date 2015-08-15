@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get   'public/index'
   get   'carousel/index'  #(play) the game
-  get   'public/story'    #Synopsis
+  get   'public/synopsis' #Synopsis
   get   'public/team'     #Team page
   get   'public/about'    #About (the game)
   get   'public/contact'  #Contact us form page
