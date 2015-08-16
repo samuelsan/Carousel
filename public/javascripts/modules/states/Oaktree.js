@@ -4,12 +4,33 @@
 
 var OaktreeState = function (game) 
 {
-  this.game = game;
-  this.launchX = 320;
-  this.launchY = 325;
-  this.acorn;
-  this.squirrelhole;
-};
+  this.init = function(){ 
+    this.game = game;
+    this.launchX = 320;
+    this.launchY = 325;
+    this.acorn;
+    this.squirrelhole;
+
+    this.game.stateTransition = this.game.plugins.add(Phaser.Plugin.StateTransition); 
+    // This passes now!
+    // The function referred to by: game.state.start('MinigameState');
+    // should have an init function that is passed a context (this) with a preconfigured game
+    // object. That object has a plugins property (this.game.plugins), which can be added to
+    // (ie. is not null)
+
+    this.game.stateTransition.configure({
+      duration: Phaser.Timer.SECOND * 3,
+      ease: Phaser.Easing.Exponential.InOut,
+      properties: {
+        alpha: 0,
+        scale: {
+          x: 1.4,
+          y: 1.4
+        }
+      }
+    });       
+  };
+};    
 
 var ground = [[1,796.5,929,558.5,1067,564,1067,800],[367,583.5,469,575.5,599,600.5,329,599.5,348.5,586],[824,582.5,735,606.5,780,586.5],[599,600.5,469,575.5,545,579.5,573,585.5],[61,621.5,1,796.5,10,632.5,17,624.5],[1067,564,1020,561.5,1052,559.5],[929,558.5,824,582.5,882,562.5],[329,599.5,1,796.5,259,603.5,285,597.5],[209,607.5,1,796.5,179,610.5,187,607.5],[677,611.5,1,796.5,631,606.5,667,607.5],[259,603.5,1,796.5,209,607.5,221,603.5],[469,575.5,367,583.5,391,575.5],[179,610.5,1,796.5,87,615.5,99,609.5],[10,632.5,1,796.5,0.5,636],[87,615.5,1,796.5,61,621.5],[599,600.5,631,606.5,1,796.5,329,599.5],[929,558.5,735,606.5,824,582.5],[703,610.5,1,796.5,677,611.5],[735,606.5,1,796.5,703,610.5]];
 
