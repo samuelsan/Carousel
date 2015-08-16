@@ -29,7 +29,7 @@ MinigameState.prototype = {
     this.game.load.image('firefly',         '/javascripts/modules/units/sprites/firefly.png');
     this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
     this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background.png');
-
+    this.game.load.image('arrow',            '/javascripts/modules/units/sprites/right_arrow.png');
     // load the sounds and music //
     this.game.load.audio('fireflybuzz',     '/javascripts/modules/units/sounds/firefly_buzzing.wav');
     this.game.load.audio('netswish',        '/javascripts/modules/units/sounds/net_swish.mp3');
@@ -139,6 +139,12 @@ MinigameState.prototype = {
     // displays the score and sets a default of 0 // 
     this.score = 0;
     this.labelScore = this.game.add.text(30, 55, '0', { font: '30px Arial', fill: '#ffffff' });
+
+    this.arrow = this.game.add.image(500, 500, 'arrow');
+    this.arrow.inputEnabled = true;
+    this.arrow.events.onInputDown.add(function () {
+    game.stateTransition.to('Oaktree', true, true);
+    }); 
   },
   update: function() {
     this.bugnet.fixedRotation = this.game.physics.arcade.moveToPointer(this.bugnet, 0, this.game.input.activePointer, 50);
