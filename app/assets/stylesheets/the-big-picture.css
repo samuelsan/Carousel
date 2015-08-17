@@ -28,3 +28,19 @@ body {
   position: fixed;
   overflow-y:scroll;
 }
+
+.contactdiv {
+   float: center;
+   position: absolute;
+   left: 585px;
+   top: 300px;
+   z-index: 1000;
+   background-color: none;
+   padding: 5px;
+   color: #690505;
+   font-weight: bold;
+}
+
+#btn-primary {
+  color: #690505;
+}
