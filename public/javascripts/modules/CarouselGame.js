@@ -20,5 +20,5 @@
   game.state.add('Minimenu', minimenu);
   game.state.add('Minigame', minigame);
   game.state.add('EndDemo', enddemo);
-  game.state.start('Minigame');
+  game.state.start('Preload');
 }());
