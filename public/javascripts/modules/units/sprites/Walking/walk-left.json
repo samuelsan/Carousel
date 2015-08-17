@@ -1,0 +1,28 @@
+{"frames": {
+
+"Iris-walk-left1.png":
+{
+	"frame": {"x":2,"y":2,"w":279,"h":583},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":7,"y":90,"w":279,"h":583},
+	"sourceSize": {"w":311,"h":792}
+},
+"Iris-walk-left3.png":
+{
+	"frame": {"x":2,"y":587,"w":264,"h":600},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":12,"y":90,"w":264,"h":600},
+	"sourceSize": {"w":291,"h":792}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "walk-left.png",
+	"format": "RGBA8888",
+	"size": {"w":283,"h":1189},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:078c39c85adf65fb0b14b215bbd54291:8640ea23d87afe6729288573a642c347:157fa70b5c5861a4e44b98a747ae4b50$"
+}
+}
