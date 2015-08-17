@@ -13,7 +13,7 @@ class Contact < MailForm::Base
   def headers
     {
       subject:  "Message from a Carousel user.",
-      to:       "nmithani1@gmail.com",
+      to:       "CarouselFinal@gmail.com",
       from:     %("#{name}" <#{email}>)
     }
   end
