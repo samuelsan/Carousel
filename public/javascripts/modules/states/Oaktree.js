@@ -2,12 +2,16 @@
 
 'use strict';
 
+// this.inventory = []
+
 var OaktreeState = function (game) 
 {
   this.game = game;
   this.launchX = 320;
   this.launchY = 325;
   this.acorn;
+  this.bugnet;
+  this.key;
   this.squirrelhole;
 };
 
@@ -16,12 +20,20 @@ var ground = [[1,796.5,929,558.5,1067,564,1067,800],[367,583.5,469,575.5,599,600
 OaktreeState.prototype = {
   constructor: BootState,
   preload: function() {
+    this.game.load.atlasJSONHash('iris-throwing', '/javascripts/modules/units/sprites/Throwing/iris-throwing.png', '/javascripts/modules/units/sprites/Throwing/iris-throwing.json');
+
+    this.game.load.atlasJSONHash('iris-swing', '/javascripts/modules/units/sprites/Tireswing/iris-tire.png', '/javascripts/modules/units/sprites/Tireswing/iris-tire.json');
+
+    this.game.load.atlasJSONHash('walk-right', '/javascripts/modules/units/sprites/Walking/walk-right.png', '/javascripts/modules/units/sprites/Walking/walk-right.json');
+
     this.game.load.image('background',      '/javascripts/modules/units/backgrounds/oaktree.jpg');
     this.game.load.image('ground',          '/javascripts/modules/units/backgrounds/oakground.png');
     this.game.load.image('treetrunk',       '/javascripts/modules/units/backgrounds/treetrunk.png');
     this.game.load.image('squirrelhole',    '/javascripts/modules/units/backgrounds/squirrelhole.png');
-    this.game.load.image('iris',            '/javascripts/modules/units/sprites/temp-iris.png');
+    this.game.load.image('branch',          '/javascripts/modules/units/backgrounds/branch.png');
     this.game.load.image('acorn',           '/javascripts/modules/units/sprites/Acorn.png');
+    this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet.png');
+    this.game.load.image('key',             '/javascripts/modules/units/sprites/key.png');
 
     //audio
     this.game.load.audio('background-music', '/javascripts/modules/units/music/oaktreemusic.mp3');
@@ -64,7 +76,41 @@ OaktreeState.prototype = {
     this.squirrelhole.body.setCircle(30, 805, 190);
     this.squirrelhole.body.addCircle(30, 805, 210);
 
-    this.iris = this.game.add.image(300,200, 'iris');
+    // IRIS THROWING
+
+    // this.iris = game.add.sprite(100, 180, 'iris-throwing');
+    // this.iris.scale.setTo(0.5,0.5);
+
+    // this.iris.animations.add('throw');
+
+    // this.iris.animations.play('throw', 2.5, false);
+
+    // IRIS TIRESWINGING
+
+    // this.iris = game.add.sprite(100, 180, 'iris-swing');
+    // this.iris.scale.setTo(0.5,0.5);
+
+    // this.iris.animations.add('swing');
+
+    // this.iris.animations.play('swing', 2.5, false);
+
+    // IRIS WALKING
+
+    // this.iris = game.add.sprite(100, 180, 'walk-right');
+    // this.iris.scale.setTo(0.5,0.5);
+
+    // this.iris.animations.add('walk-right');
+
+    // this.iris.animations.play('walk-right', 3, true);
+
+    this.bugnet = this.game.add.image(150,100,'bugnet');
+    this.game.physics.box2d.enable(this.bugnet);
+    this.bugnet.body.static = true;
+    this.bugnet.body.setRec(150, 100, 190, 30);
+
+    this.branch = this.game.add.image(0,0, 'branch');
+    this.branch.height = this.game.height;
+    this.branch.width = this.game.width;
 
     this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
     this.groundCollider.static = true;
@@ -119,6 +165,15 @@ OaktreeState.prototype = {
 
     this.groundCollider.setChain(points);
   },
+  update: function()
+  {
+    // this.iris.x += 3;
+    // if(this.iris.x > 800)
+    // {
+    //     this.iris.x = -50;
+    // }
+  },
+
   render: function()
   {
     // game.debug.box2dWorld();
@@ -129,10 +184,27 @@ OaktreeState.prototype = {
     this.acorn.body.setBodyContactCallback(this.squirrelhole, this.squirrelholeCallback, this); 
   },
 
+  tosskey: function()
+  {
+    this.key = this.game.add.image(780,190, 'key');
+    this.key.anchor.setTo(0.5, 0.5);
+    this.tweenFunctions = [
+        { name: "Quadratic In", ease: Phaser.Easing.Quadratic.In }]
+
+    var tween = this.game.add.tween(this.key).to({
+      x: [780, 700, 600, 400],
+      y: [190, 600, 500, 300],
+      angle: [100]
+    }, 5000).interpolation(function(v, k){
+  return Phaser.Math.catmullRomInterpolation(v, k);
+});
+  },
+
   squirrelholeCallback: function(body1, body2, fixture1, fixture2, begin) 
   {
-    this.squirrel.play();
     this.acorn.destroy();
-  }   
+    this.squirrel.play();
+    this.tosskey();
+  }
 
 };

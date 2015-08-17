@@ -14,20 +14,23 @@ MinigameState.prototype = {
   createFireFly: function()
   {
     var fly = new FireFly(this.game, this.game.world.randomX, this.game.world.randomY);
+    fly.scale.setTo(0.30,0.30);
     this.game.add.existing(fly);
     this.arrayOfFlies.push(fly);
     fly.inputEnabled = true;
     fly.input.useHandCursor = true;
-    fly.events.onInputDown.add(this.destroySprite, this);
+    fly.events.onInputDown.addOnce(this.destroySprite, this);
     return fly;
   },
   preload: function() {
     // load the images //
+    this.game.load.atlasJSONHash('firefly-surprise', '/javascripts/modules/units/sprites/Firefly/firefly-surprise.png', '/javascripts/modules/units/sprites/Firefly/firefly-surprise.json');
+
     this.game.load.image('background',      '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
     this.game.load.image('bugjar',          '/javascripts/modules/units/sprites/bugjar.png');
     this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet.png');
-    this.game.load.image('firefly',         '/javascripts/modules/units/sprites/firefly.png');
-    this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
+    this.game.load.image('firefly',         '/javascripts/modules/units/sprites/firefly1.png');
+    // this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
     this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background.png');
 
     // load the sounds and music //
@@ -178,12 +181,19 @@ MinigameState.prototype = {
     }  
   },
   destroySprite: function (firefly) {
+    firefly.body.moves = false;
+    firefly.loadTexture('firefly-surprise', 0);
+    firefly.animations.add('firefly-surprise');
+    firefly.animations.play('firefly-surprise', 10, false);
+
     this.fireflycatch.play();
     this.arrayOfFlies = this.arrayOfFlies.filter(function(fly)
     {
       return fly !== firefly;
     });
-    firefly.destroy();
+    setTimeout(function(){
+      firefly.destroy();
+    }.bind(this), 1500);
   
     if (this.timer.running)
     {

@@ -24,12 +24,17 @@
                 </button>
                 <!-- <a class="navbar-brand" href="#">CAROUSEL</a> -->
                 <div class='navbar-brand'>
-                    <%= link_to "CAROUSEL", public_index_path %>
+                    CAROUSEL
                 </div>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <li>
+                        <% if (!current_user()) %>
+                            <%= link_to "The Game", public_index_path %>
+                        <% end %>
+                    </li>
                     <li>
                         <%= link_to "Synopsis", public_story_path %>
                     </li>
@@ -39,7 +44,10 @@
                         <% end %>
                     </li>
                     <li>
-                        <%= link_to "About / Contact us", public_team_path %>
+                        <%= link_to "The Team", public_team_path %>
+                    </li>
+                                        <li>
+                        <%= link_to "Contact Us", public_index_path %>
                     </li>
                     <li id="user-widget">
                         <% if (current_user()) %>

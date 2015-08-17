@@ -28,14 +28,14 @@ StreamState.prototype = {
 
     var handlePointerDown = function(pointer) {
       console.log(pointer.x, pointer.y);
-      // var inside = recClick.contains(pointer.x,pointer.y);
-      // if(inside)
-      // {
+      var inside = recClick.contains(pointer.x,pointer.y);
+      if(inside)
+      {
       //   this.fishJump();
       // }
 
       this.stage.backgroundColor = '#eee';
-      this.increment = 5 / game.width;  
+      this.increment = 10 / game.width;  
       this.i = 0;
       this.timer1Stopped = true;
       this.timer1 = null;
@@ -55,7 +55,13 @@ StreamState.prototype = {
       this.fishSprite = game.add.sprite(0, 0, "fish");
       this.fishSprite.anchor.setTo(0.5, 0.5);
 
-
+    if (this.timer1Stopped) {
+      this.timer1Stopped = false;
+      this.timer1 = this.game.time.create(true);
+      this.timer1.loop(.01, this.plot, this);
+      this.timer1.start();
+    }
+      }
     };
 
     // this.game.add.tween(this.fish).to({ y: 300 }, 2000, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
@@ -79,7 +85,7 @@ StreamState.prototype = {
   this.fishSprite.x = posx;
   this.fishSprite.y = posy;
   this.i += this.increment;
-  if (posy > 800) {
+  if (posy > 845) {
     this.timer1.stop();
     this.timer1.destroy();
     this.i = 0;
@@ -88,12 +94,7 @@ StreamState.prototype = {
   },
 
   update: function() {
-    if (this.timer1Stopped) {
-      this.timer1Stopped = false;
-      this.timer1 = this.game.time.create(true);
-      this.timer1.loop(.01, this.plot, this);
-      this.timer1.start();
-    }
+
    },
 
   render: function() {

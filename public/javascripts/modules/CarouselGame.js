@@ -22,4 +22,5 @@
   game.state.add('EndDemo', enddemo);
   
   game.state.start('Stream');
+
 }());
