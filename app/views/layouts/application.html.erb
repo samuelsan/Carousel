@@ -33,11 +33,6 @@
                     <li>
                         <%= link_to "About", public_about_path %>
                     </li>
-                    <li>
-                        <% if (!current_user()) %>
-                            <%= link_to "The Game", public_index_path %>
-                        <% end %>
-                    </li>
 
                     <li>
                         <%= link_to "Synopsis", public_synopsis_path %>
@@ -46,21 +41,23 @@
                     <li>
                         <% if (current_user()) %>
                             <%= link_to "Play Demo", carousel_index_path %>
+                        <% else %>
+                            <%= link_to "Play Demo", "/auth/facebook", id: "sign_in" %>
                         <% end %>
                     </li>
+
+                    <li>
                         <%= link_to "The Team", public_team_path %>
                     </li>
 
                     <li>
-                        <%= link_to "Contact Us", public_index_path %>
+                        <%= link_to "Contact Us", public_contact_path %>
                     </li>
 
                     <li id="user-widget">
                         <% if (current_user()) %>
-                            Welcome <strong><%= current_user.name %></strong>!
+                            <li>Welcome <strong><%= current_user.name %></strong>!</li>
                             <%= link_to "Sign out", signout_path, id: "sign_out" %>
-                        <% else %>
-                            <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
                         <% end %>
                     </li>
                 </ul>
