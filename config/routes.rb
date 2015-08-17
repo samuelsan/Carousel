@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get   'public/synopsis' #Synopsis
   get   'public/team'     #Team page
   get   'public/about'    #About (the game)
-  get   'public/contact'  #Contact us form page
+  get   'contacts/new'    #Contact us form page
 
 
   resources :contacts, only: [:new, :create]
