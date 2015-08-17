@@ -24,6 +24,7 @@ OaktreeState.prototype = {
     this.game.load.image('acorn',           '/javascripts/modules/units/sprites/Acorn.png');
 
     //audio
+    this.game.load.audio('background-music', '/javascripts/modules/units/music/oaktreemusic.mp3');
     this.game.load.audio('squirrel',        '/javascripts/modules/units/sounds/squirrel.wav');
     this.game.load.audio('acorn-on-ground', '/javascripts/modules/units/sounds/acorn_on_grass.wav');
   },
@@ -36,7 +37,11 @@ OaktreeState.prototype = {
     this.game.physics.box2d.setBoundsToWorld(); 
 
     this.squirrel = this.game.add.audio('squirrel'); 
-    this.acorn_on_ground = this.game.add.audio('acorn-on-ground');      
+    this.acorn_on_ground = this.game.add.audio('acorn-on-ground');
+    this.music = this.game.add.audio('background-music');
+
+    this.music.volume = 2;
+    this.music.play();    
 
     this.background = this.game.add.image(0,0, 'background');
     this.background.height = this.game.height;
