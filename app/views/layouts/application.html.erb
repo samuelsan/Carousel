@@ -31,22 +31,30 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <%= link_to "Synopsis", public_synopsis_path %>
-                    </li>
-                    <li>
                         <%= link_to "About", public_about_path %>
                     </li>
+                    <li>
+                        <% if (!current_user()) %>
+                            <%= link_to "The Game", public_index_path %>
+                        <% end %>
+                    </li>
+
+                    <li>
+                        <%= link_to "Synopsis", public_story_path %>
+                    </li>
+
                     <li>
                         <% if (current_user()) %>
                             <%= link_to "Play Demo", carousel_index_path %>
                         <% end %>
                     </li>
-                    <li>
-                        <%= link_to "Team", public_team_path %>
+                        <%= link_to "The Team", public_team_path %>
                     </li>
+
                     <li>
-                        <%= link_to "Conatct Us", new_contact_path %>
+                        <%= link_to "Contact Us", public_index_path %>
                     </li>
+
                     <li id="user-widget">
                         <% if (current_user()) %>
                             Welcome <strong><%= current_user.name %></strong>!
