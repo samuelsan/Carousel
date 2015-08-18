@@ -7,7 +7,7 @@
 body {
 	margin-top: 50px;
 	margin-bottom: auto;
-	background: url("../images/websitebackground.jpg") repeat 0 0;
+	/*background: url("../images/wood-bg.jpg") repeat 0 0;*/
 }
 
 .full { 
@@ -19,4 +19,12 @@ body {
 
 #gamecontainer {
   margin-top: 25px;
+}
+
+#background-container {
+  overflow: hidden;
+  height: auto;
+  width: auto;
+  position: fixed;
+  overflow-y:scroll;
 }
