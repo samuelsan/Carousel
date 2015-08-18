@@ -1,7 +1,7 @@
 class CarouselController < ApplicationController
 
+  before_filter :authenticated        #from ApplicationController.rb
   before_filter :set_cache_buster
-  before_filter :authenticated    #from ApplicationController.rb
 
   def set_cache_buster
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
