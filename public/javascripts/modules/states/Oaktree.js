@@ -42,8 +42,8 @@ OaktreeState.prototype = {
     this.game.load.image('treetrunk',       '/javascripts/modules/units/backgrounds/treetrunk.png');
     this.game.load.image('squirrelhole',    '/javascripts/modules/units/backgrounds/squirrelhole.png');
     this.game.load.image('iris',            '/javascripts/modules/units/sprites/temp-iris.png');
-    this.game.load.image('acorn',           '/javascripts/modules/units/sprites/Acorn.png');
-
+    this.game.load.image('arrow_right',     '/javascripts/modules/units/sprites/arrow_right.png');
+ 
     //audio
     this.game.load.audio('squirrel',        '/javascripts/modules/units/sounds/squirrel.wav');
     this.game.load.audio('acorn-on-ground', '/javascripts/modules/units/sounds/acorn_on_grass.wav');
@@ -84,6 +84,12 @@ OaktreeState.prototype = {
 
     this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
     this.groundCollider.static = true;
+
+    this.arrow = this.game.add.image(500, 500, 'arrow_right');
+    this.arrow.inputEnabled = true;
+    this.arrow.events.onInputDown.add(function () {
+    game.stateTransition.to('Minigame', true, true);
+    });      
 
     function flatten(arr)
     {
