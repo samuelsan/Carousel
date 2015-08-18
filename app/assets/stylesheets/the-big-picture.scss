@@ -29,7 +29,7 @@ body {
   overflow-y:scroll;
 }
 
-.contactdiv {
+.contact-div {
   background-image: url('../images/contact-background.jpg');
   background-size:  cover;
   margin-left:      auto;
@@ -47,13 +47,13 @@ body {
   }
 }
 
-.contactform {
+.contact-form {
   position: absolute;
-  top: 500px;
-  left: 500px;
+  top:      350px;
+  left:     600px;
 }
 
-.contactdiv .input {
+.contact-div .input {
   margin: 10px 0px;
 }
 
