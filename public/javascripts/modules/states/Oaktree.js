@@ -30,7 +30,7 @@ var OaktreeState = function (game)
       }
     });       
   };
-},  
+};
 
 var ground = [[1,796.5,929,558.5,1067,564,1067,800],[367,583.5,469,575.5,599,600.5,329,599.5,348.5,586],[824,582.5,735,606.5,780,586.5],[599,600.5,469,575.5,545,579.5,573,585.5],[61,621.5,1,796.5,10,632.5,17,624.5],[1067,564,1020,561.5,1052,559.5],[929,558.5,824,582.5,882,562.5],[329,599.5,1,796.5,259,603.5,285,597.5],[209,607.5,1,796.5,179,610.5,187,607.5],[677,611.5,1,796.5,631,606.5,667,607.5],[259,603.5,1,796.5,209,607.5,221,603.5],[469,575.5,367,583.5,391,575.5],[179,610.5,1,796.5,87,615.5,99,609.5],[10,632.5,1,796.5,0.5,636],[87,615.5,1,796.5,61,621.5],[599,600.5,631,606.5,1,796.5,329,599.5],[929,558.5,735,606.5,824,582.5],[703,610.5,1,796.5,677,611.5],[735,606.5,1,796.5,703,610.5]];
 
@@ -85,10 +85,10 @@ OaktreeState.prototype = {
     this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
     this.groundCollider.static = true;
 
-    this.arrow = this.game.add.image(500, 500, 'arrow_right');
-    this.arrow.inputEnabled = true;
-    this.arrow.events.onInputDown.add(function () {
-    game.stateTransition.to('Minigame', true, true);
+    this.arrow_right = this.game.add.image(500, 500, 'arrow_right');
+    this.arrow_right.inputEnabled = true;
+    this.arrow_right.events.onInputDown.add(function () {
+    game.stateTransition.to('Minigame', true, false);
     });      
 
     function flatten(arr)

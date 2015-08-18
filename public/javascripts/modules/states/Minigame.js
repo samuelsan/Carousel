@@ -3,10 +3,32 @@
 'use strict';
 
 var MinigameState = function (game) {
+
+this.init = function(){   
   this.game = game;
   this.arrayOfFlies = [];
   this.highscore = 0;
   this.score = 0; 
+
+   this.game.stateTransition = this.game.plugins.add(Phaser.Plugin.StateTransition); 
+    // This passes now!
+    // The function referred to by: game.state.start('MinigameState');
+    // should have an init function that is passed a context (this) with a preconfigured game
+    // object. That object has a plugins property (this.game.plugins), which can be added to
+    // (ie. is not null)
+
+    this.game.stateTransition.configure({
+      duration: Phaser.Timer.SECOND * 3,
+      ease: Phaser.Easing.Exponential.InOut,
+      properties: {
+        alpha: 0,
+        scale: {
+          x: 1.4,
+          y: 1.4
+        }
+      }
+    });       
+  };
 };
 
 MinigameState.prototype = {
@@ -29,7 +51,7 @@ MinigameState.prototype = {
     this.game.load.image('firefly',         '/javascripts/modules/units/sprites/firefly.png');
     this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
     this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background.png');
-    this.game.load.image('arrow',            '/javascripts/modules/units/sprites/right_arrow.png');
+    this.game.load.image('arrow_right',            '/javascripts/modules/units/sprites/arrow_right.png');
     // load the sounds and music //
     this.game.load.audio('fireflybuzz',     '/javascripts/modules/units/sounds/firefly_buzzing.wav');
     this.game.load.audio('netswish',        '/javascripts/modules/units/sounds/net_swish.mp3');
@@ -140,9 +162,9 @@ MinigameState.prototype = {
     this.score = 0;
     this.labelScore = this.game.add.text(30, 55, '0', { font: '30px Arial', fill: '#ffffff' });
 
-    this.arrow = this.game.add.image(500, 500, 'arrow');
-    this.arrow.inputEnabled = true;
-    this.arrow.events.onInputDown.add(function () {
+    this.arrow_right = this.game.add.image(500, 500, 'arrow_right');
+    this.arrow_right.inputEnabled = true;
+    this.arrow_right.events.onInputDown.add(function () {
     game.stateTransition.to('Oaktree', true, true);
     }); 
   },
