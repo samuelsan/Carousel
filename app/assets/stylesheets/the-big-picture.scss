@@ -31,17 +31,17 @@ body {
 
 .contactdiv {
   background-image: url('../images/contact-background.jpg');
-  background-size: cover;
-  margin-left: auto;
-  margin-right: auto;
-  min-width: 1480px;
-  min-height: 1164px;
-  z-index: 1000;
+  background-size:  cover;
+  margin-left:      auto;
+  margin-right:     auto;
+  min-width:        1480px;
+  min-height:       1164px;
+  z-index:          1000;
   background-color: none;
-  padding: 5px;
-  color: #690505;
-  font-weight: bold;
-  text-align: right;
+  padding:          5px;
+  color:            #690505;
+  font-weight:      bold;
+  text-align:       right;
   input, textarea {
     margin-left: 20px;
   }
