@@ -30,15 +30,31 @@ body {
 }
 
 .contactdiv {
-   float: center;
-   position: absolute;
-   left: 585px;
-   top: 300px;
-   z-index: 1000;
-   background-color: none;
-   padding: 5px;
-   color: #690505;
-   font-weight: bold;
+  background-image: url('../images/contact-background.jpg');
+  background-size: cover;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 1480px;
+  min-height: 1164px;
+  z-index: 1000;
+  background-color: none;
+  padding: 5px;
+  color: #690505;
+  font-weight: bold;
+  text-align: right;
+  input, textarea {
+    margin-left: 20px;
+  }
+}
+
+.contactform {
+  position: absolute;
+  top: 500px;
+  left: 500px;
+}
+
+.contactdiv .input {
+  margin: 10px 0px;
 }
 
 #btn-primary {

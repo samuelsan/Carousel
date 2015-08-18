@@ -11,7 +11,6 @@ class ContactsController < ApplicationController
     if (@contact.deliver)
       redirect_to (new_contact_path), flash: {success: "Message delivered."}
     else
-      # flash.now[:notice] = "Unfortunately, the message could not be sent."
       render :new, flash: {failure: "Message could not be sent."}
     end
   end
