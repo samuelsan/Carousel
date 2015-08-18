@@ -11,4 +11,9 @@ class SessionsController < ApplicationController
     redirect_to         root_url
   end
 
+  def create_failure
+    redirect_to     root_url
+    flash[:alert] = params[:message] # if using sinatra-flash or rack-flash
+  end
+
 end

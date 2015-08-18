@@ -13,9 +13,10 @@ Rails.application.routes.draw do
   
   resource  :session,   only: [:create, :destroy]
 
-  match '/contacts',                to: 'contacts#new',                    via: 'get'
-  match 'auth/:provider/callback',  to: 'sessions#create',                 via: [:get, :post]
-  match 'auth/failure',             to:  redirect('/'),                    via: [:get, :post]
+  match '/contacts',                to: 'contacts#new', via: 'get'
+  match 'auth/:provider/callback',  to: 'sessions#create', via: [:get, :post]
+  # match 'auth/failure',             to:  redirect('/'),                    via: [:get, :post]
+  match 'auth/failure',             to: 'sessions#create_failure', via: [:get, :post]
   match 'signout',                  to: 'sessions#destroy', as: 'signout', via: [:get, :post]
 
   # The priority is based upon order of creation: first created -> highest priority.
