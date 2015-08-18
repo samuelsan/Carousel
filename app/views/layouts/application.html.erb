@@ -8,6 +8,7 @@
   <meta name="author" content="">
   <title>Carousel</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -24,29 +25,40 @@
                 </button>
                 <!-- <a class="navbar-brand" href="#">CAROUSEL</a> -->
                 <div class='navbar-brand'>
-                    <%= link_to "CAROUSEL", public_index_path %>
+                    <%= link_to "CAROUSEL", public_about_path %>
                 </div>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <%= link_to "Synopsis", public_story_path %>
+                        <%= link_to "About", public_about_path %>
                     </li>
+
+                    <li>
+                        <%= link_to "Synopsis", public_synopsis_path %>
+                    </li>
+
                     <li>
                         <% if (current_user()) %>
                             <%= link_to "Play Demo", carousel_index_path %>
+                        <% else %>
+                            <%= link_to "Play Demo", "/auth/facebook", id: "sign_in" %>
                         <% end %>
                     </li>
+
                     <li>
-                        <%= link_to "About / Contact us", public_team_path %>
+                        <%= link_to "The Team", public_team_path %>
                     </li>
+
+                    <li>
+                        <%= link_to "Contact Us", contacts_new_path %>
+                    </li>
+
                     <li id="user-widget">
                         <% if (current_user()) %>
-                            Welcome <strong><%= current_user.name %></strong>!
+                            <li>Welcome <strong><%= current_user.name %></strong>!</li>
                             <%= link_to "Sign out", signout_path, id: "sign_out" %>
-                        <% else %>
-                            <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
                         <% end %>
                     </li>
                 </ul>
@@ -57,8 +69,6 @@
     </nav>
 
   <%= yield %>
-
-  
 
 </body>
 </html>
