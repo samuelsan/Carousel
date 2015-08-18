@@ -43,6 +43,7 @@ OaktreeState.prototype = {
     this.game.load.image('squirrelhole',    '/javascripts/modules/units/backgrounds/squirrelhole.png');
     this.game.load.image('iris',            '/javascripts/modules/units/sprites/temp-iris.png');
     this.game.load.image('arrow_right',     '/javascripts/modules/units/sprites/arrow_right.png');
+    this.game.load.image('acorn',           '/javascripts/modules/units/sprites/Acorn.png')
  
     //audio
     this.game.load.audio('squirrel',        '/javascripts/modules/units/sounds/squirrel.wav');
@@ -85,10 +86,10 @@ OaktreeState.prototype = {
     this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
     this.groundCollider.static = true;
 
-    this.arrow_right = this.game.add.image(500, 500, 'arrow_right');
+    this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
     this.arrow_right.inputEnabled = true;
     this.arrow_right.events.onInputDown.add(function () {
-    game.stateTransition.to('Minigame', true, false);
+    game.stateTransition.to('Stream', true, true);
     });      
 
     function flatten(arr)

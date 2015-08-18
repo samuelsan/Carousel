@@ -3,32 +3,12 @@
 'use strict';
 
 var MinigameState = function (game) {
-
-this.init = function(){   
+ 
   this.game = game;
   this.arrayOfFlies = [];
   this.highscore = 0;
   this.score = 0; 
 
-   this.game.stateTransition = this.game.plugins.add(Phaser.Plugin.StateTransition); 
-    // This passes now!
-    // The function referred to by: game.state.start('MinigameState');
-    // should have an init function that is passed a context (this) with a preconfigured game
-    // object. That object has a plugins property (this.game.plugins), which can be added to
-    // (ie. is not null)
-
-    this.game.stateTransition.configure({
-      duration: Phaser.Timer.SECOND * 3,
-      ease: Phaser.Easing.Exponential.InOut,
-      properties: {
-        alpha: 0,
-        scale: {
-          x: 1.4,
-          y: 1.4
-        }
-      }
-    });       
-  };
 };
 
 MinigameState.prototype = {
@@ -118,7 +98,7 @@ MinigameState.prototype = {
     this.timer = this.game.time.create();
       
     // Create a delayed event 1m and 30s from now//
-    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 30, this.endTimer, this);
+    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 5, this.endTimer, this);
       
     // Start the timer//
     this.timer.start();
@@ -154,7 +134,7 @@ MinigameState.prototype = {
     
     this.game.input.activePointer.leftButton.onUp.add(function(e) //jshint ignore:line
     {
-      tween.stop();
+      this.tween.stop();
       this.game.add.tween(this.bugnet).to({ angle: orig }, 100, 'Sine.easeInOut', true, -1);
     }.bind(this), null, 0);
 
@@ -162,11 +142,6 @@ MinigameState.prototype = {
     this.score = 0;
     this.labelScore = this.game.add.text(30, 55, '0', { font: '30px Arial', fill: '#ffffff' });
 
-    this.arrow_right = this.game.add.image(500, 500, 'arrow_right');
-    this.arrow_right.inputEnabled = true;
-    this.arrow_right.events.onInputDown.add(function () {
-    game.stateTransition.to('Oaktree', true, true);
-    }); 
   },
   update: function() {
     this.bugnet.fixedRotation = this.game.physics.arcade.moveToPointer(this.bugnet, 0, this.game.input.activePointer, 50);
@@ -241,8 +216,8 @@ MinigameState.prototype = {
       this.game.input.activePointer.leftButton.onDown.removeAll();
       this.music.stop();
       this.fireflybuzz.stop();
-      this.fireflycatch.stop();
-      this.game.state.start('Minimenu', true, false);
+      this.fireflycatch.stop(); 
+      this.game.state.start('Minimenu', true, true);
     }
   },
   endTimer: function() {
