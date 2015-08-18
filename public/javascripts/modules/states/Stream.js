@@ -9,8 +9,8 @@ var StreamState = function (game) {
   this.launchY = 540;
   this.iris = null;
   this.points = {
-  'x': [985, 770, 845],
-  'y': [770, -320, 730]
+  'x': [985, 770, 840],
+  'y': [650, -320, 700]
   };
   this.timer1Stopped = true;
 };
@@ -24,6 +24,8 @@ StreamState.prototype =
     this.game.load.image('fish',        '/javascripts/modules/units/sprites/fish.png');
     this.game.load.atlasJSONHash('walk-right', '/javascripts/modules/units/sprites/Walking/walk-right.png', '/javascripts/modules/units/sprites/Walking/walk-right.json');
     this.game.load.image('stand', '/javascripts/modules/units/sprites/iris-standing.png');
+    this.game.load.audio('streammusic', '/javascripts/modules/units/sounds/mountain_stream_loop.mp3');
+    this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background.png');
   },
   create: function()
   {
@@ -35,8 +37,47 @@ StreamState.prototype =
     this.iris.scale.setTo(0.5,0.5);
     this.iris.animations.add('walk-right');
     this.iris.animations.play('walk-right', 3, true);
-
     this.game.add.sprite('stand');
+
+    this.streammusic = this.game.add.audio('streammusic');
+    this.streammusic.volume = 1;
+    this.streammusic.loop=true;
+    this.streammusic.play();
+
+    //bug glow
+
+    this.sprite = { x: 0, y: -64 };
+    this.tween = this.game.add.tween(this.sprite).to( { x: 128 }, 4000, "Bounce.easeIn", true, 0, -1, true);
+    this.tween2 = this.game.add.tween(this.sprite).to( { y: 128 }, 4000, "Bounce.easeOut", true, 0, -1, false);
+    this.glows = [];
+    this.waveformX = this.tween.generateData(70);
+    this.waveformY = this.tween2.generateData(70);
+
+    this.xl = this.waveformX.length - 1;
+    this.yl = this.waveformY.length - 1;
+
+    this.sprites = this.game.add.spriteBatch();
+
+    var xs = 28;
+    var ys = 7;
+
+    for (var y = 0; y < 10; y++)
+    {
+      for (var x = 0; x < 20; x++)
+      {
+        var glow = this.game.make.sprite((x * xs * 8), (y * ys * 9), 'glow');
+
+        glow.ox = glow.x;
+        glow.oy = glow.y;
+
+        glow.cx = this.game.rnd.between(0, this.xl);
+        glow.cy = this.game.rnd.between(0, this.yl);
+
+        glow.anchor.set(0.5);
+        this.sprites.addChild(glow);
+        this.glows.push(glow);
+      }
+    }
 
     var recClick = new Phaser.Rectangle(700, 500, 250, 250);
 
@@ -63,6 +104,15 @@ StreamState.prototype =
         // follow the motion path by using the plot function 
         this.fishSprite = this.game.add.sprite(0, 0, "fish");
         this.fishSprite.anchor.setTo(0.5, 0.5);
+
+    // this.bmd = this.add.bitmapData(this.game.width, this.game.height);
+    // this.bmd.addToWorld();
+    // // Draw the path
+    // for (var j = 0; j < 1; j += this.increment) {
+    //   var posx = this.math.bezierInterpolation(this.points.x, j);
+    //   var posy = this.math.bezierInterpolation(this.points.y, j);
+    //   this.bmd.rect(posx, posy, 3, 3, 'rgba(245, 0, 0, 1)');
+    // }
 
         if (this.timer1Stopped)
         {
@@ -103,7 +153,7 @@ StreamState.prototype =
     this.fishSprite.x = posx;
     this.fishSprite.y = posy;
     this.i += this.increment;
-    if (posy > 845)
+    if (posy > 700)
     {
       this.timer1.stop();
       this.timer1.destroy();
@@ -111,7 +161,31 @@ StreamState.prototype =
       this.timer1Stopped = true;
       this.fishSprite.destroy();
     }
+  },
+
+  update: function() 
+  {    
+    for (var i = 0, len = this.glows.length; i < len; i++)
+    {
+        this.glows[i].x = this.glows[i].ox + this.waveformX[this.glows[i].cx].x;
+        this.glows[i].y = this.glows[i].oy + this.waveformY[this.glows[i].cy].y;
+
+        this.glows[i].cx++;
+
+        if (this.glows[i].cx > this.xl)
+        {
+            this.glows[i].cx = 0;
+        }
+
+        this.glows[i].cy++;
+
+        if (this.glows[i].cy > this.yl)
+        {
+            this.glows[i].cy = 0;
+        }
+    }  
   }
+
 };
 
 
