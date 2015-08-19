@@ -4,12 +4,11 @@
   var EndDemoState = function (game) {
     this.game = game;
 
-    this.content = [
+    this.lineArray = [
     "Thank you for playing Carousel!",
-    "Hope you enjoy!",
+    "Hope you enjoyed!",
     ];
-    this.text;
-    this.index = 0;
+    this.index = -1;
     this.line = '';
   };
 
@@ -18,8 +17,7 @@
   EndDemoState.prototype = {
     constructor:BootState,
     preload: function() {
-    this.game.load.image('background', '/javascripts/modules/units/backgrounds/stream.jpg');
-
+      this.game.load.image('background', '/javascripts/modules/units/backgrounds/stream.jpg');
     },
 
     create: function() {
@@ -27,36 +25,27 @@
       this.background.height = this.game.height;
       this.background.width = this.game.width;
 
-      this.text = this.game.add.text(32, 500, '', { font: "30pt Courier", fill: "black", stroke: "white", strokeThickness: 2 });
+      this.text = this.game.add.text(300, 200, '', { font: "30pt Courier", fill: "black", stroke: "white", strokeThickness: 2 });
       this.nextLine();
 
     },
-    
-    updateLine: function() 
-    {
-      if (this.line.length < this.content[this.index].length);
-      {
-          this.line = this.content[this.index].substr(0, this.line.length + 1);
-          // text.text = line;
-          this.text.setText(this.line);}
-
-      else
-      {
-          //  Wait 2 seconds then start a new line
-          this.game.time.events.add(Phaser.Timer.SECOND * 2, this.nextLine, this);
+    updateLine: function()  {
+      if (this.line.length < this.lineArray[this.index].length) {
+        this.line = this.lineArray[this.index].substr(0, this.line.length + 1);
+        // text.text = line;
+        console.log('line1', this.line);
+        this.text.setText(this.line);
+      } else {
+        //  Wait 2 seconds then start a new line
+        this.game.time.events.add(Phaser.Timer.SECOND * 2, this.nextLine, this);
       }
-
     },
-
-    nextLine: function()
-    {
-
+    nextLine: function() {
       this.index++;
 
-      if (this.index < this.content.length);
-      {
-          this.line = '';
-          this.game.time.events.repeat(80, this.content[this.index].length + 1, this.updateLine, this);
+      if (this.index < this.lineArray.length) {
+        this.line = '';
+        this.game.time.events.repeat(80, this.lineArray[this.index].length + 1, this.updateLine, this);
       }
     }
   };
