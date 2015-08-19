@@ -1,4 +1,6 @@
 Rails.application.configure do
+  puts "Development rb"
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -26,6 +28,8 @@ Rails.application.configure do
   #   authentication:         'login',
   #   domain:                 'localhost:3000',
   # }
+
+# APP_CONFIG = YAML.load_file("#{Rails.root}/config/application.yml").symbolize_keys
 
   # ActionMailer SMTP settings using Gmail
   config.action_mailer.smtp_settings = {
