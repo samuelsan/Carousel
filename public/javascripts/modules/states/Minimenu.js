@@ -4,7 +4,7 @@
 
 var MinimenuState = function (game) {
   this.game = game;
-};
+}; 
 
 MinimenuState.prototype = {
   constructor: BootState,
@@ -31,10 +31,13 @@ MinimenuState.prototype = {
     }
   },
   playgame: function() {
-    this.game.state.start('Minigame', true, true);
+    game.state.start('Minigame', true, true);
   },
   gotostory: function() {
-    this.game.state.start('Stream', true, true);
+    game.state.start('Stream', true, true);
   },
-  update: function() {}
+  // update: function() {}
+  shutdown: function() {
+    this.game.stateTransition = null;
+  }  
 };
