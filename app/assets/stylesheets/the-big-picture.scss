@@ -29,6 +29,18 @@ body {
   overflow-y:scroll;
 }
 
+.about-div {
+  background-image:     url('../images/indexbackground.jpg');
+  background-size:      cover;
+  background-position:  center center;
+  z-index:              1000;
+  margin-left:          auto;
+  margin-right:         auto;
+  min-width:            1447px;
+  min-height:           1080px;
+  padding:              5px;
+}
+
 .contact-div {
   background-image: url('../images/contact-background.jpg');
   background-size:  cover;
