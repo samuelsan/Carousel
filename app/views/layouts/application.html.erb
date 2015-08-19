@@ -41,9 +41,9 @@
 
                     <li>
                         <% if (current_user()) %>
-                            <%= link_to "Play Demo", carousel_index_path %>
+                            <%= link_to "Play Game", carousel_index_path %>
                         <% else %>
-                            <%= link_to "Play Demo", "/auth/facebook", id: "sign_in" %>
+                            <%= link_to "Play Game", "/auth/facebook", id: "sign_in" %>
                         <% end %>
                     </li>
 
