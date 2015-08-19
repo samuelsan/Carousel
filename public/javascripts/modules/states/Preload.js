@@ -14,33 +14,6 @@
       game.load.image('title', '/javascripts/modules/units/backgrounds/carousellogo.jpg');
       game.load.audio('compass-song', '/javascripts/modules/units/music/IntroSong.mp3');
 
-      //Oaktree Assets //
-      this.game.load.atlasJSONHash('iris-throwing', '/javascripts/modules/units/sprites/Throwing/iris-throwing.png', '/javascripts/modules/units/sprites/Throwing/iris-throwing.json');
-
-      this.game.load.atlasJSONHash('iris-swing', '/javascripts/modules/units/sprites/Tireswing/iris-tire.png', '/javascripts/modules/units/sprites/Tireswing/iris-tire.json');
-
-      this.game.load.atlasJSONHash('walk-right', '/javascripts/modules/units/sprites/Walking/walk-right.png', '/javascripts/modules/units/sprites/Walking/walk-right.json');
-
-      this.game.load.image('background',      '/javascripts/modules/units/backgrounds/oaktree.jpg');
-      this.game.load.image('ground',          '/javascripts/modules/units/backgrounds/oakground.png');
-      this.game.load.image('treetrunk',       '/javascripts/modules/units/backgrounds/treetrunk.png');
-      this.game.load.image('squirrelhole',    '/javascripts/modules/units/backgrounds/squirrelhole.png');
-      this.game.load.image('branch',          '/javascripts/modules/units/backgrounds/branch.png');
-      this.game.load.image('acorn',           '/javascripts/modules/units/sprites/acorn1.png');
-      this.game.load.image('acorninventory',  '/javascripts/modules/units/sprites/acorninventory.png');
-      this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet1.png');
-      this.game.load.image('bugnetinventory', '/javascripts/modules/units/sprites/bugnetinventory.png')
-      this.game.load.image('key',             '/javascripts/modules/units/sprites/key1.png');
-      this.game.load.image('iris-stand',      '/javascripts/modules/units/sprites/iris-standing.png');
-      this.game.load.image('iris-pickup',     '/javascripts/modules/units/sprites/pickup.png');
-      this.game.load.image('iris-start',      '/javascripts/modules/units/sprites/iris-swing-start.png');
-
-      // Oaktree Audio //
-      this.game.load.audio('background-music', '/javascripts/modules/units/music/oaktreemusic.mp3');
-      this.game.load.audio('squirrel',        '/javascripts/modules/units/sounds/squirrel.wav');
-      this.game.load.audio('acorn-on-ground', '/javascripts/modules/units/sounds/acorn_on_grass.wav');
-      this.game.load.audio('pickup',          '/javascripts/modules/units/sounds/pickup.mp3');
-
       //Mini Menu Assets //
       this.game.load.image('background',    '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
       this.game.load.image('menu',          '/javascripts/modules/units/backgrounds/minigame-intro.png');

@@ -31,11 +31,16 @@ MinimenuState.prototype = {
       this.music.play();
     }
   },
-  playgame: function() {
-    this.game.state.start('Minigame', true, true);
+  playgame: function() { 
+   this.game.state.start('Minigame', true, true);
+   this.game.stateTransition = null;
   },
   gotostory: function() {
     this.game.state.start('Stream', true, true);
+    this.game.stateTransition = null;
   },
-  update: function() {}
+  // update: function() {}
+  shutdown: function() {
+    this.game.stateTransition = null;
+  }  
 };

@@ -3,11 +3,15 @@
 'use strict';
 
 var MinigameState = function (game) {
-  this.game = game;
-  this.arrayOfFlies = [];
-  this.highscore = 0;
-  this.score = 0; 
-};
+
+    this.game = game;
+    this.arrayOfFlies = [];
+    this.highscore = 0;
+    this.score = 0; 
+    this.timer1Stopped = true;
+    this.game.stateTransition = null;
+
+};    
 
 MinigameState.prototype = {
   createFireFly: function()
@@ -31,7 +35,7 @@ MinigameState.prototype = {
     this.game.load.image('firefly',         '/javascripts/modules/units/sprites/firefly1.png');
     // this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
     this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background.png');
-
+    this.game.load.image('arrow_right',            '/javascripts/modules/units/sprites/arrow_right.png');
     // load the sounds and music //
     this.game.load.audio('fireflybuzz',     '/javascripts/modules/units/sounds/firefly_buzzing.wav');
     this.game.load.audio('netswish',        '/javascripts/modules/units/sounds/net_swish.mp3');
@@ -98,7 +102,7 @@ MinigameState.prototype = {
     this.timer = this.game.time.create();
       
     // Create a delayed event 1m and 30s from now//
-    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 30, this.endTimer, this);
+    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 5, this.endTimer, this);
       
     // Start the timer//
     this.timer.start();
@@ -136,7 +140,7 @@ MinigameState.prototype = {
     
     this.game.input.activePointer.leftButton.onUp.add(function(e) //jshint ignore:line
     {
-      tween.stop();
+      this.tween.stop();
       this.game.add.tween(this.bugnet).to({ angle: orig }, 100, 'Sine.easeInOut', true, -1);
     }.bind(this), null, 0);
 
@@ -227,7 +231,6 @@ MinigameState.prototype = {
   },
   render: function () {
     // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
-    
     // if (this.timer.running) {
     //   this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 480, 70, "white", "60px Arial");
     // }
@@ -238,8 +241,8 @@ MinigameState.prototype = {
     //   this.game.input.activePointer.leftButton.onDown.removeAll();
     //   this.music.stop();
     //   this.fireflybuzz.stop();
-    //   this.fireflycatch.stop();
-    //   this.game.state.start('Minimenu', true, false);
+    //   this.fireflycatch.stop(); 
+    //   this.game.state.start('Minimenu', true, true);
     // }
   },
   endTimer: function() {
@@ -250,5 +253,8 @@ MinigameState.prototype = {
     // Convert seconds (s) to a nicely formatted and padded time string
     var seconds = "0" + (s);
     return seconds.substr(-2);   
+  },
+  shutdown: function() {
+    this.game.stateTransition = null;
   }
 };

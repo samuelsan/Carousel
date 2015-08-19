@@ -4,27 +4,46 @@
 
 var OaktreeState = function (game) 
 {
-  this.game = game;
-  BootState.call(this, game);
-  // this.launchX = this.iris.x;
-  // this.launchY = this.iris.y;
-  this.acorn = null;
-  this.bugnet = null;
-  this.key = null;
-  this.squirrelhole = null;
-  this.iris = null;
-  this.arrayOfAcorns = []
+  this.init = function(){ 
+    this.game = game;
+    BootState.call(this, game);
+    this.acorn = null;
+    this.key = null;
+    this.bugnet = null;
+    this.squirrelhole = null;
+    this.iris = null;
+    this.arrayOfAcorns = [];
 
-  this.hasAcorn = 0;
-  this.hasBugnet = false;
-  this.hasKey = false;
-  this.hasBugjar = true;
+    this.hasAcorn = 0;
+    this.hasBugnet = false;
+    this.hasKey = false;
+    this.hasBugjar = true;
 
-  this.key1 = null;
-  this.key2 = null;
-  this.key3 = null;
-  this.key4 = null;
-  this.key5 = null;
+    this.key1 = null;
+    this.key2 = null;
+    this.key3 = null;
+    this.key4 = null;
+    this.key5 = null;
+
+    this.game.stateTransition = this.game.plugins.add(Phaser.Plugin.StateTransition); 
+    // This passes now!
+    // The function referred to by: game.state.start('MinigameState');
+    // should have an init function that is passed a context (this) with a preconfigured game
+    // object. That object has a plugins property (this.game.plugins), which can be added to
+    // (ie. is not null)
+
+    this.game.stateTransition.configure({
+      duration: Phaser.Timer.SECOND * 3,
+      ease: Phaser.Easing.Exponential.InOut,
+      properties: {
+        alpha: 0,
+        scale: {
+          x: 1.4,
+          y: 1.4
+        }
+      }
+    });       
+  };
 };
 
 var ground = [[1,796.5,929,558.5,1067,564,1067,800],[367,583.5,469,575.5,599,600.5,329,599.5,348.5,586],[824,582.5,735,606.5,780,586.5],[599,600.5,469,575.5,545,579.5,573,585.5],[61,621.5,1,796.5,10,632.5,17,624.5],[1067,564,1020,561.5,1052,559.5],[929,558.5,824,582.5,882,562.5],[329,599.5,1,796.5,259,603.5,285,597.5],[209,607.5,1,796.5,179,610.5,187,607.5],[677,611.5,1,796.5,631,606.5,667,607.5],[259,603.5,1,796.5,209,607.5,221,603.5],[469,575.5,367,583.5,391,575.5],[179,610.5,1,796.5,87,615.5,99,609.5],[10,632.5,1,796.5,0.5,636],[87,615.5,1,796.5,61,621.5],[599,600.5,631,606.5,1,796.5,329,599.5],[929,558.5,735,606.5,824,582.5],[703,610.5,1,796.5,677,611.5],[735,606.5,1,796.5,703,610.5]];
@@ -77,15 +96,7 @@ OaktreeState.prototype = {
   create: function() {
     //KEYBOARD ASSIGNMENT//
     this.key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE).onDown.add(this.checkAcorn, this);
-    // this.key1.onDown.add(this.checkAcorn(), this);
-
     this.key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(this.useBugnet, this);
-    // // this.key2.onDown.add(this.checkBugnet(), this);
-
-    // this.key3 = this.game.input.keyboard.addKey(3);
-    // this.key4 = this.game.input.keyboard.addKey(4);
-    // this.key5 = this.game.input.keyboard.addKey(5);
-
 
     //START GAME PHYSICS//
     this.game.physics.startSystem(Phaser.Physics.BOX2D);
@@ -125,7 +136,7 @@ OaktreeState.prototype = {
     this.squirrelhole.body.setCircle(30, 805, 190);
     this.squirrelhole.body.addCircle(30, 805, 210);
 
-    this.iris = this.game.add.sprite(273,55, 'iris-start')
+    this.iris = this.game.add.sprite(273,55, 'iris-start');
     this.iris.scale.setTo(0.60, 0.60);
     this.iris.inputEnabled = true;
     this.iris.events.onInputDown.addOnce(this.spinTire, this);
@@ -181,6 +192,12 @@ OaktreeState.prototype = {
 
     this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
     this.groundCollider.static = true;
+
+    this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
+    this.arrow_right.inputEnabled = true;
+    this.arrow_right.events.onInputDown.add(function () {
+    game.stateTransition.to('Stream', true, true);
+    });      
 
     function flatten(arr)
     {
@@ -295,7 +312,7 @@ OaktreeState.prototype = {
   },
 
   checkAcorn: function() {
-    if (this.hasAcorn != 0){
+    if (this.hasAcorn !== 0){
         this.iris.loadTexture('iris-throw-static');
         this.acorn = new Projectile(this.game, this.iris.x + 23, this.iris.y + 40, true);
         this.acorn.body.static = true;
@@ -313,7 +330,6 @@ OaktreeState.prototype = {
     //     //AUDIO//
     //     // this.cantuse.play();
     // }
-    debugger
   },
 
   fireAcorn: function () {
@@ -360,7 +376,7 @@ OaktreeState.prototype = {
 
   useBugnet: function()
   {
-    if(state === 'Stream' && this.hasBugnet == true) {
+    if(this.game.state === 'Stream' && this.hasBugnet === true) {
       this.game.state.start('Minimenu');
     } else {
       //AUDIO//
@@ -388,7 +404,6 @@ OaktreeState.prototype = {
     this.iris.x = key.x - 145;
     this.iris.y = key.y - 150;
     this.iris.loadTexture('iris-pickup', 0);
-
     this.pickup.play();
     this.hasKey = true;
     key.destroy();
@@ -399,6 +414,11 @@ OaktreeState.prototype = {
     }.bind(this), 1000);
 
     // this.bugnetinventory = this.game.add.image(20, 30, 'bugnetinventory');
+  },
+
+  shutdown: function() {
+    this.game.input.activePointer.leftButton.onDown.removeAll();
+    this.game.stateTransition = null;
   },
 
   bugnetCallback: function()
