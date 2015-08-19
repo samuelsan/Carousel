@@ -11,7 +11,6 @@ var StreamState = function (game)
     'x': [985, 770, 840],
     'y': [650, -320, 700]
     };
-    this.timer1Stopped = true;
 
     this.game.stateTransition = this.game.plugins.add(Phaser.Plugin.StateTransition); 
     // This passes now!
@@ -220,8 +219,7 @@ StreamState.prototype =
 
   shutdown: function() {
     this.game.stateTransition = null;
-  }  
-
+  }
 };
 
 

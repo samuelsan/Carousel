@@ -96,8 +96,8 @@ OaktreeState.prototype = {
 
   create: function() {
     //KEYBOARD ASSIGNMENT//
-    this.key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE).onDown.add(this.checkAcorn, this);
-    this.key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(this.useBugnet, this);
+      this.key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE).onDown.add(this.checkAcorn, this);
+      this.key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(this.useBugnet, this);
 
     //START GAME PHYSICS//
     this.game.physics.startSystem(Phaser.Physics.BOX2D);
@@ -184,7 +184,9 @@ OaktreeState.prototype = {
     this.bugnet = this.game.add.sprite(200,150,'bugnet');
     this.game.physics.box2d.enable(this.bugnet);
     this.bugnet.body.static = true;
-    this.bugnet.body.setRectangle(75, 75);
+    this.bugnet.body.setRectangle(80, 70, -10, -40);
+    this.bugnet.body.addRectangle(30, 70, 30, 32)
+
 
     this.branch = this.game.add.image(0,0, 'branch');
     this.branch.height = this.game.height;
@@ -305,7 +307,7 @@ OaktreeState.prototype = {
     bugnet.destroy();
 
     setTimeout(function() {
-      this.iris.loadTexture('iris-stand', 0);
+      this.iris.loadTexture('iris-ticnd', 0);
       this.iris.y = 300;
     }.bind(this), 1000);
 
@@ -424,7 +426,14 @@ OaktreeState.prototype = {
 
   bugnetCallback: function()
   {
-    // this.bugnet.body.static = true;
-    this.bugnet.events.onInputDown.add(this.pickupBugnet, this);
+    this.bugnet.destroy();
+    this.game.physics.startSystem(Phaser.Physics.BOX2D);
+    this.bugnetx = this.game.add.sprite(200,150,'bugnet');
+    this.game.physics.box2d.enable(this.bugnetx);
+    this.bugnet.body.static = false;
+    this.acorn.destroy();
+    // this.bugnetFall();
+    // this.bugnet.events.onInputDown.add(this.pickupBugnet, this);
   }
+
 };
