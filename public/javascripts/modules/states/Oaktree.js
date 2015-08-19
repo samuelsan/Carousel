@@ -238,6 +238,7 @@ OaktreeState.prototype = {
 
   shutdown: function() {
     this.game.input.activePointer.leftButton.onDown.removeAll();
+    this.game.stateTransition = null;
   }
 
 };

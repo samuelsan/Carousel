@@ -3,29 +3,7 @@
 'use strict';
 
 var MinimenuState = function (game) {
-
-// this.init = function(){   
   this.game = game;
-
-   // this.game.stateTransition = this.game.plugins.add(Phaser.Plugin.StateTransition); 
-    // This passes now!
-    // The function referred to by: game.state.start('MinigameState');
-    // should have an init function that is passed a context (this) with a preconfigured game
-    // object. That object has a plugins property (this.game.plugins), which can be added to
-    // (ie. is not null)
-
-  //   this.game.stateTransition.configure({
-  //     duration: Phaser.Timer.SECOND * 3,
-  //     ease: Phaser.Easing.Exponential.InOut,
-  //     properties: {
-  //       alpha: 0,
-  //       scale: {
-  //         x: 1.4,
-  //         y: 1.4
-  //       }
-  //     }
-  //   });       
-  // };
 }; 
 
 MinimenuState.prototype = {
@@ -53,10 +31,13 @@ MinimenuState.prototype = {
     }
   },
   playgame: function() {
-    game.stateTransition.to('Minigame', true, true);
+    game.state.start('Minigame', true, true);
   },
   gotostory: function() {
-    game.stateTransition.to('Stream', true, true);
+    game.state.start('Stream', true, true);
   },
-  update: function() {}
+  // update: function() {}
+  shutdown: function() {
+    this.game.stateTransition = null;
+  }  
 };

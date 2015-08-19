@@ -250,5 +250,8 @@ MinigameState.prototype = {
     // Convert seconds (s) to a nicely formatted and padded time string
     var seconds = "0" + (s);
     return seconds.substr(-2);   
+  },
+  shutdown: function() {
+    this.game.stateTransition = null;
   }
 };

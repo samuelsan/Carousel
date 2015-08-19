@@ -2,14 +2,36 @@
 
 'use strict';
 
-var StreamState = function (game) {
-  this.game = game;
-  this.iris = null;
-  this.points = {
-  'x': [985, 770, 840],
-  'y': [650, -320, 700]
-  };
-  this.timer1Stopped = true;
+var StreamState = function (game) 
+{
+  this.init = function(){ 
+    this.game = game;
+    this.iris = null;
+    this.points = {
+    'x': [985, 770, 840],
+    'y': [650, -320, 700]
+    };
+    this.timer1Stopped = true;
+
+    this.game.stateTransition = this.game.plugins.add(Phaser.Plugin.StateTransition); 
+    // This passes now!
+    // The function referred to by: game.state.start('MinigameState');
+    // should have an init function that is passed a context (this) with a preconfigured game
+    // object. That object has a plugins property (this.game.plugins), which can be added to
+    // (ie. is not null)
+
+    this.game.stateTransition.configure({
+      duration: Phaser.Timer.SECOND * 3,
+      ease: Phaser.Easing.Exponential.InOut,
+      properties: {
+        alpha: 0,
+        scale: {
+          x: 1.4,
+          y: 1.4
+        }
+      }
+    });       
+  };  
 };
 
 StreamState.prototype = 
@@ -139,13 +161,7 @@ StreamState.prototype =
     {
       this.iris.loadTexture('stand', 0);
     }, this);
-
-    this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
-    this.arrow_right.inputEnabled = true;
-    this.arrow_right.events.onInputDown.add(function () {
-    game.stateTransition.to('Minigame', true, true);
-    });      
-
+    
     this.arrow_left = this.game.add.image(game.width - game.width + 2, game.height/2 - 100, 'arrow_left');
     this.arrow_left.inputEnabled = true;
     this.arrow_left.events.onInputDown.add(function () {
@@ -196,6 +212,10 @@ StreamState.prototype =
         }
     }  
   },
+
+  shutdown: function() {
+    this.game.stateTransition = null;
+  }  
 
 };
 
