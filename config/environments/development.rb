@@ -32,8 +32,8 @@ Rails.application.configure do
     address:                "smtp.gmail.com",
     port:                   587,
     enable_starttls_auto:   true,
-    user_name:              "CarouselFinal@gmail.com",
-    password:               "Merry Go Round",
+    user_name:              APP_CONFIG[:carousel_gmail_username],
+    password:               APP_CONFIG[:carousel_gmail_password],
     authentication:         :login,
     domain:                 'localhost:3000',
   }
