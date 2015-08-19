@@ -102,7 +102,7 @@ MinigameState.prototype = {
     this.timer = this.game.time.create();
       
     // Create a delayed event 1m and 30s from now//
-    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 5, this.endTimer, this);
+    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 30, this.endTimer, this);
       
     // Start the timer//
     this.timer.start();

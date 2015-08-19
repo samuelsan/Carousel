@@ -85,6 +85,7 @@ OaktreeState.prototype = {
       this.game.load.image('iris-stand',      '/javascripts/modules/units/sprites/iris-standing.png');
       this.game.load.image('iris-pickup',     '/javascripts/modules/units/sprites/pickup.png');
       this.game.load.image('iris-start',      '/javascripts/modules/units/sprites/iris-swing-start.png');
+      this.game.load.image('arrow_right',     '/javascripts/modules/units/sprites/arrow_right.png')
 
       // Oaktree Audio //
       this.game.load.audio('background-music', '/javascripts/modules/units/music/oaktreemusic.mp3');

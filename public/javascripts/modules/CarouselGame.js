@@ -23,6 +23,6 @@
   game.state.add('Minigame', minigame);
   game.state.add('EndDemo', enddemo);
 
-  game.state.start('MainMenu');
+  game.state.start('Boot');
 
 }());
