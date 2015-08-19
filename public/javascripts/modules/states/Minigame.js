@@ -181,7 +181,7 @@ MinigameState.prototype = {
       this.music.stop();
       this.fireflybuzz.stop();
       this.fireflycatch.stop();
-      this.game.state.start('Minimenu', true, true);
+      this.game.state.start('Minimenu', true, false);
     }  
   },
   destroySprite: function (firefly) {
@@ -254,6 +254,6 @@ MinigameState.prototype = {
     return seconds.substr(-2);   
   },
   shutdown: function() {
-    game.stateTransition = null;
+    this.game.stateTransition = null;
   }
 };
