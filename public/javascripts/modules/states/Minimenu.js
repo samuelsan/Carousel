@@ -31,13 +31,14 @@ MinimenuState.prototype = {
     }
   },
   playgame: function() {
-    game.state.start('Minigame', true, true);
+    game.state.start('Minigame', true, false);
   },
   gotostory: function() {
     game.state.start('Stream', true, true);
+    game.stateTransition = null;
   },
   // update: function() {}
   shutdown: function() {
-    this.game.stateTransition = null;
+    game.stateTransition = null;
   }  
 };

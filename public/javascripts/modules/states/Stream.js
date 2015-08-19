@@ -162,6 +162,12 @@ StreamState.prototype =
       this.iris.loadTexture('stand', 0);
     }, this);
     
+    this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
+    this.arrow_right.inputEnabled = true;
+    this.arrow_right.events.onInputDown.add(function () {
+    game.stateTransition.to('Minimenu', true, true);
+    });
+
     this.arrow_left = this.game.add.image(game.width - game.width + 2, game.height/2 - 100, 'arrow_left');
     this.arrow_left.inputEnabled = true;
     this.arrow_left.events.onInputDown.add(function () {
