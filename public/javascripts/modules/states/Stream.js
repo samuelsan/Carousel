@@ -51,8 +51,8 @@ StreamState.prototype =
   create: function()
   {
     this.background = this.game.add.image(0,0, 'background');
-    this.background.height=this.game.height;
-    this.background.width=this.game.width;
+    this.background.height = this.game.height;
+    this.background.width = this.game.width;
 
     this.iris = game.add.sprite(-150, 300, 'walk-right');
     this.iris.scale.setTo(0.5,0.5);
