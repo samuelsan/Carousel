@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# gems for a mail form
+gem 'mail_form'
+gem 'simple_form'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
@@ -49,3 +52,4 @@ gem "koala", "~> 1.10.0rc" # Facebook API
 # gem 'debugger', group: [:development, :test]
 
 gem 'puma'
+

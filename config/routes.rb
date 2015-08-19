@@ -1,16 +1,23 @@
 Rails.application.routes.draw do
-  root  'public#index'
+  root  'public#about'    #About (the game)
 
-  get   'public/index'
-  get   'carousel/index'
-  get   'public/story'    #Synopsis
+  get   'carousel/index'  #(play) the game
+  get   'public/synopsis' #Synopsis
+  get   'public/team'     #Team page
+  get   'public/about'    #About (the game)
+  get   'contacts/new'    #Contact us form page
 
+
+  resources :contacts, only: [:new, :create]
   resources :users
+  
   resource  :session,   only: [:create, :destroy]
 
-  match 'auth/:provider/callback',  to: 'sessions#create',                  via: [:get, :post]
-  match 'auth/failure',             to: redirect('/'),                      via: [:get, :post]
-  match 'signout',                  to: 'sessions#destroy', as: 'signout',  via: [:get, :post]
+  match '/contacts',                to: 'contacts#new', via: 'get'
+  match 'auth/:provider/callback',  to: 'sessions#create', via: [:get, :post]
+  match 'auth/failure',             to:  redirect('/'),                    via: [:get, :post]
+  # match 'auth/failure',             to: 'sessions#create_failure', via: [:get, :post]
+  match 'signout',                  to: 'sessions#destroy', as: 'signout', via: [:get, :post]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

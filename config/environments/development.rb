@@ -16,6 +16,28 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
+  # ActionMailer SMTP settings using Mandrill
+  # config.action_mailer.smtp_settings = {
+  #   address:                "smtp.mandrillapp.com",
+  #   port:                   587,
+  #   enable_starttls_auto:   true,
+  #   user_name:              "CarouselFinal@gmail.com",
+  #   password:               "2K4f7n6nZKjKrjHrWBnwcA",
+  #   authentication:         'login',
+  #   domain:                 'localhost:3000',
+  # }
+
+  # ActionMailer SMTP settings using Gmail
+  config.action_mailer.smtp_settings = {
+    address:                "smtp.gmail.com",
+    port:                   587,
+    enable_starttls_auto:   true,
+    user_name:              "CarouselFinal@gmail.com",
+    password:               "Merry Go Round",
+    authentication:         :login,
+    domain:                 'localhost:3000',
+  }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

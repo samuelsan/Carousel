@@ -161,7 +161,21 @@ MinigameState.prototype = {
         {
             this.glows[i].cy = 0;
         }
-    }    
+    }  
+
+    if (this.timer.running) {
+      this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 480, 70, "white", "60px Arial");
+    }
+    else {
+      this.game.world.removeAll();
+      clearTimeout(this.fireflytimer);
+      this.checkhighscore();
+      this.game.input.activePointer.leftButton.onDown.removeAll();
+      this.music.stop();
+      this.fireflybuzz.stop();
+      this.fireflycatch.stop();
+      this.game.state.start('Minimenu', true, false);
+    }  
   },
   destroySprite: function (firefly) {
     this.fireflycatch.play();
@@ -203,19 +217,19 @@ MinigameState.prototype = {
   render: function () {
     // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
     
-    if (this.timer.running) {
-      this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 480, 70, "white", "60px Arial");
-    }
-    else {
-      this.game.world.removeAll();
-      clearTimeout(this.fireflytimer);
-      this.checkhighscore();
-      this.game.input.activePointer.leftButton.onDown.removeAll();
-      this.music.stop();
-      this.fireflybuzz.stop();
-      this.fireflycatch.stop();
-      this.game.state.start('Minimenu', true, false);
-    }
+    // if (this.timer.running) {
+    //   this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 480, 70, "white", "60px Arial");
+    // }
+    // else {
+    //   this.game.world.removeAll();
+    //   clearTimeout(this.fireflytimer);
+    //   this.checkhighscore();
+    //   this.game.input.activePointer.leftButton.onDown.removeAll();
+    //   this.music.stop();
+    //   this.fireflybuzz.stop();
+    //   this.fireflycatch.stop();
+    //   this.game.state.start('Minimenu', true, false);
+    // }
   },
   endTimer: function() {
     // Stop the timer when the delayed event triggers

@@ -9,6 +9,7 @@ var OaktreeState = function (game)
   this.launchY = 325;
   this.acorn;
   this.squirrelhole;
+  this.inventory = []
 };
 
 var ground = [[1,796.5,929,558.5,1067,564,1067,800],[367,583.5,469,575.5,599,600.5,329,599.5,348.5,586],[824,582.5,735,606.5,780,586.5],[599,600.5,469,575.5,545,579.5,573,585.5],[61,621.5,1,796.5,10,632.5,17,624.5],[1067,564,1020,561.5,1052,559.5],[929,558.5,824,582.5,882,562.5],[329,599.5,1,796.5,259,603.5,285,597.5],[209,607.5,1,796.5,179,610.5,187,607.5],[677,611.5,1,796.5,631,606.5,667,607.5],[259,603.5,1,796.5,209,607.5,221,603.5],[469,575.5,367,583.5,391,575.5],[179,610.5,1,796.5,87,615.5,99,609.5],[10,632.5,1,796.5,0.5,636],[87,615.5,1,796.5,61,621.5],[599,600.5,631,606.5,1,796.5,329,599.5],[929,558.5,735,606.5,824,582.5],[703,610.5,1,796.5,677,611.5],[735,606.5,1,796.5,703,610.5]];
@@ -20,10 +21,13 @@ OaktreeState.prototype = {
     this.game.load.image('ground',          '/javascripts/modules/units/backgrounds/oakground.png');
     this.game.load.image('treetrunk',       '/javascripts/modules/units/backgrounds/treetrunk.png');
     this.game.load.image('squirrelhole',    '/javascripts/modules/units/backgrounds/squirrelhole.png');
+    this.game.load.image('branch',          '/javascripts/modules/units/backgrounds/branch.png');
     this.game.load.image('iris',            '/javascripts/modules/units/sprites/temp-iris.png');
     this.game.load.image('acorn',           '/javascripts/modules/units/sprites/Acorn.png');
+    this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet.png');
 
     //audio
+    this.game.load.audio('background-music', '/javascripts/modules/units/music/oaktreemusic.mp3');
     this.game.load.audio('squirrel',        '/javascripts/modules/units/sounds/squirrel.wav');
     this.game.load.audio('acorn-on-ground', '/javascripts/modules/units/sounds/acorn_on_grass.wav');
   },
@@ -36,7 +40,11 @@ OaktreeState.prototype = {
     this.game.physics.box2d.setBoundsToWorld(); 
 
     this.squirrel = this.game.add.audio('squirrel'); 
-    this.acorn_on_ground = this.game.add.audio('acorn-on-ground');      
+    this.acorn_on_ground = this.game.add.audio('acorn-on-ground');
+    this.music = this.game.add.audio('background-music');
+
+    this.music.volume = 2;
+    this.music.play();    
 
     this.background = this.game.add.image(0,0, 'background');
     this.background.height = this.game.height;
@@ -60,6 +68,15 @@ OaktreeState.prototype = {
     this.squirrelhole.body.addCircle(30, 805, 210);
 
     this.iris = this.game.add.image(300,200, 'iris');
+
+    this.bugnet = this.game.add.image(150,100,'bugnet');
+    this.game.physics.box2d.enable(this.bugnet);
+    this.bugnet.body.static = true;
+    this.bugnet.body.setRec(150, 100, 190, 30);
+
+    this.branch = this.game.add.image(0,0, 'branch');
+    this.branch.height = this.game.height;
+    this.branch.width = this.game.width;
 
     this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
     this.groundCollider.static = true;
