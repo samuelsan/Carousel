@@ -96,8 +96,8 @@ OaktreeState.prototype = {
 
   create: function() {
     //KEYBOARD ASSIGNMENT//
-      this.key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE).onDown.add(this.checkAcorn, this);
-      this.key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(this.useBugnet, this);
+    this.key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE).onDown.add(this.checkAcorn, this);
+    this.key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(this.useBugnet, this);
 
     //START GAME PHYSICS//
     this.game.physics.startSystem(Phaser.Physics.BOX2D);
@@ -399,7 +399,7 @@ OaktreeState.prototype = {
   {
     this.acorn.destroy();
     this.squirrel.play();
-    this.tosskey();
+    //this.tosskey();
   },
 
   pickupKey: function(key)
