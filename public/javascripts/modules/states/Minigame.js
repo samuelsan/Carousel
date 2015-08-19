@@ -34,7 +34,7 @@ MinigameState.prototype = {
     this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet1.png');
     this.game.load.image('firefly',         '/javascripts/modules/units/sprites/firefly1.png');
     // this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
-    this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background.png');
+    this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background1.png');
     this.game.load.image('arrow_right',            '/javascripts/modules/units/sprites/arrow_right.png');
     // load the sounds and music //
     this.game.load.audio('fireflybuzz',     '/javascripts/modules/units/sounds/firefly_buzzing.wav');

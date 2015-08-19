@@ -79,7 +79,7 @@ OaktreeState.prototype = {
       this.game.load.image('acorninventory',  '/javascripts/modules/units/sprites/acorninventory.png');
       this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet1.png');
       this.game.load.image('bugnetinventory', '/javascripts/modules/units/sprites/bugnetinventory.png');
-      this.game.load.image('key1',             '/javascripts/modules/units/sprites/key1.png');
+      this.game.load.image('key2',             '/javascripts/modules/units/sprites/key1.png');
       this.game.load.image('iris-throw-static', '/javascripts/modules/units/sprites/iristhrow.png');
       this.game.load.image('iris-throw-left',   '/javascripts/modules/units/sprites/iristhrowleft.png');
       this.game.load.image('iris-stand',      '/javascripts/modules/units/sprites/iris-standing.png');
@@ -271,7 +271,7 @@ OaktreeState.prototype = {
 
   render: function()
   {
-    // this.game.debug.box2dWorld();
+    this.game.debug.box2dWorld();
   },
 
   pickupAcorn: function(acorn) {
@@ -349,27 +349,35 @@ OaktreeState.prototype = {
       }.bind(this), 500);
   },
 
+  // tosskey: function()
+  // {
+  //   this.key = this.game.add.sprite(780,190, 'key1');
+  //   this.key.anchor.setTo(0.5, 0.5);
+  //   this.key.inputEnabled = true;
+  //   this.key.events.onInputDown.add(this.pickupKey(this.key), this);
+  //   this.tweenFunctions = [
+  //     { name: "Quadratic In", ease: Phaser.Easing.Quadratic.In }
+  //   ];
+  //   this.game.physics.box2d.enable(this.key);
+
+  //   /*var tween = */this.game.add.tween(this.key).to({
+  //     x: [780, 700, 600, 400],
+  //     y: [190, 600, 500, 300],
+  //     angle: [100]
+  //   }, 5000)
+  //   .interpolation(function(v, k)
+  //   {
+  //     return Phaser.Math.catmullRomInterpolation(v, k);
+  //   });
+  // },
+
   tosskey: function()
   {
-    this.key = this.game.add.sprite(780,190, 'key1');
-    this.key.anchor.setTo(0.5, 0.5);
-    this.key.inputEnabled = true;
-    this.key.events.onInputDown.add(this.pickupKey(this.key), this);
-    this.tweenFunctions = [
-      { name: "Quadratic In", ease: Phaser.Easing.Quadratic.In }
-    ];
+    this.game.physics.startSystem(Phaser.Physics.BOX2D);
+    this.key = this.game.add.sprite(780,190, 'key2');
     this.game.physics.box2d.enable(this.key);
-
-    /*var tween = */this.game.add.tween(this.key).to({
-      x: [780, 700, 600, 400],
-      y: [190, 600, 500, 300],
-      angle: [100]
-    }, 5000)
-    .interpolation(function(v, k)
-    {
-      return Phaser.Math.catmullRomInterpolation(v, k);
-    });
-  },
+    this.key.body.static = false;
+ },  
 
   checkcollision: function()
   {
@@ -399,7 +407,7 @@ OaktreeState.prototype = {
   {
     this.acorn.destroy();
     this.squirrel.play();
-    //this.tosskey();
+    this.tosskey();
   },
 
   pickupKey: function(key)
