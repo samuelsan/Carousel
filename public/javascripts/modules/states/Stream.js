@@ -36,7 +36,6 @@ var StreamState = function (game)
 
 StreamState.prototype = 
 {
-  constructor: BootState,
   preload: function() 
   {
     this.game.load.image('background',         '/javascripts/modules/units/backgrounds/stream.jpg');

@@ -14,11 +14,10 @@ var MinigameState = function (game) {
 };    
 
 MinigameState.prototype = {
-  constructor: BootState,
   createFireFly: function()
   {
     var fly = new FireFly(this.game, this.game.world.randomX, this.game.world.randomY);
-    fly.scale.setTo(0.30,0.30);
+    fly.scale.setTo(0.25,0.25);
     this.game.add.existing(fly);
     this.arrayOfFlies.push(fly);
     fly.inputEnabled = true;
@@ -31,8 +30,8 @@ MinigameState.prototype = {
     this.game.load.atlasJSONHash('firefly-surprise', '/javascripts/modules/units/sprites/Firefly/firefly-surprise.png', '/javascripts/modules/units/sprites/Firefly/firefly-surprise.json');
 
     this.game.load.image('background',      '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
-    this.game.load.image('bugjar',          '/javascripts/modules/units/sprites/bugjar.png');
-    this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet.png');
+    this.game.load.image('bugjar',          '/javascripts/modules/units/sprites/bugjar1.png');
+    this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet1.png');
     this.game.load.image('firefly',         '/javascripts/modules/units/sprites/firefly1.png');
     // this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
     this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background.png');
@@ -49,7 +48,7 @@ MinigameState.prototype = {
     
     // add images//
     this.background = this.game.add.image(0,0, 'background');
-    this.bugjar = this.game.add.image(0,0, 'bugjar');
+    this.bugjar = this.game.add.image(10,15, 'bugjar');
     this.glow = this.game.add.image(0,0, 'glow');
 
     this.sprite = { x: 0, y: -64 };
@@ -103,7 +102,7 @@ MinigameState.prototype = {
     this.timer = this.game.time.create();
       
     // Create a delayed event 1m and 30s from now//
-    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 5, this.endTimer, this);
+    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 30, this.endTimer, this);
       
     // Start the timer//
     this.timer.start();
@@ -112,7 +111,9 @@ MinigameState.prototype = {
       this.createFireFly();
     }
 
-    this.pause_label = this.game.add.text(200, 200, 'Pause', { font: '24px Arial', fill: '#fff' });
+    // PAUSE BUTTON //
+
+    this.pause_label = this.game.add.text(20, 200, 'Pause', { font: '24px Arial', fill: '#fff' });
     this.pause_label.inputEnabled = true;
     this.pause_label.events.onInputUp.add(function () {
       game.paused = true; 
@@ -145,7 +146,7 @@ MinigameState.prototype = {
 
     // displays the score and sets a default of 0 // 
     this.score = 0;
-    this.labelScore = this.game.add.text(30, 55, '0', { font: '30px Arial', fill: '#ffffff' });
+    this.labelScore = this.game.add.text(45, 63, '0', { font: '30px Arial', fill: '#ffffff' });
   },
   update: function() {
     this.bugnet.fixedRotation = this.game.physics.arcade.moveToPointer(this.bugnet, 0, this.game.input.activePointer, 50);
