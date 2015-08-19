@@ -19,11 +19,18 @@ body {
 
 #gamecontainer {
   margin-top: 25px;
+  float: center;
+  position: absolute;
+  left: 0px;
+  top: 0px;
 }
 
 #background-container {
+  overflow: hidden;
   height: auto;
+  position:fixed;
   width: auto;
+  overflow-y: scroll;
 }
 
 .about-div {
