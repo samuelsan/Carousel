@@ -1,5 +1,6 @@
 class CarouselController < ApplicationController
 
+  before_filter :authenticated        #from ApplicationController.rb
   before_filter :set_cache_buster
 
   def set_cache_buster
@@ -8,7 +9,4 @@ class CarouselController < ApplicationController
     response.headers["Expires"]       = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 
-  def index
-  end
-  
 end
