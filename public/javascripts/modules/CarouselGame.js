@@ -23,6 +23,5 @@
   game.state.add('Minigame', minigame);
   game.state.add('EndDemo', enddemo);
 
-  game.state.start('Boot');
-
+  game.state.start('EndDemo');
 }());
