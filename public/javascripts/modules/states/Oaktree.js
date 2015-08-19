@@ -269,7 +269,7 @@ OaktreeState.prototype = {
 
   render: function()
   {
-    this.game.debug.box2dWorld();
+    // this.game.debug.box2dWorld();
   },
 
   pickupAcorn: function(acorn) {
