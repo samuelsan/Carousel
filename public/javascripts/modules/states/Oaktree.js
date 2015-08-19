@@ -269,7 +269,7 @@ OaktreeState.prototype = {
 
   render: function()
   {
-    this.game.debug.box2dWorld();
+    // this.game.debug.box2dWorld();
   },
 
   pickupAcorn: function(acorn) {
@@ -424,7 +424,7 @@ OaktreeState.prototype = {
 
   bugnetCallback: function()
   {
-    this.bugnet.body.static = false;
+    // this.bugnet.body.static = true;
     this.bugnet.events.onInputDown.add(this.pickupBugnet, this);
   }
 };
