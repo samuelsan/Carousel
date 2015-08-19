@@ -3,33 +3,39 @@
 'use strict';
 
 var MinigameState = function (game) {
-  this.game = game;
-  this.arrayOfFlies = [];
-  this.highscore = 0;
-  this.score = 0; 
-};
+
+    this.game = game;
+    this.arrayOfFlies = [];
+    this.highscore = 0;
+    this.score = 0; 
+    this.timer1Stopped = true;
+    this.game.stateTransition = null;
+
+};    
 
 MinigameState.prototype = {
-  constructor: BootState,
   createFireFly: function()
   {
     var fly = new FireFly(this.game, this.game.world.randomX, this.game.world.randomY);
+    fly.scale.setTo(0.25,0.25);
     this.game.add.existing(fly);
     this.arrayOfFlies.push(fly);
     fly.inputEnabled = true;
     fly.input.useHandCursor = true;
-    fly.events.onInputDown.add(this.destroySprite, this);
+    fly.events.onInputDown.addOnce(this.destroySprite, this);
     return fly;
   },
   preload: function() {
     // load the images //
-    this.game.load.image('background',      '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
-    this.game.load.image('bugjar',          '/javascripts/modules/units/sprites/bugjar.png');
-    this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet.png');
-    this.game.load.image('firefly',         '/javascripts/modules/units/sprites/firefly.png');
-    this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
-    this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background.png');
+    this.game.load.atlasJSONHash('firefly-surprise', '/javascripts/modules/units/sprites/Firefly/firefly-surprise.png', '/javascripts/modules/units/sprites/Firefly/firefly-surprise.json');
 
+    this.game.load.image('background',      '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
+    this.game.load.image('bugjar',          '/javascripts/modules/units/sprites/bugjar1.png');
+    this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet1.png');
+    this.game.load.image('firefly',         '/javascripts/modules/units/sprites/firefly1.png');
+    // this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
+    this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background.png');
+    this.game.load.image('arrow_right',            '/javascripts/modules/units/sprites/arrow_right.png');
     // load the sounds and music //
     this.game.load.audio('fireflybuzz',     '/javascripts/modules/units/sounds/firefly_buzzing.wav');
     this.game.load.audio('netswish',        '/javascripts/modules/units/sounds/net_swish.mp3');
@@ -42,7 +48,7 @@ MinigameState.prototype = {
     
     // add images//
     this.background = this.game.add.image(0,0, 'background');
-    this.bugjar = this.game.add.image(0,0, 'bugjar');
+    this.bugjar = this.game.add.image(10,15, 'bugjar');
     this.glow = this.game.add.image(0,0, 'glow');
 
     this.sprite = { x: 0, y: -64 };
@@ -105,7 +111,9 @@ MinigameState.prototype = {
       this.createFireFly();
     }
 
-    this.pause_label = this.game.add.text(200, 200, 'Pause', { font: '24px Arial', fill: '#fff' });
+    // PAUSE BUTTON //
+
+    this.pause_label = this.game.add.text(20, 200, 'Pause', { font: '24px Arial', fill: '#fff' });
     this.pause_label.inputEnabled = true;
     this.pause_label.events.onInputUp.add(function () {
       game.paused = true; 
@@ -132,13 +140,13 @@ MinigameState.prototype = {
     
     this.game.input.activePointer.leftButton.onUp.add(function(e) //jshint ignore:line
     {
-      tween.stop();
+      this.tween.stop();
       this.game.add.tween(this.bugnet).to({ angle: orig }, 100, 'Sine.easeInOut', true, -1);
     }.bind(this), null, 0);
 
     // displays the score and sets a default of 0 // 
     this.score = 0;
-    this.labelScore = this.game.add.text(30, 55, '0', { font: '30px Arial', fill: '#ffffff' });
+    this.labelScore = this.game.add.text(45, 63, '0', { font: '30px Arial', fill: '#ffffff' });
   },
   update: function() {
     this.bugnet.fixedRotation = this.game.physics.arcade.moveToPointer(this.bugnet, 0, this.game.input.activePointer, 50);
@@ -178,12 +186,19 @@ MinigameState.prototype = {
     }  
   },
   destroySprite: function (firefly) {
+    firefly.body.moves = false;
+    firefly.loadTexture('firefly-surprise', 0);
+    firefly.animations.add('firefly-surprise');
+    firefly.animations.play('firefly-surprise', 10, false);
+
     this.fireflycatch.play();
     this.arrayOfFlies = this.arrayOfFlies.filter(function(fly)
     {
       return fly !== firefly;
     });
-    firefly.destroy();
+    setTimeout(function(){
+      firefly.destroy();
+    }.bind(this), 1500);
   
     if (this.timer.running)
     {
@@ -216,7 +231,6 @@ MinigameState.prototype = {
   },
   render: function () {
     // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
-    
     // if (this.timer.running) {
     //   this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 480, 70, "white", "60px Arial");
     // }
@@ -227,8 +241,8 @@ MinigameState.prototype = {
     //   this.game.input.activePointer.leftButton.onDown.removeAll();
     //   this.music.stop();
     //   this.fireflybuzz.stop();
-    //   this.fireflycatch.stop();
-    //   this.game.state.start('Minimenu', true, false);
+    //   this.fireflycatch.stop(); 
+    //   this.game.state.start('Minimenu', true, true);
     // }
   },
   endTimer: function() {
@@ -239,5 +253,8 @@ MinigameState.prototype = {
     // Convert seconds (s) to a nicely formatted and padded time string
     var seconds = "0" + (s);
     return seconds.substr(-2);   
+  },
+  shutdown: function() {
+    this.game.stateTransition = null;
   }
 };
