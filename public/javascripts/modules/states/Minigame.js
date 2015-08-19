@@ -3,13 +3,15 @@
 'use strict';
 
 var MinigameState = function (game) {
- 
-  this.game = game;
-  this.arrayOfFlies = [];
-  this.highscore = 0;
-  this.score = 0; 
 
-};
+    this.game = game;
+    this.arrayOfFlies = [];
+    this.highscore = 0;
+    this.score = 0; 
+    this.timer1Stopped = true;
+    this.game.stateTransition = null;
+
+};    
 
 MinigameState.prototype = {
   constructor: BootState,
@@ -228,19 +230,19 @@ MinigameState.prototype = {
   },
   render: function () {
     // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
-    if (this.timer.running) {
-      this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 480, 70, "white", "60px Arial");
-    }
-    else {
-      this.game.world.removeAll();
-      clearTimeout(this.fireflytimer);
-      this.checkhighscore();
-      this.game.input.activePointer.leftButton.onDown.removeAll();
-      this.music.stop();
-      this.fireflybuzz.stop();
-      this.fireflycatch.stop(); 
-      this.game.state.start('Minimenu', true, true);
-    }
+    // if (this.timer.running) {
+    //   this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 480, 70, "white", "60px Arial");
+    // }
+    // else {
+    //   this.game.world.removeAll();
+    //   clearTimeout(this.fireflytimer);
+    //   this.checkhighscore();
+    //   this.game.input.activePointer.leftButton.onDown.removeAll();
+    //   this.music.stop();
+    //   this.fireflybuzz.stop();
+    //   this.fireflycatch.stop(); 
+    //   this.game.state.start('Minimenu', true, true);
+    // }
   },
   endTimer: function() {
     // Stop the timer when the delayed event triggers

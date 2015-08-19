@@ -30,11 +30,13 @@ MinimenuState.prototype = {
       this.music.play();
     }
   },
-  playgame: function() {
-    game.state.start('Minigame', true, true);
+  playgame: function() { 
+   this.game.state.start('Minigame', true, true);
+   this.game.stateTransition = null;
   },
   gotostory: function() {
-    game.state.start('Stream', true, true);
+    this.game.state.start('Stream', true, true);
+    this.game.stateTransition = null;
   },
   // update: function() {}
   shutdown: function() {
