@@ -18,7 +18,10 @@ body {
 }
 
 #gamecontainer {
-  margin-top: 25px;
+  float: center;
+  position: absolute;
+  left: 0px;
+  top: 0px;
 }
 
 #background-container {

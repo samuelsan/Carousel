@@ -2,7 +2,7 @@
 {
     "use strict";
 
-    var Projectile = window.Projectile =  function (game, x, y)
+    var Projectile = window.Projectile =  function (game, x, y, no_throw)
     {
         Phaser.Sprite.call(this, game, x, y, 'acorn');
         
@@ -14,8 +14,11 @@
         // console.log(v);
 
         // this.body.sensor = true;
-        this.body.velocity.x = v.x;
-        this.body.velocity.y = v.y;
+        if(!no_throw)
+        {
+            this.body.velocity.x = v.x;
+            this.body.velocity.y = v.y;
+        }
         this.game.add.existing(this);
 
         // this.body.onBeginContact.add(function()
