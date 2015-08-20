@@ -622,8 +622,7 @@ OaktreeState.prototype = {
 
     this.game.physics.box2d.enable(this.squirrelhole);
     this.squirrelhole.body.static = true;
-    this.squirrelhole.body.setCircle(30, 805, 190);
-    this.squirrelhole.body.addCircle(30, 805, 210);    
+    this.squirrelhole.body.setCircle(30, 805, 200);   
 
     this.game.physics.box2d.restitution = 0.3;
     this.game.physics.box2d.gravity.y = 500;
