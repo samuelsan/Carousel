@@ -5,7 +5,7 @@ var MainMenu = function MainMenu(game)
 
 MainMenu.prototype.create = function create()
 {
-  this.background = game.add.image(0,0, 'background');
+  // this.background = game.add.image(0,0, 'background');
   this.title = game.add.image(170,200, 'title');
   this.title.alpha = 0;
 
