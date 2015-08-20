@@ -21,19 +21,21 @@ Rails.application.configure do
   #   address:                "smtp.mandrillapp.com",
   #   port:                   587,
   #   enable_starttls_auto:   true,
-  #   user_name:              "CarouselFinal@gmail.com",
-  #   password:               "2K4f7n6nZKjKrjHrWBnwcA",
+  #   user_name:              ENV["CAROUSEL_MANDRILL_USERNAME"],
+  #   password:               ENV["CAROUSEL_MANDRILL_PASSWORD"],
   #   authentication:         'login',
   #   domain:                 'localhost:3000',
   # }
+
+# APP_CONFIG = YAML.load_file("#{Rails.root}/config/application.yml").symbolize_keys
 
   # ActionMailer SMTP settings using Gmail
   config.action_mailer.smtp_settings = {
     address:                "smtp.gmail.com",
     port:                   587,
     enable_starttls_auto:   true,
-    user_name:              "CarouselFinal@gmail.com",
-    password:               "Merry Go Round",
+    user_name:              ENV["CAROUSEL_GMAIL_USERNAME"],
+    password:               ENV["CAROUSEL_GMAIL_PASSWORD"],
     authentication:         :login,
     domain:                 'localhost:3000',
   }

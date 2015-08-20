@@ -21,4 +21,12 @@ database.yml
 # OS X Finder files
 .DS_Store
 
+# Gemfile.lock file related to Ruby gems' collection used by project.
 Gemfile.lock
+
+# Ignore application configuration
+/config/application.yml
+
+# Env. variable files
+*.env
+secrets.yml

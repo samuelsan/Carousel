@@ -7,6 +7,9 @@ gem 'simple_form'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
 
+# Loads environment variables from `.env`.
+gem 'dotenv-rails', :groups => [:development, :test]
+
 # PostgreSQL gem
 gem 'pg'
 
@@ -35,6 +38,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 gem 'pry',           group: :development
 
+# Facebook authentication
 gem 'omniauth'
 gem 'omniauth-facebook' # Facebook authentication
 gem "koala", "~> 1.10.0rc" # Facebook API
@@ -51,5 +55,6 @@ gem "koala", "~> 1.10.0rc" # Facebook API
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# Server
 gem 'puma'
 
