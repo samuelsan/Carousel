@@ -7,6 +7,9 @@ var OaktreeState = function (game)
   this.init = function(){ 
     this.game = game;
     BootState.call(this, game);
+
+    this.storydone1 = false;
+
     this.acorn = null;
     this.key = null;
     this.bugnet = null;
@@ -100,6 +103,20 @@ OaktreeState.prototype = {
       this.game.load.image('iris-start',      '/javascripts/modules/units/sprites/iris-swing1.png');
       this.game.load.image('arrow_right',     '/javascripts/modules/units/sprites/arrow_right.png');
 
+      //Oaktree Story//
+      this.game.load.image('story1',   '/javascripts/modules/units/story/story1.png');
+      this.game.load.image('story2',   '/javascripts/modules/units/story/story2.png');
+      this.game.load.image('story3',   '/javascripts/modules/units/story/story3.png');
+      this.game.load.image('story4',   '/javascripts/modules/units/story/story4.png');
+      this.game.load.image('story5',   '/javascripts/modules/units/story/story5.png');
+      this.game.load.image('story6',   '/javascripts/modules/units/story/story6.png');
+      this.game.load.image('story7',   '/javascripts/modules/units/story/story7.png');
+      this.game.load.image('story8',   '/javascripts/modules/units/story/story8.png');
+      this.game.load.image('story9',   '/javascripts/modules/units/story/story9.png');
+      this.game.load.image('story11',   '/javascripts/modules/units/story/story11.png');
+      this.game.load.image('story12',   '/javascripts/modules/units/story/story12.png');
+      this.game.load.image('dontneed',   '/javascripts/modules/units/story/dontneed.png');
+
       // Oaktree Audio //
       this.game.load.audio('background-music', '/javascripts/modules/units/music/oaktreemusic.mp3');
       this.game.load.audio('meadowsound',       '/javascripts/modules/units/sounds/meadow-loop.mp3');
@@ -111,6 +128,7 @@ OaktreeState.prototype = {
   create: function() {
     //KEYBOARD ASSIGNMENT//
     this.key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE).onDown.add(this.checkAcorn, this);
+    this.key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(this.useBugnet, this);
 
     //START GAME PHYSICS//
     this.game.physics.startSystem(Phaser.Physics.BOX2D);
@@ -162,9 +180,7 @@ OaktreeState.prototype = {
     this.iris.input.priorityID = 100;
     this.iris.events.onInputDown.addOnce(this.spinTire, this);
 
-    this.iris.animations.add('walk-right', 4, true);
-
-    this.iris.animations.add('walk-left', 4, true);
+    this.storyteller();
 
     //IRIS ACTIONS//
     // this.throwing = this.iris.animations.add('iris-throwing');
@@ -320,10 +336,105 @@ OaktreeState.prototype = {
     // this.game.debug.box2dWorld();
   },
 
+  storyteller: function() {
+    setTimeout(function(){
+      this.panel1 = this.game.add.image(200, 350, 'story1');
+      this.panel1.inputEnabled = true;
+      this.panel1.events.onInputDown.add(this.storyteller2, this);
+    }.bind(this), 2000);
+  },
+
+  storyteller2: function() {
+    this.panel1.destroy();
+    this.panel2 = this.game.add.image(200, 350, 'story2');
+    this.panel2.inputEnabled = true;
+    this.panel2.events.onInputDown.add(this.storyteller3, this);
+  },
+
+  storyteller3: function() {
+    this.panel2.destroy();
+    this.panel3 = this.game.add.image(200, 350, 'story3');
+    this.panel3.inputEnabled = true;
+    this.panel3.events.onInputDown.add(this.storyteller4, this);
+  },
+
+  storyteller4: function() {
+    this.panel3.destroy();
+    this.panel4 = this.game.add.image(200, 350, 'story4');
+    this.panel4.inputEnabled = true;
+    this.panel4.events.onInputDown.add(this.storyteller5, this);
+  },
+
+  storyteller5: function() {
+    this.panel4.destroy();
+    this.panel5 = this.game.add.image(200, 350, 'story5');
+    this.panel5.inputEnabled = true;
+    this.panel5.events.onInputDown.add(this.storyteller6, this);
+  },
+
+  storyteller6: function() {
+    this.panel5.destroy();
+    this.panel6 = this.game.add.image(200, 350, 'story6');
+    this.panel6.inputEnabled = true;
+    this.panel6.events.onInputDown.add(this.storyteller7, this);
+  },
+
+  storyteller7: function() {
+    this.panel6.destroy();
+    this.panel7 = this.game.add.image(200, 350, 'story7');
+    this.panel7.inputEnabled = true;
+    this.panel7.events.onInputDown.add(this.storyteller8, this);
+  },
+
+  storyteller8: function() {
+    this.panel7.destroy();
+    this.panel8 = this.game.add.image(200, 350, 'story8');
+    this.panel8.inputEnabled = true;
+    this.panel8.events.onInputDown.add(this.storyteller9, this);
+  },
+
+  storyteller9: function() {
+    this.panel8.destroy();
+    this.panel9 = this.game.add.image(200, 350, 'story9');
+    this.panel9.inputEnabled = true;
+    this.panel9.events.onInputDown.add(this.storyteller10, this);
+  },
+
+  storyteller10: function() {
+    this.panel9.destroy();
+    this.storydone1 = true;
+  },
+
+  storyteller11: function() {
+    this.panel11 = this.game.add.image(200, 350, 'story11');
+    this.panel11.inputEnabled = true;
+    setTimeout(function(){
+      this.panel11.destroy();
+    }.bind(this), 5000);
+  },
+
+  storyteller12: function() {
+    this.panel12 = this.game.add.image(200, 350, 'story12');
+    this.panel12.inputEnabled = true;
+    setTimeout(function(){
+      this.panel12.destroy();
+    }.bind(this), 5000);
+  },
+
+  storyteller13: function() {
+    this.panel13 = this.game.add.image(200, 350, 'dontneed');
+    this.panel13.inputEnabled = true;
+    setTimeout(function(){
+      this.panel13.destroy();
+    }.bind(this), 5000);
+  },
+
   pickupAcorn: function(acorn) {
     // IF THE ACORN IS TO THE RIGHT OF IRIS //
-    if (this.irisclicked === true)
+    if (this.irisclicked === false || this.storydone1 === false)
     {
+      false
+    } else {
       this.iris.x = acorn.x - 145;
       this.iris.y = acorn.y - 150;
       this.iris.loadTexture('iris-pickup', 0);
@@ -374,7 +485,7 @@ OaktreeState.prototype = {
         // this.noneleft.play();
     }
   },
-  
+
   fireAcorn: function () {
     this.iris.loadTexture('iris-throwing', 0);
     this.iris.animations.add('throw');
@@ -608,6 +719,7 @@ OaktreeState.prototype = {
     // if (this.hasBugnet === true) {
     this.acorn1.destroy();
     this.squirrel.play();
+    this.storyteller11();
     this.tosskey();
     // }
   },
@@ -618,6 +730,7 @@ OaktreeState.prototype = {
     this.iris.y = key.y - 150;
     this.iris.loadTexture('iris-pickup', 0);
     this.pickup.play();
+    this.storyteller12();
     this.hasKey = true;
     key.destroy();
 
@@ -627,6 +740,11 @@ OaktreeState.prototype = {
     }.bind(this), 1000);
 
     this.keyinventory = this.game.add.image(140, 30, 'keyinventory');
+  },
+
+  useBugnet: function(key)
+  {
+    this.storyteller13();
   },
 
   maintainAcorns: function() {

@@ -10,7 +10,7 @@
     {
       //Assets for Main Menu//
       game.load.image('background', '/javascripts/modules/units/backgrounds/carousellogo1.jpg');
-      game.load.image('title', '/javascripts/modules/units/backgrounds/carousellogo.jpg');
+      game.load.image('title', '/javascripts/modules/units/backgrounds/carousellogo1.png');
       game.load.audio('compass-song', '/javascripts/modules/units/music/IntroSong.mp3');
 
       //Mini Menu Assets //

@@ -52,6 +52,10 @@ StreamState.prototype =
     this.game.load.image('bugnetinventory', '/javascripts/modules/units/sprites/bugnetinventory.png');
     this.game.load.image('keyinventory', '/javascripts/modules/units/sprites/keyinventory.png');
 
+    this.game.load.image('story13',   '/javascripts/modules/units/story/story13.png');
+    this.game.load.image('story14',   '/javascripts/modules/units/story/story14.png');
+    this.game.load.image('story15',   '/javascripts/modules/units/story/story15.png');
+
   },
   create: function()
   {
@@ -71,6 +75,8 @@ StreamState.prototype =
 
     this.fishjump = this.game.add.audio('fishjump');
     this.fishjump.volume = 2;
+
+    this.storyteller();
 
     if (window.oaktree.maintainAcorns() > 0){
       this.acorninventory = this.game.add.image(20, 30, 'acorninventory');
@@ -243,8 +249,39 @@ StreamState.prototype =
     }  
   },
 
+  storyteller: function() {
+    setTimeout(function(){
+      this.panel13 = this.game.add.image(200, 350, 'story13');
+      this.panel13.inputEnabled = true;
+      this.panel13.events.onInputDown.add(this.storyteller2, this);
+    }.bind(this), 2000);
+  },
+
+  storyteller2: function() {
+    this.panel13.destroy();
+    this.panel14 = this.game.add.image(200, 350, 'story14');
+    this.panel14.inputEnabled = true;
+    this.panel14.events.onInputDown.add(this.storyteller3, this);
+  },
+
+  storyteller3: function() {
+    this.panel14.destroy();
+    this.panel15 = this.game.add.image(200, 350, 'story15');
+    this.panel15.inputEnabled = true;
+    this.panel15.events.onInputDown.add(this.storyteller4, this);
+    this.storydone2 = true;
+  },
+
+  storyteller4: function() {
+    this.panel15.destroy();
+  },
+
   useBugnet: function() {
-    game.state.start('Minimenu', true, true);
+    if (this.storydone2 === true){
+      game.state.start('Minimenu', true, true);
+    } else {
+      false
+    }
   },
 
   shutdown: function() {
