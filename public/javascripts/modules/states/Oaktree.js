@@ -58,6 +58,7 @@ OaktreeState.prototype = {
     acorn.input.useHandCursor = true;
     acorn.events.onInputDown.add(this.pickupAcorn, this);
     this.arrayOfAcorns.push(acorn);
+    this.arrayOfAcorns.collidesWith = [this.bugnet, this.squirrelhole];
     return acorn;
   },
 
@@ -100,11 +101,11 @@ OaktreeState.prototype = {
     this.key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(this.useBugnet, this);
 
     //START GAME PHYSICS//
-    this.game.physics.startSystem(Phaser.Physics.BOX2D);
-    this.game.physics.box2d.restitution = 0.3;
-    this.game.physics.box2d.gravity.y = 500;
-    this.game.physics.box2d.friction = 0.3;
-    this.game.physics.box2d.setBoundsToWorld(); 
+    game.physics.startSystem(Phaser.Physics.BOX2D);
+    game.physics.box2d.restitution = 0.3;
+    game.physics.box2d.gravity.y = 500;
+    game.physics.box2d.friction = 0.3;
+    game.physics.box2d.setBoundsToWorld(); 
 
     //ADD AUDIO//
     this.squirrel = this.game.add.audio('squirrel'); 
@@ -132,10 +133,10 @@ OaktreeState.prototype = {
     this.squirrelhole.height = this.game.height;
     this.squirrelhole.width = this.game.width;
     
-    this.game.physics.box2d.enable(this.squirrelhole);
-    this.squirrelhole.body.static = true;
-    this.squirrelhole.body.setCircle(30, 805, 190);
-    this.squirrelhole.body.addCircle(30, 805, 210);
+    // this.game.physics.box2d.enable(this.squirrelhole);
+    // this.squirrelhole.body.static = true;
+    // this.squirrelhole.body.setCircle(30, 805, 190);
+    // this.squirrelhole.body.addCircle(30, 805, 210);
 
     this.iris = this.game.add.sprite(273,55, 'iris-start');
     this.iris.scale.setTo(0.60, 0.60);
@@ -271,7 +272,7 @@ OaktreeState.prototype = {
 
   render: function()
   {
-    this.game.debug.box2dWorld();
+    // this.game.debug.box2dWorld();
   },
 
   pickupAcorn: function(acorn) {
@@ -298,6 +299,7 @@ OaktreeState.prototype = {
     },
 
   pickupBugnet: function(bugnet) {
+    console.log("inside");
     this.iris.x = bugnet.x - 145;
     this.iris.y = bugnet.y - 150;
     this.iris.loadTexture('iris-pickup', 0);
@@ -307,7 +309,7 @@ OaktreeState.prototype = {
     bugnet.destroy();
 
     setTimeout(function() {
-      this.iris.loadTexture('iris-ticnd', 0);
+      this.iris.loadTexture('iris-stand', 0);
       this.iris.y = 300;
     }.bind(this), 1000);
 
@@ -342,7 +344,8 @@ OaktreeState.prototype = {
     this.acorn.destroy();
     this.acorn = new Projectile(this.game, this.iris.x, this.iris.y);
     this.hasAcorn -= 1;
-    this.checkcollision();
+    this.checkcollisionacorn();
+    this.checkcollisionbugnet();
     setTimeout(function() {
         this.iris.loadTexture('iris-stand');
         this.iris.y = 300;
@@ -374,14 +377,161 @@ OaktreeState.prototype = {
   tosskey: function()
   {
     this.game.physics.startSystem(Phaser.Physics.BOX2D);
-    this.key = this.game.add.sprite(780,190, 'key2');
+    this.key = game.add.sprite(780,190,'key2');
     this.game.physics.box2d.enable(this.key);
     this.key.body.static = false;
- },  
+    // this.key.destroy();
 
-  checkcollision: function()
+    this.game.physics.box2d.restitution = 0.3;
+    this.game.physics.box2d.gravity.y = 500;
+    this.game.physics.box2d.friction = 0.3;
+    this.game.physics.box2d.setBoundsToWorld();     
+
+    // this.bugnet = this.game.add.sprite(200,150,'bugnet');
+    // this.game.physics.box2d.enable(this.bugnet);
+    // this.bugnet.body.static = true;
+    // this.bugnet.body.setRectangle(80, 70, -10, -40);
+    // this.bugnet.body.addRectangle(30, 70, 30, 32);  
+
+    this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
+    this.groundCollider.static = true;
+
+    function flatten(arr)
+    {
+      return arr.reduce(function(a, i) { return a.concat(i); }, []); // .inject([]) { |a,i| a << i }
+    }
+
+    function toPairs(arr)
+    {
+      var pairs = [];
+
+      for(var i = 0; i < arr.length; i+= 2)
+      {
+        pairs.push({x: arr[i], y: arr[i+1]});
+      }
+      return pairs;
+    }
+
+    function fromPairs(arr)
+    {
+      return arr.reduce(function(a, i) { return a.concat(i.x, i.y); }, []);
+    }
+
+    function band(d, v1, v2)
+    {
+      return function(pair)
+      {
+        return pair[d] >= v1 && pair[d] <= v2;
+      };
+    }
+
+    function byCoordinate(c)
+    {
+      return function(a, b)
+      {
+        if(a[c] == b[c]) { return  0; }
+        if(a[c]  < b[c]) { return -1; }
+        return 1;
+      };
+    }
+
+    var points =  
+      fromPairs(
+        toPairs(
+          flatten(ground)
+        )
+        .filter(band('y', 0, 700))
+        .sort(byCoordinate('x'))
+      );
+
+    this.groundCollider.setChain(points);
+  },
+ 
+  bugnetCallback: function()
+  {
+    this.bugnet.destroy();
+    this.game.physics.startSystem(Phaser.Physics.BOX2D);
+    this.bugnetx = this.game.add.sprite(200,150,'bugnet');
+    this.game.physics.box2d.enable(this.bugnetx);
+    this.bugnet.body.static = false;
+    this.acorn.destroy();   
+
+    this.squirrelhole = this.game.add.sprite(0,0, 'squirrelhole');
+    this.squirrelhole.height = this.game.height;
+    this.squirrelhole.width = this.game.width;
+
+    this.game.physics.box2d.enable(this.squirrelhole);
+    this.squirrelhole.body.static = true;
+    this.squirrelhole.body.setCircle(30, 805, 190);
+    this.squirrelhole.body.addCircle(30, 805, 210);    
+
+    this.game.physics.box2d.restitution = 0.3;
+    this.game.physics.box2d.gravity.y = 500;
+    this.game.physics.box2d.friction = 0.3;
+    this.game.physics.box2d.setBoundsToWorld();     
+
+    this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
+    this.groundCollider.static = true;
+
+    function flatten(arr)
+    {
+      return arr.reduce(function(a, i) { return a.concat(i); }, []); // .inject([]) { |a,i| a << i }
+    }
+
+    function toPairs(arr)
+    {
+      var pairs = [];
+
+      for(var i = 0; i < arr.length; i+= 2)
+      {
+        pairs.push({x: arr[i], y: arr[i+1]});
+      }
+      return pairs;
+    }
+
+    function fromPairs(arr)
+    {
+      return arr.reduce(function(a, i) { return a.concat(i.x, i.y); }, []);
+    }
+
+    function band(d, v1, v2)
+    {
+      return function(pair)
+      {
+        return pair[d] >= v1 && pair[d] <= v2;
+      };
+    }
+
+    function byCoordinate(c)
+    {
+      return function(a, b)
+      {
+        if(a[c] == b[c]) { return  0; }
+        if(a[c]  < b[c]) { return -1; }
+        return 1;
+      };
+    }
+
+    var points =  
+      fromPairs(
+        toPairs(
+          flatten(ground)
+        )
+        .filter(band('y', 0, 700))
+        .sort(byCoordinate('x'))
+      );
+
+    this.groundCollider.setChain(points);  
+    this.bugnet.events.onInputDown.add(this.pickupBugnet, this);
+  },    
+
+  checkcollisionacorn: function()
   {
     this.acorn.body.setBodyContactCallback(this.squirrelhole, this.squirrelholeCallback, this);
+  },
+
+  checkcollisionbugnet: function()
+  {
     this.acorn.body.setBodyContactCallback(this.bugnet, this.bugnetCallback, this);
   },
 
@@ -405,9 +555,11 @@ OaktreeState.prototype = {
 
   squirrelholeCallback: function(/*body1, body2, fixture1, fixture2, begin*/)
   {
+    // if (this.hasBugnet === true) {
     this.acorn.destroy();
     this.squirrel.play();
     this.tosskey();
+    // }
   },
 
   pickupKey: function(key)
@@ -430,18 +582,6 @@ OaktreeState.prototype = {
   shutdown: function() {
     this.game.input.activePointer.leftButton.onDown.removeAll();
     this.game.stateTransition = null;
-  },
-
-  bugnetCallback: function()
-  {
-    this.bugnet.destroy();
-    this.game.physics.startSystem(Phaser.Physics.BOX2D);
-    this.bugnetx = this.game.add.sprite(200,150,'bugnet');
-    this.game.physics.box2d.enable(this.bugnetx);
-    this.bugnet.body.static = false;
-    this.acorn.destroy();
-    // this.bugnetFall();
-    // this.bugnet.events.onInputDown.add(this.pickupBugnet, this);
   }
 
 };
