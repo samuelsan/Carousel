@@ -8,13 +8,13 @@ Rails.application.routes.draw do
   get   'contacts/new'    #Contact us form page
 
 
-  # resources :contacts, only: [:new, :create]
+  resources :contacts, only: [:new, :create]
+
   # resources :users #this is commented out since we have no need...
   # ... to access user (profile) pages at present
   
   resource  :session,   only: [:create, :destroy]
 
-  match '/contacts',                to: 'contacts#new',    via: 'get'
   match 'auth/:provider/callback',  to: 'sessions#create', via: [:get, :post]
   match 'auth/failure',             to:  redirect('/'),    via: [:get, :post]
   # match 'auth/failure',             to: 'sessions#create_failure', via: [:get, :post]

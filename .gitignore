@@ -28,4 +28,4 @@ Gemfile.lock
 /config/application.yml
 
 # Env. variable files
-.env
+*.env

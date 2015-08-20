@@ -21,8 +21,8 @@ Rails.application.configure do
   #   address:                "smtp.mandrillapp.com",
   #   port:                   587,
   #   enable_starttls_auto:   true,
-  #   user_name:              "CarouselFinal@gmail.com",
-  #   password:               "2K4f7n6nZKjKrjHrWBnwcA",
+  #   user_name:              ENV["CAROUSEL_MANDRILL_USERNAME"],
+  #   password:               ENV["CAROUSEL_MANDRILL_PASSWORD"],
   #   authentication:         'login',
   #   domain:                 'localhost:3000',
   # }
@@ -34,8 +34,8 @@ Rails.application.configure do
     address:                "smtp.gmail.com",
     port:                   587,
     enable_starttls_auto:   true,
-    user_name:              APP_CONFIG[:carousel_gmail_username],
-    password:               APP_CONFIG[:carousel_gmail_password],
+    user_name:              ENV["CAROUSEL_GMAIL_USERNAME"],
+    password:               ENV["CAROUSEL_GMAIL_PASSWORD"],
     authentication:         :login,
     domain:                 'localhost:3000',
   }
