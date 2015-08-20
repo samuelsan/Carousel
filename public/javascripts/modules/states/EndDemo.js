@@ -5,8 +5,8 @@
     this.game = game;
 
     this.lineArray = [
-    "Thank you for playing Carousel!",
-    "Hope you enjoyed the Demo!",
+    "Thank you for playing the Carousel demo!",
+    "Please vote for us if you enjoyed it! :)",
     ];
     this.index = -1;
     this.line = '';
@@ -18,7 +18,8 @@
     preload: function() {
       this.game.load.image('background',   '/javascripts/modules/units/backgrounds/stream.jpg');
       this.game.load.audio('compass-song', '/javascripts/modules/units/music/IntroSong.mp3');
-      this.game.load.image('glow',         '/javascripts/modules/units/sprites/firefly-background.png');
+      this.game.load.image('glow',         '/javascripts/modules/units/sprites/firefly-background1.png');
+      this.game.load.image('chest',         '/javascripts/modules/units/sprites/secretchest.png');
     },
 
     create: function() {
@@ -30,7 +31,7 @@
       this.compasssong.loop = true;
       this.compasssong.play();
 
-      this.text = this.game.add.text(230, 350, '', { font: "30pt Courier", fill: "white", stroke: "white", textAlign: "center", strokeThickness: 2 });
+      this.text = this.game.add.text(50, 350, '', { font: "30pt Courier", fill: "white", stroke: "white", textAlign: "center", strokeThickness: 2 });
       this.nextLine();
 
       //bug glow
@@ -107,5 +108,22 @@
           this.glows[i].cy = 0;
         }
       }  
+    },
+
+    revealchest: function()
+    {
+      this.chest = this.game.add.image(140, 30, 'chest');
+      this.chest.inputEnabled = true;
+      this.chest.events.onInputDown.add(this.unlock, this)
+    },
+
+    unlock: function()
+    {
+      this.slingshot = this.game.add.image(140, 30, 'slingshot');
+      this.lineArray = [
+        "You got the slingshot! Lucky!",
+        "Now Iris can shoot acorns faster and with better accuracy to injure or stun enemies!",
+        "It's not useable yet, but it's going to be pretty handy in the main game!",
+      ]
     }
   };

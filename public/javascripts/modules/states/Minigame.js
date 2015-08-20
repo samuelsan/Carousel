@@ -29,12 +29,12 @@ MinigameState.prototype = {
     // load the images //
     this.game.load.atlasJSONHash('firefly-surprise', '/javascripts/modules/units/sprites/Firefly/firefly-surprise.png', '/javascripts/modules/units/sprites/Firefly/firefly-surprise.json');
 
-    this.game.load.image('background',      '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
-    this.game.load.image('bugjar',          '/javascripts/modules/units/sprites/bugjar1.png');
+    this.game.load.image('background',      '/javascripts/modules/units/backgrounds/Minigame-done.png');
+    this.game.load.image('bugjar',          '/javascripts/modules/units/sprites/bugjar-done.png');
     this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet1.png');
     this.game.load.image('firefly',         '/javascripts/modules/units/sprites/firefly1.png');
     // this.game.load.image('fireflysurprise', '/javascripts/modules/units/sprites/firefly-surprise.png');
-    this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background.png');
+    this.game.load.image('glow',            '/javascripts/modules/units/sprites/firefly-background1.png');
     this.game.load.image('arrow_right',            '/javascripts/modules/units/sprites/arrow_right.png');
     // load the sounds and music //
     this.game.load.audio('fireflybuzz',     '/javascripts/modules/units/sounds/firefly_buzzing.wav');
@@ -146,7 +146,7 @@ MinigameState.prototype = {
 
     // displays the score and sets a default of 0 // 
     this.score = 0;
-    this.labelScore = this.game.add.text(45, 63, '0', { font: '30px Arial', fill: '#ffffff' });
+    this.labelScore = this.game.add.text(48, 63, '0', { font: '30px Arial', fill: '#ffffff' });
   },
   update: function() {
     this.bugnet.fixedRotation = this.game.physics.arcade.moveToPointer(this.bugnet, 0, this.game.input.activePointer, 50);
