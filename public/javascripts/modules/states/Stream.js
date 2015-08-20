@@ -48,6 +48,10 @@ StreamState.prototype =
     this.game.load.image('glow',               '/javascripts/modules/units/sprites/firefly-background1.png');
     this.game.load.audio('fishjump',           '/javascripts/modules/units/sounds/fish_jump1.wav');
 
+    this.game.load.image('acorninventory',  '/javascripts/modules/units/sprites/acorninventory.png');
+    this.game.load.image('bugnetinventory', '/javascripts/modules/units/sprites/bugnetinventory.png');
+    this.game.load.image('keyinventory', '/javascripts/modules/units/sprites/keyinventory.png');
+
   },
   create: function()
   {
@@ -68,6 +72,21 @@ StreamState.prototype =
     this.fishjump = this.game.add.audio('fishjump');
     this.fishjump.volume = 2;
 
+    if (window.oaktree.maintainAcorns() > 0){
+      this.acorninventory = this.game.add.image(20, 30, 'acorninventory');
+      this.hasAcorn = window.oaktree.maintainAcorns();
+      this.acorncount = this.game.add.text(40, 45, this.hasAcorn, { font: '20px Arial', fill: '#ffffff' });
+    }
+
+    if (window.oaktree.maintainBugnet() === true){
+      this.bugnetinventory = this.game.add.image(80, 30, 'bugnetinventory');
+    }
+
+    if (window.oaktree.maintainKeys() === true){
+      this.keyinventory = this.game.add.image(140, 30, 'keyinventory');
+    }
+
+    this.key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(this.useBugnet, this);
     //bug glow
 
     this.sprite = { x: 0, y: -64 };
@@ -166,11 +185,11 @@ StreamState.prototype =
       this.iris.loadTexture('stand', 0);
     }, this);
     
-    this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
-    this.arrow_right.inputEnabled = true;
-    this.arrow_right.events.onInputDown.add(function () {
-    game.state.start('Minimenu', true, true);
-    });
+    // this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
+    // this.arrow_right.inputEnabled = true;
+    // this.arrow_right.events.onInputDown.add(function () {
+    // game.state.start('Minimenu', true, true);
+    // });
 
     this.arrow_left = this.game.add.image(game.width - game.width + 2, game.height/2 - 100, 'arrow_left');
     this.arrow_left.inputEnabled = true;
@@ -222,6 +241,10 @@ StreamState.prototype =
             this.glows[i].cy = 0;
         }
     }  
+  },
+
+  useBugnet: function() {
+    game.state.start('Minimenu', true, true);
   },
 
   shutdown: function() {

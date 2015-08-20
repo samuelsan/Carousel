@@ -8,7 +8,6 @@
   {
     preload: function()
     {
-      console.log(this.constructor.name, "preload");
       //Assets for Main Menu//
       game.load.image('background', '/javascripts/modules/units/backgrounds/carousellogo1.jpg');
       game.load.image('title', '/javascripts/modules/units/backgrounds/carousellogo.jpg');
@@ -44,10 +43,6 @@
     },
     create: function()
     {
-      console.log(this.constructor.name, "create");
-
-
-
       this.game.state.start('MainMenu');
     }
   };

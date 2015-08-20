@@ -18,7 +18,6 @@ var OaktreeState = function (game)
     this.hasAcorn = 0;
     this.hasBugnet = false;
     this.hasKey = false;
-    this.hasBugjar = true;
 
     this.key1 = null;
     this.key2 = null;
@@ -86,11 +85,12 @@ OaktreeState.prototype = {
       this.game.load.image('branch',          '/javascripts/modules/units/backgrounds/branch.png');
 
       this.game.load.image('acorn',           '/javascripts/modules/units/sprites/acorn1.png');
-      this.game.load.image('acorninventory',  '/javascripts/modules/units/sprites/acorninventory.png');
-
       this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet1.png');
-      this.game.load.image('bugnetinventory', '/javascripts/modules/units/sprites/bugnetinventory.png');
       this.game.load.image('key2',             '/javascripts/modules/units/sprites/key1.png');
+
+      this.game.load.image('acorninventory',  '/javascripts/modules/units/sprites/acorninventory.png');
+      this.game.load.image('bugnetinventory', '/javascripts/modules/units/sprites/bugnetinventory.png');
+      this.game.load.image('keyinventory', '/javascripts/modules/units/sprites/keyinventory.png');
 
       this.game.load.image('iris-throw-static', '/javascripts/modules/units/sprites/iris-throw.png');
 
@@ -111,7 +111,6 @@ OaktreeState.prototype = {
   create: function() {
     //KEYBOARD ASSIGNMENT//
     this.key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE).onDown.add(this.checkAcorn, this);
-    // this.key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(this.useBugnet, this);
 
     //START GAME PHYSICS//
     this.game.physics.startSystem(Phaser.Physics.BOX2D);
@@ -375,16 +374,7 @@ OaktreeState.prototype = {
         // this.noneleft.play();
     }
   },
-
-  checkBugnet: function() {
-    // if (this.hasBugnet = true) {
-    //     this.game.state.start("Minimenu");
-    // } else {
-    //     //AUDIO//
-    //     // this.cantuse.play();
-    // }
-  },
-
+  
   fireAcorn: function () {
     this.iris.loadTexture('iris-throwing', 0);
     this.iris.animations.add('throw');
@@ -636,12 +626,23 @@ OaktreeState.prototype = {
       this.iris.y = 300;
     }.bind(this), 1000);
 
-    this.game.add.image('keyinventory', 140, 30);
+    this.keyinventory = this.game.add.image(140, 30, 'keyinventory');
+  },
+
+  maintainAcorns: function() {
+    return this.hasAcorn;
+  },
+
+  maintainBugnet: function() {
+    return this.hasBugnet;
+  },
+
+  maintainKeys: function() {
+    return this.hasKey;
   },
 
   shutdown: function() {
     this.game.input.activePointer.leftButton.onDown.removeAll();
     this.game.stateTransition = null;
   }
-
 };
