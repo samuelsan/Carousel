@@ -40,12 +40,23 @@ StreamState.prototype =
   {
     this.game.load.image('background',         '/javascripts/modules/units/backgrounds/stream.jpg');
     this.game.load.image('fish',               '/javascripts/modules/units/sprites/fish.png');
-    this.game.load.atlasJSONHash('walk-right', '/javascripts/modules/units/sprites/Walking/walk-right.png', '/javascripts/modules/units/sprites/Walking/walk-right.json');
-    this.game.load.image('stand',              '/javascripts/modules/units/sprites/iris-standing.png');
+    this.game.load.atlasJSONHash('walk-right', '/javascripts/modules/units/sprites/Walking/walk-right1.png', '/javascripts/modules/units/sprites/Walking/walk-right1.json');
+    this.game.load.image('stand',              '/javascripts/modules/units/sprites/iris-stand.png');
     this.game.load.image('arrow_right',        '/javascripts/modules/units/sprites/arrow_right.png');
     this.game.load.image('arrow_left',         '/javascripts/modules/units/sprites/arrow_left.png');
     this.game.load.audio('streammusic',        '/javascripts/modules/units/sounds/mountain_stream_loop.mp3');
-    this.game.load.image('glow',               '/javascripts/modules/units/sprites/firefly-background.png');
+    this.game.load.image('glow',               '/javascripts/modules/units/sprites/firefly-background1.png');
+    this.game.load.audio('fishjump',           '/javascripts/modules/units/sounds/fish_jump1.wav');
+    this.game.load.audio('walksound',           '/javascripts/modules/units/sounds/Walking.mp3');
+
+    this.game.load.image('acorninventory',  '/javascripts/modules/units/sprites/acorninventory.png');
+    this.game.load.image('bugnetinventory', '/javascripts/modules/units/sprites/bugnetinventory.png');
+    this.game.load.image('keyinventory', '/javascripts/modules/units/sprites/keyinventory.png');
+
+    this.game.load.image('story13',   '/javascripts/modules/units/story/story13.png');
+    this.game.load.image('story14',   '/javascripts/modules/units/story/story14.png');
+    this.game.load.image('story15',   '/javascripts/modules/units/story/story15.png');
+
   },
   create: function()
   {
@@ -54,16 +65,39 @@ StreamState.prototype =
     this.background.width = this.game.width;
 
     this.iris = game.add.sprite(-150, 300, 'walk-right');
-    this.iris.scale.setTo(0.5,0.5);
     this.iris.animations.add('walk-right');
     this.iris.animations.play('walk-right', 3, true);
     this.game.add.sprite('stand');
 
     this.streammusic = this.game.add.audio('streammusic');
-    this.streammusic.volume = 1;
+    this.streammusic.volume = 0.5;
     this.streammusic.loop=true;
     this.streammusic.play();
 
+    this.walksound = this.game.add.audio('walksound');
+    this.walksound.volume = 0.5;
+    this.walksound.play();
+
+    this.fishjump = this.game.add.audio('fishjump');
+    this.fishjump.volume = 2;
+
+    this.storyteller();
+
+    if (window.oaktree.maintainAcorns() > 0){
+      this.acorninventory = this.game.add.image(20, 30, 'acorninventory');
+      this.hasAcorn = window.oaktree.maintainAcorns();
+      this.acorncount = this.game.add.text(40, 45, this.hasAcorn, { font: '20px Arial', fill: '#ffffff' });
+    }
+
+    if (window.oaktree.maintainBugnet() === true){
+      this.bugnetinventory = this.game.add.image(80, 30, 'bugnetinventory');
+    }
+
+    if (window.oaktree.maintainKeys() === true){
+      this.keyinventory = this.game.add.image(140, 30, 'keyinventory');
+    }
+
+    this.key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(this.useBugnet, this);
     //bug glow
 
     this.sprite = { x: 0, y: -64 };
@@ -125,6 +159,7 @@ StreamState.prototype =
         this.fishSprite = this.game.add.sprite(0, 0, "fish");
         this.fishSprite.anchor.setTo(0.5, 0.5);
 
+
     // this.bmd = this.add.bitmapData(this.game.width, this.game.height);
     // this.bmd.addToWorld();
     // // Draw the path
@@ -158,14 +193,15 @@ StreamState.prototype =
     var tween = this.game.add.tween(this.iris).to({x: 500}, 5000, Phaser.Easing.Linear.None, true);
     tween.onComplete.add(function()
     {
+      this.walksound.stop();
       this.iris.loadTexture('stand', 0);
     }, this);
     
-    this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
-    this.arrow_right.inputEnabled = true;
-    this.arrow_right.events.onInputDown.add(function () {
-    game.state.start('Minimenu', true, true);
-    });
+    // this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
+    // this.arrow_right.inputEnabled = true;
+    // this.arrow_right.events.onInputDown.add(function () {
+    // game.state.start('Minimenu', true, true);
+    // });
 
     this.arrow_left = this.game.add.image(game.width - game.width + 2, game.height/2 - 100, 'arrow_left');
     this.arrow_left.inputEnabled = true;
@@ -191,6 +227,7 @@ StreamState.prototype =
       this.timer1.destroy();
       this.i = 0;
       this.timer1Stopped = true;
+      this.fishjump.play();
       this.fishSprite.destroy();
     }
   },
@@ -218,10 +255,44 @@ StreamState.prototype =
     }  
   },
 
+  storyteller: function() {
+    setTimeout(function(){
+      this.panel13 = this.game.add.image(200, 350, 'story13');
+      this.panel13.inputEnabled = true;
+      this.panel13.events.onInputDown.add(this.storyteller2, this);
+    }.bind(this), 2000);
+  },
+
+  storyteller2: function() {
+    this.panel13.destroy();
+    this.panel14 = this.game.add.image(200, 350, 'story14');
+    this.panel14.inputEnabled = true;
+    this.panel14.events.onInputDown.add(this.storyteller3, this);
+  },
+
+  storyteller3: function() {
+    this.panel14.destroy();
+    this.panel15 = this.game.add.image(200, 350, 'story15');
+    this.panel15.inputEnabled = true;
+    this.panel15.events.onInputDown.add(this.storyteller4, this);
+    this.storydone2 = true;
+  },
+
+  storyteller4: function() {
+    this.panel15.destroy();
+  },
+
+  useBugnet: function() {
+    if (this.storydone2 === true){
+      game.state.start('Minimenu', true, true);
+    } else {
+      false
+    }
+  },
+
   shutdown: function() {
     this.game.stateTransition = null;
-  }  
-
+  }
 };
 
 
