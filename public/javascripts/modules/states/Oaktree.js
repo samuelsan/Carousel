@@ -12,6 +12,7 @@ var OaktreeState = function (game)
     this.bugnet = null;
     this.squirrelhole = null;
     this.iris = null;
+    this.irisclicked = null;
     this.arrayOfAcorns = [];
 
     this.hasAcorn = 0;
@@ -24,6 +25,8 @@ var OaktreeState = function (game)
     this.key3 = null;
     this.key4 = null;
     this.key5 = null;
+
+    var acorn = null;
 
     this.game.stateTransition = this.game.plugins.add(Phaser.Plugin.StateTransition); 
     // This passes now!
@@ -56,7 +59,6 @@ OaktreeState.prototype = {
     this.game.add.existing(acorn);
     acorn.inputEnabled = true;
     acorn.input.useHandCursor = true;
-    acorn.input.priorityID = 50;
     acorn.events.onInputDown.add(this.pickupAcorn, this);
     this.arrayOfAcorns.push(acorn);
     return acorn;
@@ -68,8 +70,8 @@ OaktreeState.prototype = {
       this.game.load.atlasJSONHash('iris-swing', '/javascripts/modules/units/sprites/iris-tire.png', 
       '/javascripts/modules/units/sprites/iris-tire.json');
 
-      this.game.load.atlasJSONHash('walk-right', '/javascripts/modules/units/sprites/Walking/walk-right.png', 
-      '/javascripts/modules/units/sprites/Walking/walk-right.json');
+      this.game.load.atlasJSONHash('walk-right', '/javascripts/modules/units/sprites/Walking/walk-right-1.png', 
+      '/javascripts/modules/units/sprites/Walking/walk-right-1.json');
 
       this.game.load.atlasJSONHash('walk-left', '/javascripts/modules/units/sprites/Walking/walk-left.png', 
       '/javascripts/modules/units/sprites/Walking/walk-left.json');
@@ -99,6 +101,7 @@ OaktreeState.prototype = {
 
       // Oaktree Audio //
       this.game.load.audio('background-music', '/javascripts/modules/units/music/oaktreemusic.mp3');
+      this.game.load.audio('meadowsound',       '/javascripts/modules/units/sounds/meadow-loop.mp3');
       this.game.load.audio('squirrel',        '/javascripts/modules/units/sounds/squirrel.wav');
       this.game.load.audio('acorn-on-ground', '/javascripts/modules/units/sounds/acorn_on_grass.wav');
       this.game.load.audio('pickup',          '/javascripts/modules/units/sounds/pickup.mp3');
@@ -120,10 +123,16 @@ OaktreeState.prototype = {
     this.squirrel = this.game.add.audio('squirrel'); 
     this.acorn_on_ground = this.game.add.audio('acorn-on-ground');
     this.pickup = this.game.add.audio('pickup');
-    this.music = this.game.add.audio('background-music');
+    this.oakmusic = this.game.add.audio('background-music');
 
-    this.music.volume = 2;
-    this.music.play();    
+    this.oakmusic.volume = 1;
+    this.oakmusic.loop = true;
+    this.oakmusic.play();
+
+    this.meadowsounds = this.game.add.audio('meadowsound');
+    this.meadowsounds.volume = 0.5;
+    this.meadowsounds.loop = true;
+    this.meadowsounds.play();    
 
     //ADD IMAGES + HITBOXES//
     this.background2 = this.game.add.image(0,0, 'background-2');
@@ -209,12 +218,18 @@ OaktreeState.prototype = {
     this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
     this.groundCollider.static = true;
 
-    this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
-    this.arrow_right.inputEnabled = true;
-    this.arrow_right.events.onInputDown.add(function () {
-
-    game.stateTransition.to('Stream', true, true);
-    });      
+    // if (this.irisclicked === true){
+    //   this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
+    //   this.arrow_right.inputEnabled = true;
+    //   this.arrow_right.events.onInputDown.add(function () {
+    //   this.iris.loadTexture('walk-right', 0);
+    //   this.iris.animations.add('walk-right');
+    //   this.iris.animations.play('walk-right', 3, true);
+    //   setTimeout(function(){
+    //     game.stateTransition.to('Stream', true, true);
+    //   }.bind(this), 2000)
+    // }.bind(this));
+    // }     
 
     function flatten(arr)
     {
@@ -272,24 +287,6 @@ OaktreeState.prototype = {
     if (this.acorn) {
       this.acorncount.text = this.hasAcorn;  
     }
-    if (this.iris.pixelPerfectClick === true) {
-      this.acorn.events.onInputDown.add(this.pickupAcorn, this);
-      if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
-      {
-        this.iris.loadTexture('walk-left');
-        this.iris.animations.play('walk-left');
-        this.iris.x -= 4;
-      }
-      else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
-      {
-        this.iris.loadTexture('walk-right');
-        this.iris.animations.play('walk-right');
-        this.iris.x += 4;
-      } else {
-        this.iris.loadTexture('iris-stand');
-        this.iris.animations.play('iris-stand');
-      }
-    }
 
     // if (this.checkAcorn) {
     //   if (this.state.mouseX >= this.iris.x){
@@ -299,15 +296,30 @@ OaktreeState.prototype = {
     //   }
     // }
 
+    if (this.irisclicked === true && this.hasBugnet === true){
+      this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
+      this.arrow_right.inputEnabled = true;
+      this.arrow_right.events.onInputDown.add(function () {
+      this.iris.loadTexture('walk-right', 0);
+      this.iris.animations.add('walk-right');
+      this.iris.animations.play('walk-right', 3, true);
+      setTimeout(function(){
+        game.stateTransition.to('Stream', true, true);
+      }.bind(this), 2000)
+    }.bind(this));
+    }
+
   },
 
   render: function()
   {
-    this.game.debug.box2dWorld();
+    // this.game.debug.box2dWorld();
   },
 
   pickupAcorn: function(acorn) {
     // IF THE ACORN IS TO THE RIGHT OF IRIS //
+    if (this.irisclicked === true)
+    {
       this.iris.x = acorn.x - 145;
       this.iris.y = acorn.y - 150;
       this.iris.loadTexture('iris-pickup', 0);
@@ -327,7 +339,8 @@ OaktreeState.prototype = {
         
       this.acorninventory = this.game.add.image(20, 30, 'acorninventory');
       this.acorncount = this.game.add.text(40, 45, this.hasAcorn, { font: '20px Arial', fill: '#ffffff' });
-    },
+    }
+  },
 
   pickupBugnet: function(bugnet) {
     this.iris.x = bugnet.x - 145;
@@ -372,8 +385,12 @@ OaktreeState.prototype = {
     this.iris.animations.add('throw');
     this.iris.animations.play('throw', 12, false);
     this.acorn.destroy();
-    this.acorn = new Projectile(this.game, this.iris.x, this.iris.y);
+    this.acorn1 = new Projectile(this.game, this.iris.x, this.iris.y);
     this.hasAcorn -= 1;
+    this.acorn1.inputEnabled = true;
+    this.acorn1.input.useHandCursor = true;
+    this.acorn1.events.onInputDown.add(this.pickupAcorn, this);
+    this.arrayOfAcorns.push(this.acorn1);
     this.checkcollision();
     setTimeout(function() {
         this.iris.loadTexture('iris-stand');
@@ -421,6 +438,7 @@ OaktreeState.prototype = {
 
   spinTire: function()
   {
+    this.irisclicked = true;
     this.iris.loadTexture('iris-swing');
     this.iris.animations.add('swing')
     this.iris.animations.play('swing',4,false);
@@ -470,7 +488,7 @@ OaktreeState.prototype = {
 
   bugnetCallback: function()
   {
-    this.bugnet.body.static = false;
+    // this.bugnet.body.static = true;
     this.bugnet.events.onInputDown.add(this.pickupBugnet, this);
   }
 };

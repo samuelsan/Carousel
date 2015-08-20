@@ -40,8 +40,8 @@ StreamState.prototype =
   {
     this.game.load.image('background',         '/javascripts/modules/units/backgrounds/stream.jpg');
     this.game.load.image('fish',               '/javascripts/modules/units/sprites/fish.png');
-    this.game.load.atlasJSONHash('walk-right', '/javascripts/modules/units/sprites/Walking/walk-right.png', '/javascripts/modules/units/sprites/Walking/walk-right.json');
-    this.game.load.image('stand',              '/javascripts/modules/units/sprites/iris-standing.png');
+    this.game.load.atlasJSONHash('walk-right', '/javascripts/modules/units/sprites/Walking/walk-right1.png', '/javascripts/modules/units/sprites/Walking/walk-right1.json');
+    this.game.load.image('stand',              '/javascripts/modules/units/sprites/iris-stand.png');
     this.game.load.image('arrow_right',        '/javascripts/modules/units/sprites/arrow_right.png');
     this.game.load.image('arrow_left',         '/javascripts/modules/units/sprites/arrow_left.png');
     this.game.load.audio('streammusic',        '/javascripts/modules/units/sounds/mountain_stream_loop.mp3');
@@ -55,7 +55,6 @@ StreamState.prototype =
     this.background.width = this.game.width;
 
     this.iris = game.add.sprite(-150, 300, 'walk-right');
-    this.iris.scale.setTo(0.5,0.5);
     this.iris.animations.add('walk-right');
     this.iris.animations.play('walk-right', 3, true);
     this.game.add.sprite('stand');
