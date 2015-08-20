@@ -61,6 +61,7 @@ OaktreeState.prototype = {
     acorn.input.useHandCursor = true;
     acorn.events.onInputDown.add(this.pickupAcorn, this);
     this.arrayOfAcorns.push(acorn);
+    this.arrayOfAcorns.collidesWith = [this.bugnet, this.squirrelhole];
     return acorn;
   },
 
@@ -70,8 +71,8 @@ OaktreeState.prototype = {
       this.game.load.atlasJSONHash('iris-swing', '/javascripts/modules/units/sprites/iris-tire.png', 
       '/javascripts/modules/units/sprites/iris-tire.json');
 
-      this.game.load.atlasJSONHash('walk-right', '/javascripts/modules/units/sprites/Walking/walk-right-1.png', 
-      '/javascripts/modules/units/sprites/Walking/walk-right-1.json');
+      this.game.load.atlasJSONHash('walk-right', '/javascripts/modules/units/sprites/Walking/walk-right1.png', 
+      '/javascripts/modules/units/sprites/Walking/walk-right1.json');
 
       this.game.load.atlasJSONHash('walk-left', '/javascripts/modules/units/sprites/Walking/walk-left.png', 
       '/javascripts/modules/units/sprites/Walking/walk-left.json');
@@ -89,15 +90,15 @@ OaktreeState.prototype = {
 
       this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet1.png');
       this.game.load.image('bugnetinventory', '/javascripts/modules/units/sprites/bugnetinventory.png');
-
-      this.game.load.image('key1',             '/javascripts/modules/units/sprites/key1.png');
+      this.game.load.image('key2',             '/javascripts/modules/units/sprites/key1.png');
 
       this.game.load.image('iris-throw-static', '/javascripts/modules/units/sprites/iris-throw.png');
+
       this.game.load.image('iris-throw-left',   '/javascripts/modules/units/sprites/iristhrowleft.png');
       this.game.load.image('iris-stand',      '/javascripts/modules/units/sprites/iris-stand.png');
       this.game.load.image('iris-pickup',     '/javascripts/modules/units/sprites/pickup1.png');
       this.game.load.image('iris-start',      '/javascripts/modules/units/sprites/iris-swing1.png');
-      this.game.load.image('arrow_right',     '/javascripts/modules/units/sprites/arrow_right.png')
+      this.game.load.image('arrow_right',     '/javascripts/modules/units/sprites/arrow_right.png');
 
       // Oaktree Audio //
       this.game.load.audio('background-music', '/javascripts/modules/units/music/oaktreemusic.mp3');
@@ -110,7 +111,7 @@ OaktreeState.prototype = {
   create: function() {
     //KEYBOARD ASSIGNMENT//
     this.key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE).onDown.add(this.checkAcorn, this);
-    this.key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(this.useBugnet, this);
+    // this.key2 = this.game.input.keyboard.addKey(Phaser.Keyboard.TWO).onDown.add(this.useBugnet, this);
 
     //START GAME PHYSICS//
     this.game.physics.startSystem(Phaser.Physics.BOX2D);
@@ -151,10 +152,10 @@ OaktreeState.prototype = {
     this.squirrelhole.height = this.game.height;
     this.squirrelhole.width = this.game.width;
     
-    this.game.physics.box2d.enable(this.squirrelhole);
-    this.squirrelhole.body.static = true;
-    this.squirrelhole.body.setCircle(30, 805, 190);
-    this.squirrelhole.body.addCircle(30, 805, 210);
+    // this.game.physics.box2d.enable(this.squirrelhole);
+    // this.squirrelhole.body.static = true;
+    // this.squirrelhole.body.setCircle(30, 805, 190);
+    // this.squirrelhole.body.addCircle(30, 805, 210);
 
     this.iris = this.game.add.sprite(255, 25, 'iris-start');
     this.iris.inputEnabled = true;
@@ -208,7 +209,9 @@ OaktreeState.prototype = {
     this.bugnet = this.game.add.sprite(200,150,'bugnet');
     this.game.physics.box2d.enable(this.bugnet);
     this.bugnet.body.static = true;
-    this.bugnet.body.setRectangle(75, 75);
+    this.bugnet.body.setRectangle(80, 70, -10, -40);
+    this.bugnet.body.addRectangle(30, 70, 30, 32);
+
 
     this.branch = this.game.add.image(0,0, 'branch');
     this.branch.height = this.game.height;
@@ -300,12 +303,14 @@ OaktreeState.prototype = {
       this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
       this.arrow_right.inputEnabled = true;
       this.arrow_right.events.onInputDown.add(function () {
-      this.iris.loadTexture('walk-right', 0);
-      this.iris.animations.add('walk-right');
-      this.iris.animations.play('walk-right', 3, true);
-      setTimeout(function(){
-        game.stateTransition.to('Stream', true, true);
-      }.bind(this), 2000)
+        this.iris.loadTexture('walk-right', 0);
+        this.iris.animations.add('walk-right');
+        this.iris.animations.play('walk-right', 3, true);
+        var tween = this.game.add.tween(this.iris).to({x: 1000}, 4000, Phaser.Easing.Linear.None, true);
+        setTimeout(function()
+        {
+          game.stateTransition.to('Stream', true, true);
+        }.bind(this), 3500);
     }.bind(this));
     }
 
@@ -356,7 +361,7 @@ OaktreeState.prototype = {
       this.iris.y = 300;
     }.bind(this), 1000);
 
-    this.bugnetinventory = this.game.add.image(20, 30, 'bugnetinventory');
+    this.bugnetinventory = this.game.add.image(80, 30, 'bugnetinventory');
   },
 
   checkAcorn: function() {
@@ -386,61 +391,212 @@ OaktreeState.prototype = {
     this.iris.animations.play('throw', 12, false);
     this.acorn.destroy();
     this.acorn1 = new Projectile(this.game, this.iris.x, this.iris.y);
+
+    this.checkcollisionacorn();
+    this.checkcollisionbugnet();
+
     this.hasAcorn -= 1;
     this.acorn1.inputEnabled = true;
     this.acorn1.input.useHandCursor = true;
     this.acorn1.events.onInputDown.add(this.pickupAcorn, this);
     this.arrayOfAcorns.push(this.acorn1);
-    this.checkcollision();
+
     setTimeout(function() {
         this.iris.loadTexture('iris-stand');
         this.iris.y = 300;
       }.bind(this), 500);
   },
 
+  // tosskey: function()
+  // {
+  //   this.key = this.game.add.sprite(780,190, 'key1');
+  //   this.key.anchor.setTo(0.5, 0.5);
+  //   this.key.inputEnabled = true;
+  //   this.key.events.onInputDown.add(this.pickupKey(this.key), this);
+  //   this.tweenFunctions = [
+  //     { name: "Quadratic In", ease: Phaser.Easing.Quadratic.In }
+  //   ];
+  //   this.game.physics.box2d.enable(this.key);
+
+  //   /*var tween = */this.game.add.tween(this.key).to({
+  //     x: [780, 700, 600, 400],
+  //     y: [190, 600, 500, 300],
+  //     angle: [100]
+  //   }, 5000)
+  //   .interpolation(function(v, k)
+  //   {
+  //     return Phaser.Math.catmullRomInterpolation(v, k);
+  //   });
+  // },
+
   tosskey: function()
   {
-    this.key = this.game.add.sprite(780,190, 'key1');
-    this.key.anchor.setTo(0.5, 0.5);
-    this.key.inputEnabled = true;
-    this.key.events.onInputDown.add(this.pickupKey(this.key), this);
-    this.tweenFunctions = [
-      { name: "Quadratic In", ease: Phaser.Easing.Quadratic.In }
-    ];
+    this.game.physics.startSystem(Phaser.Physics.BOX2D);
+    this.key = game.add.sprite(780,190,'key2');
     this.game.physics.box2d.enable(this.key);
+    this.key.body.static = false;
+    // this.key.destroy();
 
-    /*var tween = */this.game.add.tween(this.key).to({
-      x: [780, 700, 600, 400],
-      y: [190, 600, 500, 300],
-      angle: [100]
-    }, 5000)
-    .interpolation(function(v, k)
+    this.game.physics.box2d.restitution = 0.3;
+    this.game.physics.box2d.gravity.y = 500;
+    this.game.physics.box2d.friction = 0.3;
+    this.game.physics.box2d.setBoundsToWorld();     
+
+    // this.bugnet = this.game.add.sprite(200,150,'bugnet');
+    // this.game.physics.box2d.enable(this.bugnet);
+    // this.bugnet.body.static = true;
+    // this.bugnet.body.setRectangle(80, 70, -10, -40);
+    // this.bugnet.body.addRectangle(30, 70, 30, 32);  
+
+    this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
+    this.groundCollider.static = true;
+
+    function flatten(arr)
     {
-      return Phaser.Math.catmullRomInterpolation(v, k);
-    });
-  },
-
-  checkcollision: function()
-  {
-    this.acorn.body.setBodyContactCallback(this.squirrelhole, this.squirrelholeCallback, this);
-    this.acorn.body.setBodyContactCallback(this.bugnet, this.bugnetCallback, this);
-  },
-
-  useBugnet: function()
-  {
-    if(this.game.state === 'Stream' && this.hasBugnet === true) {
-      this.game.state.start('Minimenu');
-    } else {
-      //AUDIO//
-      // this.cantuse.play();
+      return arr.reduce(function(a, i) { return a.concat(i); }, []); // .inject([]) { |a,i| a << i }
     }
+
+    function toPairs(arr)
+    {
+      var pairs = [];
+
+      for(var i = 0; i < arr.length; i+= 2)
+      {
+        pairs.push({x: arr[i], y: arr[i+1]});
+      }
+      return pairs;
+    }
+
+    function fromPairs(arr)
+    {
+      return arr.reduce(function(a, i) { return a.concat(i.x, i.y); }, []);
+    }
+
+    function band(d, v1, v2)
+    {
+      return function(pair)
+      {
+        return pair[d] >= v1 && pair[d] <= v2;
+      };
+    }
+
+    function byCoordinate(c)
+    {
+      return function(a, b)
+      {
+        if(a[c] == b[c]) { return  0; }
+        if(a[c]  < b[c]) { return -1; }
+        return 1;
+      };
+    }
+
+    var points =  
+      fromPairs(
+        toPairs(
+          flatten(ground)
+        )
+        .filter(band('y', 0, 700))
+        .sort(byCoordinate('x'))
+      );
+    this.key.inputEnabled = true;
+    this.key.events.onInputDown.add(this.keyPickup, this);
+    this.groundCollider.setChain(points);
+  },
+ 
+  bugnetCallback: function()
+  {
+    this.bugnet.destroy();
+    this.game.physics.startSystem(Phaser.Physics.BOX2D);
+    this.bugnetx = this.game.add.sprite(200,150,'bugnet');
+    this.game.physics.box2d.enable(this.bugnetx);
+    this.bugnetx.body.static = false;
+    this.acorn1.destroy();   
+
+    this.squirrelhole = this.game.add.sprite(0,0, 'squirrelhole');
+    this.squirrelhole.height = this.game.height;
+    this.squirrelhole.width = this.game.width;
+
+    this.game.physics.box2d.enable(this.squirrelhole);
+    this.squirrelhole.body.static = true;
+    this.squirrelhole.body.setCircle(30, 805, 190);
+    this.squirrelhole.body.addCircle(30, 805, 210);    
+
+    this.game.physics.box2d.restitution = 0.3;
+    this.game.physics.box2d.gravity.y = 500;
+    this.game.physics.box2d.friction = 0.3;
+    this.game.physics.box2d.setBoundsToWorld();     
+
+    this.groundCollider = new Phaser.Physics.Box2D.Body(this.game, null, 0, 0);
+    this.groundCollider.static = true;
+
+    function flatten(arr)
+    {
+      return arr.reduce(function(a, i) { return a.concat(i); }, []); // .inject([]) { |a,i| a << i }
+    }
+
+    function toPairs(arr)
+    {
+      var pairs = [];
+
+      for(var i = 0; i < arr.length; i+= 2)
+      {
+        pairs.push({x: arr[i], y: arr[i+1]});
+      }
+      return pairs;
+    }
+
+    function fromPairs(arr)
+    {
+      return arr.reduce(function(a, i) { return a.concat(i.x, i.y); }, []);
+    }
+
+    function band(d, v1, v2)
+    {
+      return function(pair)
+      {
+        return pair[d] >= v1 && pair[d] <= v2;
+      };
+    }
+
+    function byCoordinate(c)
+    {
+      return function(a, b)
+      {
+        if(a[c] == b[c]) { return  0; }
+        if(a[c]  < b[c]) { return -1; }
+        return 1;
+      };
+    }
+
+    var points =  
+      fromPairs(
+        toPairs(
+          flatten(ground)
+        )
+        .filter(band('y', 0, 700))
+        .sort(byCoordinate('x'))
+      );
+
+    this.groundCollider.setChain(points);
+    this.bugnetx.inputEnabled = true;  
+    this.bugnetx.events.onInputDown.add(this.pickupBugnet, this);
+  },    
+
+  checkcollisionacorn: function()
+  {
+    this.acorn1.body.setBodyContactCallback(this.squirrelhole, this.squirrelholeCallback, this);
+  },
+
+  checkcollisionbugnet: function()
+  {
+    this.acorn1.body.setBodyContactCallback(this.bugnet, this.bugnetCallback, this);
   },
 
   spinTire: function()
   {
     this.irisclicked = true;
     this.iris.loadTexture('iris-swing');
-    this.iris.animations.add('swing')
+    this.iris.animations.add('swing');
     this.iris.animations.play('swing',4,false);
 
     setTimeout(function(){
@@ -459,12 +615,14 @@ OaktreeState.prototype = {
 
   squirrelholeCallback: function(/*body1, body2, fixture1, fixture2, begin*/)
   {
-    this.acorn.destroy();
+    // if (this.hasBugnet === true) {
+    this.acorn1.destroy();
     this.squirrel.play();
     this.tosskey();
+    // }
   },
 
-  pickupKey: function(key)
+  keyPickup: function(key)
   {
     this.iris.x = key.x - 145;
     this.iris.y = key.y - 150;
@@ -478,17 +636,12 @@ OaktreeState.prototype = {
       this.iris.y = 300;
     }.bind(this), 1000);
 
-    // this.bugnetinventory = this.game.add.image(20, 30, 'bugnetinventory');
+    this.game.add.image('keyinventory', 140, 30);
   },
 
   shutdown: function() {
     this.game.input.activePointer.leftButton.onDown.removeAll();
     this.game.stateTransition = null;
-  },
-
-  bugnetCallback: function()
-  {
-    // this.bugnet.body.static = true;
-    this.bugnet.events.onInputDown.add(this.pickupBugnet, this);
   }
+
 };

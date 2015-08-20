@@ -45,8 +45,9 @@ StreamState.prototype =
     this.game.load.image('arrow_right',        '/javascripts/modules/units/sprites/arrow_right.png');
     this.game.load.image('arrow_left',         '/javascripts/modules/units/sprites/arrow_left.png');
     this.game.load.audio('streammusic',        '/javascripts/modules/units/sounds/mountain_stream_loop.mp3');
-    this.game.load.image('glow',               '/javascripts/modules/units/sprites/firefly-background.png');
+    this.game.load.image('glow',               '/javascripts/modules/units/sprites/firefly-background1.png');
     this.game.load.audio('fishjump',           '/javascripts/modules/units/sounds/fish_jump1.wav');
+
   },
   create: function()
   {
@@ -225,8 +226,7 @@ StreamState.prototype =
 
   shutdown: function() {
     this.game.stateTransition = null;
-  }  
-
+  }
 };
 
 

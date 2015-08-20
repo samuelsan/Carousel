@@ -36,7 +36,7 @@ MinimenuState.prototype = {
    this.game.stateTransition = null;
   },
   gotostory: function() {
-    this.game.state.start('Stream', true, true);
+    this.game.state.start('EndDemo', true, true);
     this.game.stateTransition = null;
   },
   // update: function() {}
