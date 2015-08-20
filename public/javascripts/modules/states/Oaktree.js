@@ -15,7 +15,7 @@ var OaktreeState = function (game)
     this.bugnet = null;
     this.squirrelhole = null;
     this.iris = null;
-    this.irisclicked = null;
+    this.irisclicked = false;
     this.arrayOfAcorns = [];
 
     this.hasAcorn = 0;
@@ -123,6 +123,7 @@ OaktreeState.prototype = {
       this.game.load.audio('squirrel',        '/javascripts/modules/units/sounds/squirrel.wav');
       this.game.load.audio('acorn-on-ground', '/javascripts/modules/units/sounds/acorn_on_grass.wav');
       this.game.load.audio('pickup',          '/javascripts/modules/units/sounds/pickup.mp3');
+      this.game.load.audio('walk-sound',       '/javascripts/modules/units/sounds/Walking.mp3');
     },
 
   create: function() {
@@ -142,6 +143,7 @@ OaktreeState.prototype = {
     this.acorn_on_ground = this.game.add.audio('acorn-on-ground');
     this.pickup = this.game.add.audio('pickup');
     this.oakmusic = this.game.add.audio('background-music');
+    this.walksound = this.game.add.audio('walk-sound');
 
     this.oakmusic.volume = 1;
     this.oakmusic.loop = true;
@@ -318,8 +320,10 @@ OaktreeState.prototype = {
       this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
       this.arrow_right.inputEnabled = true;
       this.arrow_right.events.onInputDown.add(function () {
+        this.walksound.play();
         this.iris.loadTexture('walk-right', 0);
         this.iris.animations.add('walk-right');
+        this.walksound.play();
         this.iris.animations.play('walk-right', 3, true);
         var tween = this.game.add.tween(this.iris).to({x: 1000}, 4000, Phaser.Easing.Linear.None, true);
         setTimeout(function()
@@ -430,7 +434,6 @@ OaktreeState.prototype = {
   },
 
   pickupAcorn: function(acorn) {
-    // IF THE ACORN IS TO THE RIGHT OF IRIS //
     if (this.irisclicked === false || this.storydone1 === false)
     {
       false
@@ -695,7 +698,6 @@ OaktreeState.prototype = {
 
   spinTire: function()
   {
-    this.irisclicked = true;
     this.iris.loadTexture('iris-swing');
     this.iris.animations.add('swing');
     this.iris.animations.play('swing',4,false);
@@ -709,7 +711,8 @@ OaktreeState.prototype = {
       this.iris.loadTexture('iris-stand');
       this.iris.x = 300;
       this.iris.y = 200;
-      this.iris.enableBody = true;
+      this.irisclicked = true;
+      this.iris.inputEnabled = false;
 
     }.bind(this), 3000);
   },

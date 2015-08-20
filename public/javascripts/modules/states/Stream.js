@@ -47,6 +47,7 @@ StreamState.prototype =
     this.game.load.audio('streammusic',        '/javascripts/modules/units/sounds/mountain_stream_loop.mp3');
     this.game.load.image('glow',               '/javascripts/modules/units/sprites/firefly-background1.png');
     this.game.load.audio('fishjump',           '/javascripts/modules/units/sounds/fish_jump1.wav');
+    this.game.load.audio('walksound',           '/javascripts/modules/units/sounds/Walking.mp3');
 
     this.game.load.image('acorninventory',  '/javascripts/modules/units/sprites/acorninventory.png');
     this.game.load.image('bugnetinventory', '/javascripts/modules/units/sprites/bugnetinventory.png');
@@ -72,6 +73,10 @@ StreamState.prototype =
     this.streammusic.volume = 0.5;
     this.streammusic.loop=true;
     this.streammusic.play();
+
+    this.walksound = this.game.add.audio('walksound');
+    this.walksound.volume = 0.5;
+    this.walksound.play();
 
     this.fishjump = this.game.add.audio('fishjump');
     this.fishjump.volume = 2;
@@ -188,6 +193,7 @@ StreamState.prototype =
     var tween = this.game.add.tween(this.iris).to({x: 500}, 5000, Phaser.Easing.Linear.None, true);
     tween.onComplete.add(function()
     {
+      this.walksound.stop();
       this.iris.loadTexture('stand', 0);
     }, this);
     
