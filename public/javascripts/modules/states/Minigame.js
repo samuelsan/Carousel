@@ -29,7 +29,7 @@ MinigameState.prototype = {
     // load the images //
     this.game.load.atlasJSONHash('firefly-surprise', '/javascripts/modules/units/sprites/Firefly/firefly-surprise.png', '/javascripts/modules/units/sprites/Firefly/firefly-surprise.json');
 
-    this.game.load.image('background',      '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
+    this.game.load.image('background',      '/javascripts/modules/units/backgrounds/Minigame-done.png');
     this.game.load.image('bugjar',          '/javascripts/modules/units/sprites/bugjar1.png');
     this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet1.png');
     this.game.load.image('firefly',         '/javascripts/modules/units/sprites/firefly1.png');

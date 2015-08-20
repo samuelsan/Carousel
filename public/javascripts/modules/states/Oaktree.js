@@ -52,10 +52,11 @@ OaktreeState.prototype = {
   createAcorn: function(no_throw)
   {
     // var acorn = new Projectile(this.game, 700 + Math.random() * 300, )
-    var acorn = new Projectile(this.game, this.world.randomX, 400 + Math.random() * 200, no_throw);
+    var acorn = new Projectile(this.game, this.world.randomX, 350 + Math.random() * 200, no_throw);
     this.game.add.existing(acorn);
     acorn.inputEnabled = true;
     acorn.input.useHandCursor = true;
+    acorn.input.priorityID = 50;
     acorn.events.onInputDown.add(this.pickupAcorn, this);
     this.arrayOfAcorns.push(acorn);
     return acorn;
@@ -64,27 +65,36 @@ OaktreeState.prototype = {
   preload: function(){
     this.game.load.atlasJSONHash('iris-throwing', '/javascripts/modules/units/sprites/Throwing/iris-throwing.png', '/javascripts/modules/units/sprites/Throwing/iris-throwing.json');
 
-      this.game.load.atlasJSONHash('iris-swing', '/javascripts/modules/units/sprites/Tireswing/iris-tire.png', 
-      '/javascripts/modules/units/sprites/Tireswing/iris-tire.json');
+      this.game.load.atlasJSONHash('iris-swing', '/javascripts/modules/units/sprites/iris-tire.png', 
+      '/javascripts/modules/units/sprites/iris-tire.json');
 
       this.game.load.atlasJSONHash('walk-right', '/javascripts/modules/units/sprites/Walking/walk-right.png', 
       '/javascripts/modules/units/sprites/Walking/walk-right.json');
 
-      this.game.load.image('background',      '/javascripts/modules/units/backgrounds/oaktree.jpg');
+      this.game.load.atlasJSONHash('walk-left', '/javascripts/modules/units/sprites/Walking/walk-left.png', 
+      '/javascripts/modules/units/sprites/Walking/walk-left.json');
+
+      this.game.load.image('background-1',      '/javascripts/modules/units/backgrounds/Oaktree-start.jpg');
+      this.game.load.image('background-2',    '/javascripts/modules/units/backgrounds/Oaktree-normal.jpg');
       this.game.load.image('ground',          '/javascripts/modules/units/backgrounds/oakground.png');
-      this.game.load.image('treetrunk',       '/javascripts/modules/units/backgrounds/treetrunk.png');
+
       this.game.load.image('squirrelhole',    '/javascripts/modules/units/backgrounds/squirrelhole.png');
+
       this.game.load.image('branch',          '/javascripts/modules/units/backgrounds/branch.png');
+
       this.game.load.image('acorn',           '/javascripts/modules/units/sprites/acorn1.png');
       this.game.load.image('acorninventory',  '/javascripts/modules/units/sprites/acorninventory.png');
+
       this.game.load.image('bugnet',          '/javascripts/modules/units/sprites/bugnet1.png');
       this.game.load.image('bugnetinventory', '/javascripts/modules/units/sprites/bugnetinventory.png');
+
       this.game.load.image('key1',             '/javascripts/modules/units/sprites/key1.png');
-      this.game.load.image('iris-throw-static', '/javascripts/modules/units/sprites/iristhrow.png');
+
+      this.game.load.image('iris-throw-static', '/javascripts/modules/units/sprites/iris-throw.png');
       this.game.load.image('iris-throw-left',   '/javascripts/modules/units/sprites/iristhrowleft.png');
-      this.game.load.image('iris-stand',      '/javascripts/modules/units/sprites/iris-standing.png');
-      this.game.load.image('iris-pickup',     '/javascripts/modules/units/sprites/pickup.png');
-      this.game.load.image('iris-start',      '/javascripts/modules/units/sprites/iris-swing-start.png');
+      this.game.load.image('iris-stand',      '/javascripts/modules/units/sprites/iris-stand.png');
+      this.game.load.image('iris-pickup',     '/javascripts/modules/units/sprites/pickup1.png');
+      this.game.load.image('iris-start',      '/javascripts/modules/units/sprites/iris-swing1.png');
       this.game.load.image('arrow_right',     '/javascripts/modules/units/sprites/arrow_right.png')
 
       // Oaktree Audio //
@@ -116,13 +126,13 @@ OaktreeState.prototype = {
     this.music.play();    
 
     //ADD IMAGES + HITBOXES//
-    this.background = this.game.add.image(0,0, 'background');
-    this.background.height = this.game.height;
-    this.background.width = this.game.width;
+    this.background2 = this.game.add.image(0,0, 'background-2');
+    this.background2.height = this.game.height;
+    this.background2.width = this.game.width;
 
-    this.treetrunk = this.game.add.image(0,0, 'treetrunk');
-    this.treetrunk.height = this.game.height;
-    this.treetrunk.width = this.game.width;  
+    this.background1 = this.game.add.image(0,0, 'background-1');
+    this.background1.height = this.game.height;
+    this.background1.width = this.game.width;  
 
     this.ground = this.game.add.image(0,0, 'ground');
     this.ground.height = this.game.height;
@@ -137,10 +147,15 @@ OaktreeState.prototype = {
     this.squirrelhole.body.setCircle(30, 805, 190);
     this.squirrelhole.body.addCircle(30, 805, 210);
 
-    this.iris = this.game.add.sprite(273,55, 'iris-start');
-    this.iris.scale.setTo(0.60, 0.60);
+    this.iris = this.game.add.sprite(255, 25, 'iris-start');
     this.iris.inputEnabled = true;
+    this.iris.useHandCursor = true;
+    this.iris.input.priorityID = 100;
     this.iris.events.onInputDown.addOnce(this.spinTire, this);
+
+    this.iris.animations.add('walk-right', 4, true);
+
+    this.iris.animations.add('walk-left', 4, true);
 
     //IRIS ACTIONS//
     // this.throwing = this.iris.animations.add('iris-throwing');
@@ -197,6 +212,7 @@ OaktreeState.prototype = {
     this.arrow_right = this.game.add.image(game.width - 100, game.height/2 - 100, 'arrow_right');
     this.arrow_right.inputEnabled = true;
     this.arrow_right.events.onInputDown.add(function () {
+
     game.stateTransition.to('Stream', true, true);
     });      
 
@@ -255,6 +271,24 @@ OaktreeState.prototype = {
   {
     if (this.acorn) {
       this.acorncount.text = this.hasAcorn;  
+    }
+    if (this.iris.pixelPerfectClick === true) {
+      this.acorn.events.onInputDown.add(this.pickupAcorn, this);
+      if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+      {
+        this.iris.loadTexture('walk-left');
+        this.iris.animations.play('walk-left');
+        this.iris.x -= 4;
+      }
+      else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+      {
+        this.iris.loadTexture('walk-right');
+        this.iris.animations.play('walk-right');
+        this.iris.x += 4;
+      } else {
+        this.iris.loadTexture('iris-stand');
+        this.iris.animations.play('iris-stand');
+      }
     }
 
     // if (this.checkAcorn) {
@@ -387,10 +421,22 @@ OaktreeState.prototype = {
 
   spinTire: function()
   {
-    this.iris.animations.add('iris-swing');
-    this.iris.animations.play('iris-swing', 2.5, false);
+    this.iris.loadTexture('iris-swing');
+    this.iris.animations.add('swing')
+    this.iris.animations.play('swing',4,false);
 
-    this.iris.loadTexture('iris-stand');
+    setTimeout(function(){
+      this.iris.loadTexture('iris-start');
+    }.bind(this), 1000);
+
+    setTimeout(function(){
+      this.background1.visible =! this.background1.visible;
+      this.iris.loadTexture('iris-stand');
+      this.iris.x = 300;
+      this.iris.y = 200;
+      this.iris.enableBody = true;
+
+    }.bind(this), 3000);
   },
 
   squirrelholeCallback: function(/*body1, body2, fixture1, fixture2, begin*/)

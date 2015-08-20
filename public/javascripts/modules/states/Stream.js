@@ -46,6 +46,7 @@ StreamState.prototype =
     this.game.load.image('arrow_left',         '/javascripts/modules/units/sprites/arrow_left.png');
     this.game.load.audio('streammusic',        '/javascripts/modules/units/sounds/mountain_stream_loop.mp3');
     this.game.load.image('glow',               '/javascripts/modules/units/sprites/firefly-background.png');
+    this.game.load.audio('fishjump',           '/javascripts/modules/units/sounds/fish_jump1.wav');
   },
   create: function()
   {
@@ -60,9 +61,12 @@ StreamState.prototype =
     this.game.add.sprite('stand');
 
     this.streammusic = this.game.add.audio('streammusic');
-    this.streammusic.volume = 1;
+    this.streammusic.volume = 0.5;
     this.streammusic.loop=true;
     this.streammusic.play();
+
+    this.fishjump = this.game.add.audio('fishjump');
+    this.fishjump.volume = 2;
 
     //bug glow
 
@@ -124,6 +128,7 @@ StreamState.prototype =
         // follow the motion path by using the plot function 
         this.fishSprite = this.game.add.sprite(0, 0, "fish");
         this.fishSprite.anchor.setTo(0.5, 0.5);
+
 
     // this.bmd = this.add.bitmapData(this.game.width, this.game.height);
     // this.bmd.addToWorld();
@@ -191,6 +196,7 @@ StreamState.prototype =
       this.timer1.destroy();
       this.i = 0;
       this.timer1Stopped = true;
+      this.fishjump.play();
       this.fishSprite.destroy();
     }
   },

@@ -9,7 +9,7 @@ var MinimenuState = function (game) {
 MinimenuState.prototype = {
   preload: function() {
     //Mini Menu Assets //
-      this.game.load.image('background',    '/javascripts/modules/units/backgrounds/minigamebackground-alt.jpg');
+      this.game.load.image('background',    '/javascripts/modules/units/backgrounds/Minigame-done.png');
       this.game.load.image('menu',          '/javascripts/modules/units/backgrounds/minigame-intro.png');
       this.game.load.image('playbutton',    '/javascripts/modules/units/sprites/playbutton.png');
       this.game.load.image('returnbutton',  '/javascripts/modules/units/sprites/returnbutton.png');
