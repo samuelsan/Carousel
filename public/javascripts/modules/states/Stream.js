@@ -209,10 +209,6 @@ StreamState.prototype =
     // game.stateTransition.to('Oaktree', true, true);
     // });     
   },
-  // fishJump: function () {
-  //   var fish = new Fish(this.game, this.launchX, this.launchY);
-  //   this.game.add.existing(fish);
-  // },
 
   plot: function()
   { 
