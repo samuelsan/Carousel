@@ -1,5 +1,5 @@
 # Carousel
-Interactive Game
+Carousel Setup
 Setup:	<br />
 1. Download the zip file	<br />
 2. Run bundle install	<br />
