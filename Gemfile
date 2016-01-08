@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'heroku'
 # gems for a mail form
 gem 'mail_form'
 gem 'simple_form'
@@ -11,7 +12,10 @@ gem 'rails', '4.1.6'
 gem 'dotenv-rails', :groups => [:development, :test]
 
 # PostgreSQL gem
-gem 'pg'
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end
 
 # ActiveRecord composite key gem
 gem 'composite_primary_keys'
