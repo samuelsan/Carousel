@@ -82,7 +82,7 @@ OaktreeState.prototype = {
       this.game.load.image('background-1',      '/javascripts/modules/units/backgrounds/Oaktree-start.jpg');
       this.game.load.image('background-2',    '/javascripts/modules/units/backgrounds/Oaktree-normal.jpg');
       this.game.load.image('ground',          '/javascripts/modules/units/backgrounds/oakground.png');
-
+      this.game.load.image('iris-start',      '/javascripts/modules/units/sprites/iris-swing1.png');
       this.game.load.image('squirrelhole',    '/javascripts/modules/units/backgrounds/squirrelhole.png');
 
       this.game.load.image('branch',          '/javascripts/modules/units/backgrounds/branch.png');
@@ -100,7 +100,6 @@ OaktreeState.prototype = {
       this.game.load.image('iris-throw-left',   '/javascripts/modules/units/sprites/iristhrowleft.png');
       this.game.load.image('iris-stand',      '/javascripts/modules/units/sprites/iris-stand.png');
       this.game.load.image('iris-pickup',     '/javascripts/modules/units/sprites/pickup1.png');
-      this.game.load.image('iris-start',      '/javascripts/modules/units/sprites/iris-swing1.png');
       this.game.load.image('arrow_right',     '/javascripts/modules/units/sprites/arrow_right.png');
 
       //Oaktree Story//
@@ -155,6 +154,12 @@ OaktreeState.prototype = {
     this.meadowsounds.play();    
 
     //ADD IMAGES + HITBOXES//
+    this.iris = this.game.add.sprite(255, 25, 'iris-start');
+    this.iris.inputEnabled = true;
+    this.iris.useHandCursor = true;
+    this.iris.input.priorityID = 100;
+    this.iris.events.onInputDown.addOnce(this.spinTire, this);
+    
     this.background2 = this.game.add.image(0,0, 'background-2');
     this.background2.height = this.game.height;
     this.background2.width = this.game.width;
@@ -174,13 +179,7 @@ OaktreeState.prototype = {
     // this.game.physics.box2d.enable(this.squirrelhole);
     // this.squirrelhole.body.static = true;
     // this.squirrelhole.body.setCircle(30, 805, 190);
-    // this.squirrelhole.body.addCircle(30, 805, 210);
-
-    this.iris = this.game.add.sprite(255, 25, 'iris-start');
-    this.iris.inputEnabled = true;
-    this.iris.useHandCursor = true;
-    this.iris.input.priorityID = 100;
-    this.iris.events.onInputDown.addOnce(this.spinTire, this);
+    // this.squirrelhole.body.addCircle(30, 805, 210)
 
     this.storyteller();
 
