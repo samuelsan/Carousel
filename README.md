@@ -1,5 +1,5 @@
-# Carousel
-Carousel is an interactive story-line based Web Application Game which follows the life of a young girl Iris on her adventures. Carousel was developed and programmed with Phaser.js, Ruby, and Javascript in Rails. <br/>
+# Carousel - Interactive Storyline-Driven Game
+Carousel is a Web Application Game which follows the life of a young girl Iris on her adventures. Carousel was developed and programmed with Phaser.js, Ruby, and Javascript in Rails. <br/>
 <b>Website: </b> http://carouselgame.herokuapp.com <br/>
 <b>To Install: </b>	<br />
 2. Run bundle install	<br />
