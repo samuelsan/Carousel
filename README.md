@@ -4,6 +4,6 @@ Carousel is a web app game which follows the life of a young girl Iris on her ad
 <b>To Install: </b>	<br />
 2. Run bundle install	<br />
 3. Run bundle exec rails server	<br />
-4. Go to http://localhost:3000
+4. Go to http://localhost:3000 <br>
 <b>YouTube Demo: </b> <br/>
 https://www.youtube.com/watch?v=kqcvwEuNeDw&feature=youtu.be
